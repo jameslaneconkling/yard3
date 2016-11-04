@@ -15,9 +15,9 @@ export default class App extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-      data: generateData(10),
-      chartWidth: 900,
-      chartHeight: 500
+      data: generateData(20),
+      chartWidth: 600,
+      chartHeight: 300
     };
 
     this.randomize = this.randomize.bind(this);

@@ -3,3 +3,17 @@
 body {
   font-family: sans-serif;
 }
+
+section {
+  max-width: 60rem;
+  margin: 2rem auto;
+}
+
+.chart {
+  .bar {
+    fill: #607D8B;
+  }
+  .xaxis path, .yaxis path, .xaxis line, .yaxis line {
+    stroke: #888 !important;
+  }
+}
