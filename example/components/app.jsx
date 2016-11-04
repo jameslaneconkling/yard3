@@ -5,6 +5,7 @@ import * as d3            from 'd3';
 import {
   BarChart,
   XAxis,
+  YAxis,
   Chart
 }                         from '../../src';
 
@@ -68,6 +69,7 @@ export default class App extends Component {
           >
             <BarChart>
               <XAxis />
+              <YAxis />
             </BarChart>
           </Chart>
 

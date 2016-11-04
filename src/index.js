@@ -4,9 +4,11 @@
 import Chart from './components/Chart.jsx';
 import BarChart from './components/BarChart.jsx';
 import XAxis from './components/XAxis.jsx';
+import YAxis from './components/YAxis.jsx';
 
 export {
   Chart,
   BarChart,
-  XAxis
+  XAxis,
+  YAxis
 };
