@@ -32,7 +32,7 @@ export default class BarChart extends React.Component {
 
   render() {
     const { xScale, yScale, containerHeight, containerWidth } = this;
-    const { data, leftMargin, topMargin } = this.props;
+    const { data, leftMargin, topMargin, rightMargin, bottomMargin } = this.props;
 
     return (
       <svg
@@ -41,7 +41,7 @@ export default class BarChart extends React.Component {
         height={this.props.height}
         className='chart'
       >
-        {this.props.children && React.cloneElement(this.props.children, {data, xScale, yScale, containerWidth, containerHeight, leftMargin, topMargin})}
+        {this.props.children && React.cloneElement(this.props.children, {data, xScale, yScale, containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})}
       </svg>
     );
   }

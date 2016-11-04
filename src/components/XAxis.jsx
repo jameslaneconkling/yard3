@@ -28,3 +28,8 @@ export default class XAxis extends React.Component {
     );
   }
 }
+
+XAxis.propTypes = {
+  yScale: PropTypes.func,
+  containerHeight: PropTypes.number
+};

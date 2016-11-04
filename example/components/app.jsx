@@ -14,7 +14,7 @@ export default class App extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-      data: generateData(52),
+      data: generateData(10),
       chartWidth: 900,
       chartHeight: 500
     };

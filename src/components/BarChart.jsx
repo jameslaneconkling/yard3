@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 
+// TODO
+// - transitions
+// - event handlers
+// - multiple composable chart overlays
 export default class BarChart extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.update();
   }
@@ -14,9 +14,6 @@ export default class BarChart extends React.Component {
     this.update();
   }
 
-  /**
-   * D3 DOM data binding to run after react has rendered
-   */
   update() {
     const { data, containerHeight, xScale, yScale } = this.props;
     const $chart = d3.select(this.$chart);
@@ -56,5 +53,11 @@ export default class BarChart extends React.Component {
 BarChart.propTypes = {
   data: PropTypes.array,
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.number,
+  containerHeight: PropTypes.number,
+  topMargin: PropTypes.number,
+  bottompMargin: PropTypes.number,
+  leftMargin: PropTypes.number,
+  rightMargin: PropTypes.number
 };
