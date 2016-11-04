@@ -18,21 +18,40 @@ export default class BarChart extends React.Component {
     const { data, containerHeight, xScale, yScale } = this.props;
     const $chart = d3.select(this.$chart);
 
-    // enter
-    $chart.selectAll('.bar').data(data)
-      .enter().append('rect')
-      .attr('class', 'bar');
+    const t = d3.transition()
+      .duration(500)
+      .ease(d3.easeLinear);
 
-    // update
-    $chart.selectAll('.bar').data(data)
+    const update = $chart.selectAll('.bar')
+      .data(data)
+    const enter = update.enter();
+    const exit = update.exit();
+
+    enter
+      .append('rect')
+      .attr('class', 'bar')
       .attr('x', d => xScale(d.key))
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth())
       .attr('height', d => containerHeight - yScale(d.value));
 
-    // exit
-    $chart.selectAll('.bar').data(data)
-      .exit()
+    update
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => containerHeight - yScale(d.value))
+      .attr('x', d => xScale(d.key))
+      .attr('y', d => yScale(d.value));
+
+    // or
+    // enter
+    //   .append('rect')
+    //   .attr('class', 'bar')
+    // .merge(update)
+    //   .attr('width', xScale.bandwidth())
+    //   .attr('height', d => containerHeight - yScale(d.value))
+    //   .attr('x', d => xScale(d.key))
+    //   .attr('y', d => yScale(d.value));
+
+    exit
       .remove();
   }
 
