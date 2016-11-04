@@ -4,7 +4,9 @@
   "description": "yet another react-d3 integration library",
   "scripts": {
     "lint": "eslint ./app/",
-    "dev": "webpack-dev-server --devtool eval --progress"
+    "dev": "webpack-dev-server --devtool eval --progress",
+    "build": "babel src/ -d dist/ --source-maps",
+    "test": "echo \"Error: no tests ...yet\" && exit 1"
   },
   "keywords": [
     "react",
@@ -39,5 +41,5 @@
     "d3": "^4.3.0",
     "react": "^0.14.7"
   },
-  "main": "dist/index.html"
+  "main": "dist/index.js"
 }
