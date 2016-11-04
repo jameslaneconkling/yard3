@@ -4,7 +4,8 @@ import React, {
 import * as d3            from 'd3';
 import {
   BarChart,
-  XAxis
+  XAxis,
+  Chart
 }                         from '../../src';
 
 const generateData = length => d3.range(1, length + 1).map(idx => ({key: idx, value: Math.random()}));
@@ -60,13 +61,15 @@ export default class App extends Component {
         <div>
           <h3>Chart 1</h3>
 
-          <BarChart
+          <Chart
             data={this.state.data}
             width={this.state.chartWidth}
             height={this.state.chartHeight}
           >
-            <XAxis />
-          </BarChart>
+            <BarChart>
+              <XAxis />
+            </BarChart>
+          </Chart>
 
           <div>
             <button onClick={this.randomize}>randomize</button>
