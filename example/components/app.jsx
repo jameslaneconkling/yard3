@@ -4,6 +4,7 @@ import React, {
 import * as d3            from 'd3';
 import {
   BarChart,
+  LineChart,
   XAxis,
   YAxis,
   Chart
@@ -56,10 +57,10 @@ export default class App extends Component {
 
   render() {
     return (
-      <section>
+      <div>
         <h1>React D3</h1>
 
-        <div>
+        <section>
           <h3>Chart 1</h3>
 
           <Chart
@@ -80,9 +81,24 @@ export default class App extends Component {
             <button onClick={this.shrink}>shrink</button>
             <button onClick={this.grow}>grow</button>
           </div>
-        </div>
+        </section>
 
-      </section>
+        <section>
+          <h3>Chart 2</h3>
+
+          <Chart
+            data={this.state.data}
+            width={this.state.chartWidth}
+            height={this.state.chartHeight}
+          >
+            <LineChart>
+              <XAxis />
+              <YAxis />
+            </LineChart>
+          </Chart>
+        </section>
+
+      </div>
     );
   }
 }

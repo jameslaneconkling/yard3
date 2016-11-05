@@ -1,19 +1,30 @@
 @import 'styles/reset';
 
+$primary: #607D8B;
+
 body {
   font-family: sans-serif;
 }
 
-section {
+main {
   max-width: 60rem;
   margin: 2rem auto;
 }
 
+section {
+  margin-bottom: 3rem;
+}
+
 .chart {
   .bar {
-    fill: #607D8B;
+    fill: $primary;
   }
   .xaxis path, .yaxis path, .xaxis line, .yaxis line {
     stroke: #888 !important;
+  }
+
+  .line {
+    fill: none;
+    stroke: $primary
   }
 }
