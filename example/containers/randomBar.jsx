@@ -59,11 +59,12 @@ export default class RandomBar extends React.Component {
         <h3>Chart 1</h3>
 
         <Chart
-          data={this.state.data}
           width={this.state.chartWidth}
           height={this.state.chartHeight}
         >
-          <BarChart>
+          <BarChart
+            data={this.state.data}
+          >
             <XAxis />
             <YAxis />
           </BarChart>

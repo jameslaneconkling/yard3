@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 
-export default class BarChart extends React.Component {
+export default class Chart extends React.Component {
   constructor(props) {
     super(props);
     this.preRender(props);
@@ -17,23 +17,23 @@ export default class BarChart extends React.Component {
    * their setup/update logic must run w/i the constructor and componentWillUpdate hook
    */
   preRender(props) {
-    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin, yDomain, xDomain } = props;
+    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = props;
     this.containerWidth = width - leftMargin - rightMargin;
     this.containerHeight = height - topMargin - bottomMargin;
 
-    this.xScale = d3.scaleBand()
-      .padding(0.1)
-      .domain(xDomain(props))
-      .rangeRound([0, this.containerWidth]);
+    // this.xScale = d3.scaleBand()
+    //   .padding(0.1)
+    //   .domain(xDomain(props))
+    //   .rangeRound([0, this.containerWidth]);
 
-    this.yScale = d3.scaleLinear()
-      .domain(yDomain(props))
-      .rangeRound([this.containerHeight, 0]);
+    // this.yScale = d3.scaleLinear()
+    //   .domain(yDomain(props))
+    //   .rangeRound([this.containerHeight, 0]);
   }
 
   render() {
-    const { xScale, yScale, containerHeight, containerWidth } = this;
-    const { data, leftMargin, topMargin, rightMargin, bottomMargin } = this.props;
+    const { containerHeight, containerWidth } = this;
+    const { leftMargin, topMargin, rightMargin, bottomMargin } = this.props;
 
     return (
       <svg
@@ -42,14 +42,13 @@ export default class BarChart extends React.Component {
         height={this.props.height}
         className='chart'
       >
-        { React.Children.map(this.props.children, child => React.cloneElement(child, {data, xScale, yScale, containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})) }
+        { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})) }
       </svg>
     );
   }
 }
 
-BarChart.propTypes = {
-  data: PropTypes.array.isRequired,
+Chart.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   topMargin: PropTypes.number,
@@ -58,11 +57,9 @@ BarChart.propTypes = {
   leftMargin: PropTypes.number
 };
 
-BarChart.defaultProps = {
+Chart.defaultProps = {
   topMargin: 20,
   rightMargin: 20,
   bottomMargin: 30,
-  leftMargin: 40,
-  xDomain: props => props.data.map(d => d.key),
-  yDomain: props => d3.extent(props.data, d => d.value)
+  leftMargin: 40
 };

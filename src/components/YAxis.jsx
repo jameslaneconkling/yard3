@@ -14,11 +14,11 @@ export default class YAxis extends React.Component {
     const $yAxis = d3.select(this.$yAxis);
 
     $yAxis.call( d3.axisLeft(this.props.yScale).tickPadding(10) )
-      .append("text")
-        .attr("y", 6)
-        .attr("dy", "0.71em")
-        .attr("text-anchor", "end")
-        .text("Frequency");
+      .append('text')
+        .attr('y', 6)
+        .attr('dy', '0.71em')
+        .attr('text-anchor', 'end')
+        .text('Frequency');
   }
 
   render() {

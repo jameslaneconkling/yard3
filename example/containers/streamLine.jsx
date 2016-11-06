@@ -63,12 +63,13 @@ export default class StreamLine extends React.Component {
         <h3>Chart 2</h3>
 
         <Chart
-          data={this.state.data}
           width={this.state.chartWidth}
           height={this.state.chartHeight}
-          yDomain={() => [-1.5, 1.5]}
         >
-          <LineChart>
+          <LineChart
+            data={this.state.data}
+            yDomain={() => [-1.5, 1.5]}
+          >
             <XAxis />
             <YAxis />
           </LineChart>
