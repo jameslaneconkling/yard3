@@ -11,7 +11,7 @@ import {
 const makeStream = idx => Rx.Observable
   .create(observable => {
     let _idx = idx;
-    const wave = idx => Math.sin(idx) + 1.5;
+    const wave = idx => Math.sin(idx);
 
     setInterval(() => {
       observable.next([{key: _idx, value: wave(_idx)}]);
@@ -66,6 +66,7 @@ export default class StreamLine extends React.Component {
           data={this.state.data}
           width={this.state.chartWidth}
           height={this.state.chartHeight}
+          yDomain={() => [-1.5, 1.5]}
         >
           <LineChart>
             <XAxis />

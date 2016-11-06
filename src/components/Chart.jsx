@@ -17,16 +17,17 @@ export default class BarChart extends React.Component {
    * their setup/update logic must run w/i the constructor and componentWillUpdate hook
    */
   preRender(props) {
-    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin, data } = props;
+    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin, yDomain, xDomain } = props;
     this.containerWidth = width - leftMargin - rightMargin;
     this.containerHeight = height - topMargin - bottomMargin;
 
     this.xScale = d3.scaleBand()
       .padding(0.1)
-      .domain(data.map(d => d.key))
+      .domain(xDomain(props))
       .rangeRound([0, this.containerWidth]);
+
     this.yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.value)])
+      .domain(yDomain(props))
       .rangeRound([this.containerHeight, 0]);
   }
 
@@ -61,5 +62,7 @@ BarChart.defaultProps = {
   topMargin: 20,
   rightMargin: 20,
   bottomMargin: 30,
-  leftMargin: 40
+  leftMargin: 40,
+  xDomain: props => props.data.map(d => d.key),
+  yDomain: props => d3.extent(props.data, d => d.value)
 };
