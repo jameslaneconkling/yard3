@@ -35,7 +35,7 @@ export default class LineChart extends React.Component {
   }
 
   update() {
-    const { data } = this.props;
+    const { data, x, y } = this.props;
     const { xScale, yScale } = this;
     const $chart = d3.select(this.$chart);
 
@@ -54,8 +54,8 @@ export default class LineChart extends React.Component {
       .datum(data)
       .attr('class', 'line')
       .attr('d', d3.line()
-        .x(d => xScale(d.key))
-        .y(d => yScale(d.value))
+        .x(d => xScale(x(d)))
+        .y(d => yScale(y(d)))
       );
   }
 
@@ -78,10 +78,17 @@ LineChart.propTypes = {
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
+  x: PropTypes.func,
+  y: PropTypes.func,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number,
   topMargin: PropTypes.number,
   bottompMargin: PropTypes.number,
   leftMargin: PropTypes.number,
   rightMargin: PropTypes.number,
+};
+
+LineChart.defaultProps = {
+  x: d => d.key,
+  y: d => d.value
 };

@@ -56,6 +56,7 @@ export default class RandomBar extends React.Component {
   render() {
     const { data } = this.state;
 
+    // TODO - scales should be validated to make sure they are appropriate for the chart type
     const xScale = d3.scaleBand()
       .padding(0.1)
       .domain(data.map(d => d.key));

@@ -40,7 +40,7 @@ export default class BarChart extends React.Component {
 
   update() {
     const { xScale, yScale } = this;
-    const { data, containerHeight } = this.props;
+    const { data, containerHeight, x, y } = this.props;
     const $chart = d3.select(this.$chart);
 
     // const t = d3.transition()
@@ -55,16 +55,16 @@ export default class BarChart extends React.Component {
     enter
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => xScale(d.key))
-      .attr('y', d => yScale(d.value))
+      .attr('x', d => xScale(x(d)))
+      .attr('y', d => yScale(y(d)))
       .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(d.value));
+      .attr('height', d => containerHeight - yScale(y(d)));
 
     update
       .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(d.value))
-      .attr('x', d => xScale(d.key))
-      .attr('y', d => yScale(d.value));
+      .attr('height', d => containerHeight - yScale(y(d)))
+      .attr('x', d => xScale(x(d)))
+      .attr('y', d => yScale(y(d)));
 
     // or
     // enter
@@ -72,9 +72,9 @@ export default class BarChart extends React.Component {
     //   .attr('class', 'bar')
     // .merge(update)
     //   .attr('width', xScale.bandwidth())
-    //   .attr('height', d => containerHeight - yScale(d.value))
-    //   .attr('x', d => xScale(d.key))
-    //   .attr('y', d => yScale(d.value));
+    //   .attr('height', d => containerHeight - yScale(y(d)))
+    //   .attr('x', d => xScale(x(d)))
+    //   .attr('y', d => yScale(y(d)));
 
     exit
       .remove();
@@ -99,10 +99,17 @@ BarChart.propTypes = {
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
+  x: PropTypes.func,
+  y: PropTypes.func,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number,
   topMargin: PropTypes.number,
   bottompMargin: PropTypes.number,
   leftMargin: PropTypes.number,
   rightMargin: PropTypes.number
+};
+
+BarChart.defaultProps = {
+  x: d => d.key,
+  y: d => d.value
 };
