@@ -60,7 +60,7 @@ export default class StreamLine extends React.Component {
   render() {
     return (
       <section>
-        <h3>Chart 2</h3>
+        <h2>Chart 2</h2>
 
         <Chart
           width={this.state.chartWidth}

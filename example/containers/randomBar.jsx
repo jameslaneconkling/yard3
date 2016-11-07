@@ -56,7 +56,7 @@ export default class RandomBar extends React.Component {
   render() {
     return (
       <section>
-        <h3>Chart 1</h3>
+        <h2>Chart 1</h2>
 
         <Chart
           width={this.state.chartWidth}
