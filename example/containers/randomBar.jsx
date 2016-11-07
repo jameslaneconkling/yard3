@@ -54,6 +54,15 @@ export default class RandomBar extends React.Component {
   }
 
   render() {
+    const { data } = this.state;
+
+    const xScale = d3.scaleBand()
+      .padding(0.1)
+      .domain(data.map(d => d.key));
+
+    const yScale = d3.scaleLinear()
+      .domain(d3.extent(data, d => d.value));
+
     return (
       <section>
         <h2>Chart 1</h2>
@@ -64,6 +73,8 @@ export default class RandomBar extends React.Component {
         >
           <BarChart
             data={this.state.data}
+            xScale={xScale}
+            yScale={yScale}
           >
             <XAxis />
             <YAxis />

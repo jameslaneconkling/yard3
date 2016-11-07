@@ -1,5 +1,6 @@
 import React              from 'react';
 import Rx                 from 'rxjs';
+import * as d3            from 'd3';
 import R                  from 'ramda';
 import {
   LineChart,
@@ -44,17 +45,26 @@ export default class StreamLine extends React.Component {
   }
 
   render() {
+    const { data, chartWidth, chartHeight } = this.state;
+
+    const xScale = d3.scaleLinear()
+      .domain(d3.extent(data, d => d.key));
+
+    const yScale = d3.scaleLinear()
+      .domain([-1.5, 1.5]);
+
     return (
       <section>
         <h2>Chart 2</h2>
 
         <Chart
-          width={this.state.chartWidth}
-          height={this.state.chartHeight}
+          width={chartWidth}
+          height={chartHeight}
         >
           <LineChart
-            data={this.state.data}
-            yDomain={() => [-1.5, 1.5]}
+            data={data}
+            xScale={xScale}
+            yScale={yScale}
           >
             <XAxis />
             <YAxis />

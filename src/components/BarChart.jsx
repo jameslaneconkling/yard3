@@ -29,15 +29,12 @@ export default class BarChart extends React.Component {
    * their setup/update logic must run w/i the constructor and componentWillUpdate hook
    */
   preRender(props) {
-    const { containerWidth, containerHeight, yDomain, xDomain } = props;
+    const { containerWidth, containerHeight, yScale, xScale } = props;
 
-    this.xScale = d3.scaleBand()
-      .padding(0.1)
-      .domain(xDomain(props))
+    this.xScale = xScale
       .rangeRound([0, containerWidth]);
 
-    this.yScale = d3.scaleLinear()
-      .domain(yDomain(props))
+    this.yScale = yScale
       .rangeRound([containerHeight, 0]);
   }
 
@@ -85,14 +82,14 @@ export default class BarChart extends React.Component {
 
   render() {
     const { xScale, yScale } = this;
-    const { containerHeight, containerWidth, leftMargin, topMargin } = this.props;
+    const { containerHeight, containerWidth, leftMargin, topMargin, children } = this.props;
 
     return (
       <g
         ref={el => this.$chart = el}
-        transform={`translate(${this.props.leftMargin},${this.props.topMargin})`}
+        transform={`translate(${leftMargin},${topMargin})`}
       >
-        { React.Children.map(this.props.children, child => React.cloneElement(child, {xScale, yScale, containerWidth, containerHeight})) }
+        { React.Children.map(children, child => React.cloneElement(child, {xScale, yScale, containerWidth, containerHeight})) }
       </g>
     );
   }
@@ -100,17 +97,12 @@ export default class BarChart extends React.Component {
 
 BarChart.propTypes = {
   data: PropTypes.array.isRequired,
+  xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number,
   topMargin: PropTypes.number,
   bottompMargin: PropTypes.number,
   leftMargin: PropTypes.number,
-  rightMargin: PropTypes.number,
-  xDomain: PropTypes.func,
-  yDomain: PropTypes.func
-};
-
-BarChart.defaultProps = {
-  xDomain: props => props.data.map(d => d.key),
-  yDomain: props => d3.extent(props.data, d => d.value)
+  rightMargin: PropTypes.number
 };

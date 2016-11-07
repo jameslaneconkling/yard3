@@ -25,14 +25,12 @@ export default class LineChart extends React.Component {
    * their setup/update logic must run w/i the constructor and componentWillUpdate hook
    */
   preRender(props) {
-    const { containerWidth, containerHeight, yDomain, xDomain } = props;
+    const { containerWidth, containerHeight, xScale, yScale } = props;
 
-    this.xScale = d3.scaleLinear()
-      .domain(xDomain(props))
+    this.xScale = xScale
       .rangeRound([0, containerWidth]);
 
-    this.yScale = d3.scaleLinear()
-      .domain(yDomain(props))
+    this.yScale = yScale
       .rangeRound([containerHeight, 0]);
   }
 
@@ -78,17 +76,12 @@ export default class LineChart extends React.Component {
 
 LineChart.propTypes = {
   data: PropTypes.array.isRequired,
+  xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number,
   topMargin: PropTypes.number,
   bottompMargin: PropTypes.number,
   leftMargin: PropTypes.number,
   rightMargin: PropTypes.number,
-  xDomain: PropTypes.func,
-  yDomain: PropTypes.func
-};
-
-LineChart.defaultProps = {
-  xDomain: props => d3.extent(props.data, d => d.key),
-  yDomain: props => d3.extent(props.data, d => d.value)
 };
