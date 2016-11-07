@@ -6,11 +6,13 @@ import BarChart from './components/BarChart.jsx';
 import LineChart from './components/LineChart.jsx';
 import XAxis from './components/XAxis.jsx';
 import YAxis from './components/YAxis.jsx';
+import Rectangle from './components/Rectangle.jsx';
 
 export {
   Chart,
   BarChart,
   LineChart,
   XAxis,
-  YAxis
+  YAxis,
+  Rectangle
 };
