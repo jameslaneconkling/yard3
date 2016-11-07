@@ -1,6 +1,6 @@
 import React              from 'react';
-import * as d3            from 'd3';
 import Rx                 from 'rxjs';
+import R                  from 'ramda';
 import {
   LineChart,
   XAxis,
@@ -8,17 +8,11 @@ import {
   Chart
 }                         from '../../src';
 
-const makeStream = idx => Rx.Observable
-  .create(observable => {
-    let _idx = idx;
-    const wave = idx => Math.sin(idx);
-
-    setInterval(() => {
-      observable.next([{key: _idx, value: wave(_idx)}]);
-      _idx += 0.1;
-    }, 200);
-  })
-  .map(data => data.map(datum => ({key: +datum.key.toFixed(1), value: +datum.value.toFixed(1)})));
+let idx = 0;
+const $stream = Rx.Observable.interval(100)
+  .map(() => idx++*0.15)
+  .map(x => ([{key: x, value: Math.sin(x)}]));
+  // .scan((acc, values) => R.takeLast(50, [...acc, ...values]), []);  // tail last 50 entries
 
 
 export default class StreamLine extends React.Component {
@@ -26,35 +20,27 @@ export default class StreamLine extends React.Component {
     super(props);
     this.state = {
       data: [],
-      idx: 1,
       chartWidth: 600,
       chartHeight: 300
     };
 
-    this.$source = null;
+    this.$subscription = null;
 
     this.toggle= this.toggle.bind(this);
   }
 
-  subscribe($subject) {
-    return $subject.subscribe(newData => {
-      const { data } = this.state;
-      const joined = [...data, ...newData];
-
-      // tail last x entries in joined data
+  subscribe($observable) {
+    return $observable.subscribe(newData => {
       this.setState({
-        data: joined.slice(Math.max(0, joined.length - 40), joined.length),
-        idx: newData[newData.length -1].key
+        data: R.takeLast(50, [...this.state.data, ...newData])
       });
     });
   }
 
   toggle() {
-    if (this.$source) {
-      this.$source = this.$source.unsubscribe();
-    } else {
-      this.$source = this.subscribe(makeStream(this.state.idx));
-    }
+    this.$subscription = this.$subscription ?
+      this.$subscription.unsubscribe() :
+      this.subscribe($stream);
   }
 
   render() {
@@ -76,7 +62,7 @@ export default class StreamLine extends React.Component {
         </Chart>
 
         <div>
-          <button onClick={this.toggle}>{this.$source ? 'stop' : 'start'}</button>
+          <button onClick={this.toggle}>{this.$subscription ? 'stop' : 'start'}</button>
         </div>
       </section>
     );

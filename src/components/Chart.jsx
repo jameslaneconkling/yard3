@@ -20,15 +20,6 @@ export default class Chart extends React.Component {
     const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = props;
     this.containerWidth = width - leftMargin - rightMargin;
     this.containerHeight = height - topMargin - bottomMargin;
-
-    // this.xScale = d3.scaleBand()
-    //   .padding(0.1)
-    //   .domain(xDomain(props))
-    //   .rangeRound([0, this.containerWidth]);
-
-    // this.yScale = d3.scaleLinear()
-    //   .domain(yDomain(props))
-    //   .rangeRound([this.containerHeight, 0]);
   }
 
   render() {
