@@ -27,8 +27,7 @@ export default class LineChart extends React.Component {
   preRender(props) {
     const { containerWidth, containerHeight, yDomain, xDomain } = props;
 
-    this.xScale = d3.scaleBand()
-      .padding(0.1)
+    this.xScale = d3.scaleLinear()
       .domain(xDomain(props))
       .rangeRound([0, containerWidth]);
 
@@ -90,6 +89,6 @@ LineChart.propTypes = {
 };
 
 LineChart.defaultProps = {
-  xDomain: props => props.data.map(d => d.key),
+  xDomain: props => d3.extent(props.data, d => d.key),
   yDomain: props => d3.extent(props.data, d => d.value)
 };
