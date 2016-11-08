@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 
-const LineChart = ({ containerWidth, containerHeight, xScale, yScale, leftMargin, topMargin, children, x, y, data }) => {
+const LineChart = ({ containerWidth, containerHeight, xScale, yScale, children, x, y, data }) => {
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
 
@@ -10,9 +10,7 @@ const LineChart = ({ containerWidth, containerHeight, xScale, yScale, leftMargin
     .y(d => yScale(y(d)))(data);
 
   return (
-    <g
-      transform={`translate(${leftMargin},${topMargin})`}
-    >
+    <g>
       <path
         d={line}
         className='line'

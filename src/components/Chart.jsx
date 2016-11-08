@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import * as d3 from 'd3';
 
 export default class Chart extends React.Component {
   constructor(props) {
@@ -33,7 +32,11 @@ export default class Chart extends React.Component {
         height={this.props.height}
         className='chart'
       >
-        { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})) }
+        <g
+          transform={`translate(${leftMargin},${topMargin})`}
+        >
+          { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})) }
+        </g>
       </svg>
     );
   }

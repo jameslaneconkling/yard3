@@ -79,12 +79,11 @@ export default class BarChart extends React.Component {
 
   render() {
     const { xScale, yScale } = this;
-    const { containerHeight, containerWidth, leftMargin, topMargin, children } = this.props;
+    const { containerHeight, containerWidth, children } = this.props;
 
     return (
       <g
         ref={el => this.$chart = el}
-        transform={`translate(${leftMargin},${topMargin})`}
       >
         { React.Children.map(children, child => React.cloneElement(child, {xScale, yScale, containerWidth, containerHeight})) }
       </g>

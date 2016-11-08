@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 
-const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, leftMargin, topMargin, children, x, x0, x1, y, y0, y1, data }) => {
+const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, children, x, x0, x1, y, y0, y1, data }) => {
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
 
@@ -27,9 +27,7 @@ const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, leftMargin
   }
 
   return (
-    <g
-      transform={`translate(${leftMargin},${topMargin})`}
-    >
+    <g>
       <path
         d={area(data)}
         className='area'
