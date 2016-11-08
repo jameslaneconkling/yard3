@@ -15,7 +15,7 @@ const LineChart = ({ containerWidth, containerHeight, xScale, yScale, children, 
         d={line}
         className='line'
       />
-      { React.Children.map(children, child => React.cloneElement(child, {xScale, yScale, containerWidth, containerHeight})) }
+      { React.Children.map(children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
     </g>
   );
 };

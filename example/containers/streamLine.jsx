@@ -66,8 +66,8 @@ export default class StreamLine extends React.Component {
             xScale={xScale}
             yScale={yScale}
           >
-            <XAxis />
-            <YAxis />
+            <XAxis xScale={xScale} />
+            <YAxis yScale={yScale} />
           </LineChart>
         </Chart>
 

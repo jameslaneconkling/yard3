@@ -50,21 +50,27 @@ export default class AvgBar extends React.Component {
               y={[-1, 1]}
               fill='orange'
               fillOpacity='0.3'
+              xScale={xScale}
+              yScale={yScale}
             />
-            <XGrid />
-            <YGrid />
+            <XGrid xScale={xScale} />
+            <YGrid yScale={yScale} />
             <Line
               data={[[-10,0], [10,0]]}
               stroke='red'
               strokeWidth='5'
               strokeOpacity='0.3'
+              xScale={xScale}
+              yScale={yScale}
             />
             <Line
               data={[[-10,-0.5], [-2,0.2], [4, -0.1], [10,0.5]]}
               stroke='red'
+              xScale={xScale}
+              yScale={yScale}
             />
-            <XAxis />
-            <YAxis />
+            <XAxis xScale={xScale} />
+            <YAxis yScale={yScale} />
           </LineChart>
         </Chart>
       </section>

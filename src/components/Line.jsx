@@ -26,8 +26,8 @@ const Line = props => {
 
 Line.propTypes = {
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func,
-  yScale: PropTypes.func
+  xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired
 };
 
 Line.defaultProps = {

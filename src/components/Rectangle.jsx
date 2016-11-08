@@ -27,8 +27,8 @@ const Rectangle = props => {
 Rectangle.propTypes = {
   x: PropTypes.array.isRequired,
   y: PropTypes.array.isRequired,
-  xScale: PropTypes.func,
-  yScale: PropTypes.func
+  xScale: PropTypes.func.isRequired,
+  yScale: PropTypes.func.isRequired
 };
 
 export default Rectangle;

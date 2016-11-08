@@ -32,7 +32,7 @@ const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, children, 
         d={area(data)}
         className='area'
       />
-      { React.Children.map(children, child => React.cloneElement(child, {xScale, yScale, containerWidth, containerHeight})) }
+      { React.Children.map(children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
     </g>
   );
 };
@@ -42,7 +42,11 @@ AreaChart.propTypes = {
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   x: PropTypes.func,
+  x0: PropTypes.func,
+  x1: PropTypes.func,
   y: PropTypes.func,
+  y0: PropTypes.func,
+  y1: PropTypes.func,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number,
   topMargin: PropTypes.number,

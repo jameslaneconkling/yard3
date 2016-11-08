@@ -34,6 +34,6 @@ export default class YGrid extends React.Component {
 }
 
 YGrid.propTypes = {
-  yScale: PropTypes.func,
+  yScale: PropTypes.func.isRequired,
   containerWidth: PropTypes.number
 };

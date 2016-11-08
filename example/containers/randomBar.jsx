@@ -77,8 +77,8 @@ export default class RandomBar extends React.Component {
             xScale={xScale}
             yScale={yScale}
           >
-            <XAxis />
-            <YAxis />
+            <XAxis xScale={xScale }/>
+            <YAxis yScale={yScale} />
           </BarChart>
         </Chart>
 

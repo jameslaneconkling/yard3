@@ -33,6 +33,6 @@ export default class XAxis extends React.Component {
 }
 
 XAxis.propTypes = {
-  xScale: PropTypes.func,
+  xScale: PropTypes.func.isRequired,
   containerHeight: PropTypes.number
 };

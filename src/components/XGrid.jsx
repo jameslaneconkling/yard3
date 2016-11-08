@@ -36,6 +36,6 @@ export default class XGrid extends React.Component {
 }
 
 XGrid.propTypes = {
-  xScale: PropTypes.func,
+  xScale: PropTypes.func.isRequired,
   containerHeight: PropTypes.number
 };

@@ -1,5 +1,7 @@
-import React, { PropTypes } from 'react';
-import * as d3 from 'd3';
+import React, {
+  PropTypes
+}                   from 'react';
+import * as d3      from 'd3';
 
 export default class YAxis extends React.Component {
   componentDidMount() {
@@ -32,5 +34,5 @@ export default class YAxis extends React.Component {
 }
 
 YAxis.propTypes = {
-  yScale: PropTypes.func
+  yScale: PropTypes.func.isRequired
 };
