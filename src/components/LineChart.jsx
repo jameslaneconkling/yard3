@@ -27,11 +27,7 @@ LineChart.propTypes = {
   x: PropTypes.func,
   y: PropTypes.func,
   containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number,
-  topMargin: PropTypes.number,
-  bottompMargin: PropTypes.number,
-  leftMargin: PropTypes.number,
-  rightMargin: PropTypes.number,
+  containerHeight: PropTypes.number
 };
 
 LineChart.defaultProps = {

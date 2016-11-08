@@ -23,7 +23,7 @@ export default class Chart extends React.Component {
 
   render() {
     const { containerHeight, containerWidth } = this;
-    const { leftMargin, topMargin, rightMargin, bottomMargin } = this.props;
+    const { leftMargin, topMargin } = this.props;
 
     return (
       <svg
@@ -35,7 +35,7 @@ export default class Chart extends React.Component {
         <g
           transform={`translate(${leftMargin},${topMargin})`}
         >
-          { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight, leftMargin, topMargin, rightMargin, bottomMargin})) }
+          { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
         </g>
       </svg>
     );
@@ -44,11 +44,7 @@ export default class Chart extends React.Component {
 
 Chart.propTypes = {
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  topMargin: PropTypes.number,
-  rightMargin: PropTypes.number,
-  bottomMargin: PropTypes.number,
-  leftMargin: PropTypes.number
+  height: PropTypes.number.isRequired
 };
 
 Chart.defaultProps = {
