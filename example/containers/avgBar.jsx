@@ -5,7 +5,8 @@ import {
   XAxis,
   YAxis,
   Chart,
-  Rectangle
+  Rectangle,
+  Line
 }                         from '../../src';
 
 
@@ -43,10 +44,18 @@ export default class StreamLine extends React.Component {
             yScale={yScale}
           >
             <Rectangle
-              xExtent={xExtent}
-              yExtent={[-1, 1]}
+              x={xExtent}
+              y={[-1, 1]}
               fill='orange'
-              fillOpacity={0.3}
+              fillOpacity='0.3'
+            />
+            <Line
+              data={[[-10,0], [10,0]]}
+              stroke='#ccc'
+            />
+            <Line
+              data={[[-10,-0.5], [-2,0.2], [4, -0.1], [10,0.5]]}
+              stroke='red'
             />
             <XAxis />
             <YAxis />

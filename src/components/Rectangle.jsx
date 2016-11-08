@@ -6,9 +6,9 @@ import {
 }                 from '../utils';
 
 const Rectangle = props => {
-  const {xExtent, yExtent, xScale, yScale} = props;
-  const [xMin, xMax] = xExtent.map(xScale);
-  const [yMin, yMax] = yExtent.map(yScale);
+  const {x, y, xScale, yScale} = props;
+  const [xMin, xMax] = x.map(xScale);
+  const [yMin, yMax] = y.map(yScale);
   const styles = extractStyles(props);
 
   return (
@@ -25,8 +25,8 @@ const Rectangle = props => {
 };
 
 Rectangle.propTypes = {
-  xExtent: PropTypes.array.isRequired,
-  yExtent: PropTypes.array.isRequired,
+  x: PropTypes.array.isRequired,
+  y: PropTypes.array.isRequired,
   xScale: PropTypes.func,
   yScale: PropTypes.func
 };

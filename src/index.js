@@ -7,6 +7,7 @@ import LineChart from './components/LineChart.jsx';
 import XAxis from './components/XAxis.jsx';
 import YAxis from './components/YAxis.jsx';
 import Rectangle from './components/Rectangle.jsx';
+import Line from './components/Line.jsx';
 
 export {
   Chart,
@@ -14,5 +15,6 @@ export {
   LineChart,
   XAxis,
   YAxis,
-  Rectangle
+  Rectangle,
+  Line
 };
