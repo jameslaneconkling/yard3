@@ -12,7 +12,7 @@ import {
 }                         from '../../src';
 
 
-export default class StreamLine extends React.Component {
+export default class AvgBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

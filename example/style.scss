@@ -32,13 +32,19 @@ h2 {
     fill: $primary;
   }
 
-  .xaxis path, .yaxis path, .xaxis line, .yaxis line {
-    stroke: #888;
-  }
-
   .line {
     fill: none;
     stroke: $primary
+  }
+
+  .area {
+    fill: $primary;
+    stroke: darken($primary, 6);
+    stroke-width: 1;
+  }
+
+  .xaxis path, .yaxis path, .xaxis line, .yaxis line {
+    stroke: #888;
   }
 
   .xgrid, .ygrid {
