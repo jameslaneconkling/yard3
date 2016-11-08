@@ -3,7 +3,7 @@ import React, {
 }                 from 'react';
 import {
   extractStyles
-}                 from '../utils';
+}                 from '../../utils';
 
 const Rectangle = props => {
   const {x, y, xScale, yScale} = props;
