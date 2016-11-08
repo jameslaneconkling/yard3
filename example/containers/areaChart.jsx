@@ -69,5 +69,4 @@ export default class AreaChartContainer extends React.Component {
       </section>
     );
   }
-
 }
