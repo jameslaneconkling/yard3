@@ -8,6 +8,8 @@ import XAxis from './components/XAxis.jsx';
 import YAxis from './components/YAxis.jsx';
 import Rectangle from './components/Rectangle.jsx';
 import Line from './components/Line.jsx';
+import XGrid from './components/XGrid.jsx';
+import YGrid from './components/YGrid.jsx';
 
 export {
   Chart,
@@ -16,5 +18,7 @@ export {
   XAxis,
   YAxis,
   Rectangle,
-  Line
+  Line,
+  XGrid,
+  YGrid
 };

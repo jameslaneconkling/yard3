@@ -6,7 +6,9 @@ import {
   YAxis,
   Chart,
   Rectangle,
-  Line
+  Line,
+  XGrid,
+  YGrid
 }                         from '../../src';
 
 
@@ -49,9 +51,13 @@ export default class StreamLine extends React.Component {
               fill='orange'
               fillOpacity='0.3'
             />
+            <XGrid />
+            <YGrid />
             <Line
               data={[[-10,0], [10,0]]}
-              stroke='#ccc'
+              stroke='red'
+              strokeWidth='5'
+              strokeOpacity='0.3'
             />
             <Line
               data={[[-10,-0.5], [-2,0.2], [4, -0.1], [10,0.5]]}

@@ -31,12 +31,23 @@ h2 {
   .bar {
     fill: $primary;
   }
+
   .xaxis path, .yaxis path, .xaxis line, .yaxis line {
-    stroke: #888 !important;
+    stroke: #888;
   }
 
   .line {
     fill: none;
     stroke: $primary
+  }
+
+  .xgrid, .ygrid {
+    path {
+      display: none;
+    }
+    line {
+      stroke: #ccc;
+      stroke-dasharray: 8,4;
+    }
   }
 }

@@ -1,5 +1,7 @@
-import React, { PropTypes } from 'react';
-import * as d3 from 'd3';
+import React, {
+  PropTypes
+}                 from 'react';
+import * as d3    from 'd3';
 
 export default class XAxis extends React.Component {
   componentDidMount() {
@@ -14,7 +16,8 @@ export default class XAxis extends React.Component {
     const $xAxis = d3.select(this.$xAxis);
 
     $xAxis.call(
-      d3.axisBottom(this.props.xScale).tickPadding(10)
+      d3.axisBottom(this.props.xScale)
+        .tickPadding(10)
     );
   }
 
