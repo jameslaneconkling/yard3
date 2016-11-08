@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 
-// TODO
-// - transitions
-// - event handlers
-// - multiple composable chart overlays
+
 export default class BarChart extends React.Component {
   constructor(props) {
     super(props);
