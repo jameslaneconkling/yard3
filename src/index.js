@@ -5,6 +5,7 @@ import Chart       from './components/Chart.jsx';
 import BarChart    from './components/charts/BarChart.jsx';
 import LineChart   from './components/charts/LineChart.jsx';
 import AreaChart   from './components/charts/AreaChart.jsx';
+import ScatterPlot from './components/charts/ScatterPlot.jsx';
 import Rectangle   from './components/accessories/Rectangle.jsx';
 import Line        from './components/accessories/Line.jsx';
 import XAxis       from './components/accessories/XAxis.jsx';
@@ -17,6 +18,7 @@ export {
   BarChart,
   LineChart,
   AreaChart,
+  ScatterPlot,
   Rectangle,
   Line,
   XAxis,

@@ -3,6 +3,7 @@ import RandomBar    from '../containers/randomBar.jsx';
 import StreamLine   from '../containers/streamLine.jsx';
 import AvgBar       from '../containers/avgBar.jsx';
 import AreaChart    from '../containers/areaChart.jsx';
+import Plot         from '../containers/plot.jsx';
 
 export default () => (
   <div>
@@ -11,5 +12,6 @@ export default () => (
     <StreamLine />
     <AvgBar />
     <AreaChart />
+    <Plot />
   </div>
 );

@@ -4,7 +4,7 @@ import React, {
 import * as d3        from 'd3';
 
 
-export default class BarChart extends React.Component {
+export default class ScatterPlot extends React.Component {
   componentDidMount() {
     this.update();
   }
@@ -20,39 +20,19 @@ export default class BarChart extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-
-    // const t = d3.transition()
-    //   .duration(500)
-    //   .ease(d3.easeLinear);
-
     const update = $chart.selectAll('.bar')
       .data(data);
     const enter = update.enter();
     const exit = update.exit();
 
+
     enter
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', d => xScale(x(d)))
-      .attr('y', d => yScale(y(d)))
-      .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(y(d)));
-
-    update
-      .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(y(d)))
-      .attr('x', d => xScale(x(d)))
-      .attr('y', d => yScale(y(d)));
-
-    // or
-    // enter
-    //   .append('rect')
-    //   .attr('class', 'bar')
-    // .merge(update)
-    //   .attr('width', xScale.bandwidth())
-    //   .attr('height', d => containerHeight - yScale(y(d)))
-    //   .attr('x', d => xScale(x(d)))
-    //   .attr('y', d => yScale(y(d)));
+      .append('circle')
+      .attr('class', 'dot')
+    .merge(update)
+      .attr('r', 3.5)
+      .attr('cx', d => xScale(x(d)))
+      .attr('cy', d => yScale(y(d)));
 
     exit
       .remove();
@@ -71,7 +51,7 @@ export default class BarChart extends React.Component {
   }
 }
 
-BarChart.propTypes = {
+ScatterPlot.propTypes = {
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
@@ -81,7 +61,7 @@ BarChart.propTypes = {
   containerHeight: PropTypes.number
 };
 
-BarChart.defaultProps = {
+ScatterPlot.defaultProps = {
   x: d => d.key,
   y: d => d.value
 };

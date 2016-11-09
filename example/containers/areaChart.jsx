@@ -3,6 +3,7 @@ import * as d3            from 'd3';
 import {
   Chart,
   AreaChart,
+  LineChart,
   YGrid,
   XAxis,
   YAxis
@@ -65,6 +66,29 @@ export default class AreaChartContainer extends React.Component {
             <XAxis xScale={xScale} />
             <YAxis yScale={yScale }/>
           </AreaChart>
+        </Chart>
+
+        <Chart
+          width={chartWidth}
+          height={chartHeight}
+        >
+          <YGrid yScale={yScale} />
+          <XAxis xScale={xScale} />
+          <YAxis yScale={yScale }/>
+          <LineChart
+            data={data}
+            xScale={xScale}
+            yScale={yScale}
+            x={d => d.date}
+            y={d => d.high}
+          />
+          <LineChart
+            data={data}
+            xScale={xScale}
+            yScale={yScale}
+            x={d => d.date}
+            y={d => d.low}
+          />
         </Chart>
       </section>
     );
