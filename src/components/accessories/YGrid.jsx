@@ -13,8 +13,10 @@ export default class YGrid extends React.Component {
   }
 
   update() {
-    const { yScale, containerWidth } = this.props;
+    const { yScale, containerWidth, containerHeight } = this.props;
     const $yGrid = d3.select(this.$yGrid);
+
+    yScale.rangeRound([containerHeight, 0]);
 
     $yGrid.call(
       d3.axisRight(yScale)

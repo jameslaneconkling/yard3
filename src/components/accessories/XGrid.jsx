@@ -13,9 +13,10 @@ export default class XGrid extends React.Component {
   }
 
   update() {
-    const { xScale, containerHeight } = this.props;
-
+    const { xScale, containerHeight, containerWidth } = this.props;
     const $xGrid = d3.select(this.$xGrid);
+
+    xScale.rangeRound([0, containerWidth]);
 
     $xGrid.call(
       d3.axisBottom(xScale)
