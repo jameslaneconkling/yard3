@@ -13,10 +13,13 @@ export default class XAxis extends React.Component {
   }
 
   update() {
+    const { xScale, containerWidth } = this.props;
     const $xAxis = d3.select(this.$xAxis);
 
+    xScale.rangeRound([0, containerWidth]);
+
     $xAxis.call(
-      d3.axisBottom(this.props.xScale)
+      d3.axisBottom(xScale)
         .tickPadding(10)
     );
   }
