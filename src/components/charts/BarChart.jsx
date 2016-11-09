@@ -3,15 +3,6 @@ import * as d3 from 'd3';
 
 
 export default class BarChart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.preRender(props);
-  }
-
-  componentWillUpdate(nextProps) {
-    this.preRender(nextProps);
-  }
-
   componentDidMount() {
     this.update();
   }
@@ -20,25 +11,13 @@ export default class BarChart extends React.Component {
     this.update();
   }
 
-  /**
-   * Setup to run before render and rerender
-   * Any properties passed to child components must be available at render time, so all
-   * their setup/update logic must run w/i the constructor and componentWillUpdate hook
-   */
-  preRender(props) {
-    const { containerWidth, containerHeight, yScale, xScale } = props;
-
-    this.xScale = xScale
-      .rangeRound([0, containerWidth]);
-
-    this.yScale = yScale
-      .rangeRound([containerHeight, 0]);
-  }
-
   update() {
-    const { xScale, yScale } = this;
-    const { data, containerHeight, x, y } = this.props;
+    const { data, x, y, containerWidth, containerHeight, yScale, xScale } = this.props;
     const $chart = d3.select(this.$chart);
+
+    xScale.rangeRound([0, containerWidth]);
+    yScale.rangeRound([containerHeight, 0]);
+
 
     // const t = d3.transition()
     //   .duration(500)
@@ -78,7 +57,6 @@ export default class BarChart extends React.Component {
   }
 
   render() {
-    const { xScale, yScale } = this;
     const { containerHeight, containerWidth, children } = this.props;
 
     return (
