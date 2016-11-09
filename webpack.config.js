@@ -34,6 +34,11 @@ module.exports = validate({
         ]
       },
       {
+        test: /\.json$/,
+        include: path.join(__dirname, 'example'),
+        loader: 'json'
+      },
+      {
         test: /\.css$/,
         loader: PROD ? ExtractTextPlugin.extract('style-loader', 'css-loader') : 'style-loader!css-loader',
         include: path.join(__dirname, 'example')
