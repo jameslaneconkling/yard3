@@ -15,7 +15,7 @@ export default class PlotExample extends React.Component {
     super(props);
 
     this.state = {
-      data: nations,
+      data: nations.filter(nation => nation.income.length > 1),
       chartWidth: 600,
       chartHeight: 300,
       year: 0
