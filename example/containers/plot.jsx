@@ -1,5 +1,6 @@
 import React              from 'react';
 import * as d3            from 'd3';
+import R                  from 'ramda';
 import {
   ScatterPlot,
   XAxis,
@@ -15,17 +16,24 @@ export default class PlotExample extends React.Component {
     this.state = {
       data: nations,
       chartWidth: 600,
-      chartHeight: 300
+      chartHeight: 300,
+      year: 0
     };
+
+    this.forward = this.forward.bind(this);
+  }
+
+  forward() {
+    this.setState({year: this.state.year + 1});
   }
 
   render() {
-    const { data } = this.state;
+    const { data, year } = this.state;
 
     // TODO - scales should be validated to make sure they are appropriate for the chart type
-    const income = d => d.income[0][1];
-    const lifeExpectancy = d => d.lifeExpectancy[0][1];
-    const population = d => d.population[0][1];
+    const income = d => R.path(['income', year, 1])(d) || 0;
+    const lifeExpectancy = d => R.path(['lifeExpectancy', year, 1])(d) || 0;
+    const population = d => R.path(['population', year, 1])(d) || 0;
     const region = d => d.region;
     const xExtent = d3.extent(data, income);
     const yExtent = d3.extent(data, lifeExpectancy);
@@ -63,6 +71,9 @@ export default class PlotExample extends React.Component {
           <XAxis xScale={xScale} />
           <YAxis yScale={yScale} />
         </Chart>
+        <div>
+          <button onClick={this.forward}>+</button>
+        </div>
       </section>
     );
   }

@@ -24,7 +24,7 @@ export default class ScatterPlot extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-    const update = $chart.selectAll('.bar')
+    const update = $chart.selectAll('.dot')
       .data(data);
     const enter = update.enter();
     const exit = update.exit();
@@ -38,7 +38,7 @@ export default class ScatterPlot extends React.Component {
       .attr('r', r);
 
     // TODO - find a better pattern to apply dynamic styles
-    const circles = $chart.selectAll('circle');
+    const circles = $chart.selectAll('.dot');
     const styles = extractStyles(this.props);
     Object.keys(styles)
       .filter(name => styles[name])
