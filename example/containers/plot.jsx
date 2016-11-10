@@ -8,7 +8,7 @@ import {
 }                         from '../../src';
 import nations            from '../data/nations';
 
-export default class RandomBar extends React.Component {
+export default class PlotExample extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,16 +23,22 @@ export default class RandomBar extends React.Component {
     const { data } = this.state;
 
     // TODO - scales should be validated to make sure they are appropriate for the chart type
-    const x = d => d.income[0][1];
-    const y = d => d.lifeExpectancy[0][1];
-    const xExtent = d3.extent(data, x);
-    const yExtent = d3.extent(data, y);
+    const income = d => d.income[0][1];
+    const lifeExpectancy = d => d.lifeExpectancy[0][1];
+    const population = d => d.population[0][1];
+    const region = d => d.region;
+    const xExtent = d3.extent(data, income);
+    const yExtent = d3.extent(data, lifeExpectancy);
+
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
     const xScale = d3.scaleLinear()
       .domain([xExtent[0] - 100, xExtent[1] + 100]);
 
     const yScale = d3.scaleLinear()
       .domain([yExtent[0] - 5, yExtent[1] + 5]);
+
+    const rScale = d3.scaleSqrt().domain([0, 5e8]).range([2, 40]);
 
     return (
       <section>
@@ -43,11 +49,16 @@ export default class RandomBar extends React.Component {
           height={this.state.chartHeight}
         >
           <ScatterPlot
-            data={data}
+            data={data.sort((d0, d1) => population(d1) - population(d0))}
             xScale={xScale}
             yScale={yScale}
-            x={x}
-            y={y}
+            x={income}
+            y={lifeExpectancy}
+            r={d => rScale(population(d))}
+            fill={d => colorScale(region(d))}
+            fillOpacity={0.8}
+            stroke='#444'
+            strokeWidth={1}
           />
           <XAxis xScale={xScale} />
           <YAxis yScale={yScale} />
