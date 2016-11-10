@@ -4,7 +4,7 @@ import React, {
 import * as d3    from 'd3';
 import {
   extractStyles
-}                 from '../../utils';
+}                 from '../../utils/style';
 
 const Line = props => {
   const {data, xScale, yScale} = props;

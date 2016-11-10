@@ -4,8 +4,9 @@ import React, {
 import * as d3             from 'd3';
 import {
   stylePropTypes,
-  extractStyles
-}                          from '../../utils';
+  extractStyles,
+  applyStyles2Selection
+}                          from '../../utils/style';
 
 
 export default class ScatterPlot extends React.Component {
@@ -38,15 +39,7 @@ export default class ScatterPlot extends React.Component {
       .attr('r', r);
 
     // TODO - find a better pattern to apply dynamic styles
-    const circles = $chart.selectAll('.dot');
-    const styles = extractStyles(this.props);
-    Object.keys(styles)
-      .filter(name => styles[name])
-      .map(name => ({
-        name: name.replace(/([a-z][A-Z])/g, s => `${s[0]}-${s[1].toLowerCase()}`), // react expects camelCase props, while D3 (and the SVG spec) expect dasherized props
-        value: styles[name]
-      }))
-      .forEach(({name, value}) => circles.attr(name, value));
+    applyStyles2Selection(extractStyles(this.props), $chart.selectAll('.dot'));
 
     exit
       .remove();

@@ -29,3 +29,13 @@ export const extractStyles = props => {
     strokeMiterlimit: props.strokeMiterlimit
   };
 };
+
+export const applyStyles2Selection = (styles, selection) => {
+  Object.keys(styles)
+    .filter(name => styles[name])
+    .map(name => ({
+      name: name.replace(/([a-z][A-Z])/g, s => `${s[0]}-${s[1].toLowerCase()}`), // react expects camelCase props, while D3 (and the SVG spec) expect dasherized props
+      value: styles[name]
+    }))
+    .forEach(({name, value}) => selection.attr(name, value));
+};
