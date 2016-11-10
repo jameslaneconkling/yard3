@@ -7,10 +7,14 @@ import {
 }                 from '../../utils/style';
 
 const Rectangle = props => {
-  const {x, y, xScale, yScale} = props;
+  const {x, y, xScale, yScale, containerWidth, containerHeight} = props;
+  const styles = extractStyles(props);
+
+  xScale.rangeRound([0, containerWidth]);
+  yScale.rangeRound([containerHeight, 0]);
+
   const [xMin, xMax] = x.map(xScale);
   const [yMin, yMax] = y.map(yScale);
-  const styles = extractStyles(props);
 
   return (
     <g>

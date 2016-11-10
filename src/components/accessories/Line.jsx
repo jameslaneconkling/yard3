@@ -8,12 +8,15 @@ import {
 }                          from '../../utils/style';
 
 const Line = props => {
-  const {data, xScale, yScale} = props;
+  const {data, xScale, yScale, containerWidth, containerHeight} = props;
+  const styles = extractStyles(props);
+
+  xScale.rangeRound([0, containerWidth]);
+  yScale.rangeRound([containerHeight, 0]);
+
   const line = d3.line()
     .x(d => xScale(d[0]))
     .y(d => yScale(d[1]));
-
-  const styles = extractStyles(props);
 
   return (
     <g>
@@ -33,7 +36,8 @@ Line.propTypes = {
 };
 
 Line.defaultProps = {
-  fill: 'none'
+  fill: 'none',
+  stroke: '#000'
 };
 
 export default Line;
