@@ -35,7 +35,6 @@ h2 {
   }
 
   .line {
-    fill: none;
     stroke: $primary
   }
 
@@ -50,12 +49,12 @@ h2 {
   }
 
   .xgrid, .ygrid {
-    path {
-      display: none;
-    }
-    line {
-      stroke: #cacaca;
-      stroke-dasharray: 2,3;
-    }
+    // path {
+    //   display: none;
+    // }
+    // line {
+    //   stroke: #cacaca;
+    //   stroke-dasharray: 2,3;
+    // }
   }
 }

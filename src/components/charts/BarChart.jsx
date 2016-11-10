@@ -1,7 +1,12 @@
 import React, {
   PropTypes
-}                     from 'react';
-import * as d3        from 'd3';
+}                          from 'react';
+import * as d3             from 'd3';
+import {
+  applyStyles2Selection,
+  extractStyles,
+  stylePropTypes,
+}                          from '../../utils/style';
 
 
 export default class BarChart extends React.Component {
@@ -54,6 +59,8 @@ export default class BarChart extends React.Component {
     //   .attr('x', d => xScale(x(d)))
     //   .attr('y', d => yScale(y(d)));
 
+    applyStyles2Selection(extractStyles(this.props), $chart.selectAll('.bar'));
+
     exit
       .remove();
   }
@@ -72,6 +79,7 @@ export default class BarChart extends React.Component {
 }
 
 BarChart.propTypes = {
+  ...stylePropTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

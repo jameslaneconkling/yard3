@@ -9,6 +9,7 @@ import {
 }                         from '../../src';
 import nations            from '../data/nations';
 
+
 export default class PlotExample extends React.Component {
   constructor(props) {
     super(props);

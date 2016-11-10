@@ -2,6 +2,12 @@ import React, {
   PropTypes
 }                 from 'react';
 import * as d3    from 'd3';
+import {
+  applyStyles2Selection,
+  extractStyles,
+  stylePropTypes,
+}                          from '../../utils/style';
+
 
 export default class XGrid extends React.Component {
   componentDidMount() {
@@ -23,6 +29,11 @@ export default class XGrid extends React.Component {
         .tickFormat('')
         .tickSizeInner(containerHeight)
     );
+
+    $xGrid.selectAll('path')
+      .attr('stroke', 'none');
+
+    applyStyles2Selection(extractStyles(this.props), $xGrid.selectAll('line'));
   }
 
   render() {
@@ -30,13 +41,17 @@ export default class XGrid extends React.Component {
       <g
         ref={el => this.$xGrid = el}
         className='xgrid'
-      >
-      </g>
+      />
     );
   }
 }
 
 XGrid.propTypes = {
+  ...stylePropTypes,
   xScale: PropTypes.func.isRequired,
   containerHeight: PropTypes.number
+};
+
+XGrid.defaultProps = {
+  stroke: '#ccc'
 };

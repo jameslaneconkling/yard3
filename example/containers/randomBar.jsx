@@ -7,6 +7,7 @@ import {
   Chart
 }                         from '../../src';
 
+
 const generateData = length => d3.range(1, length + 1).map(idx => ({key: idx, value: Math.random()}));
 
 export default class RandomBar extends React.Component {
@@ -77,7 +78,7 @@ export default class RandomBar extends React.Component {
             xScale={xScale}
             yScale={yScale}
           >
-            <XAxis xScale={xScale }/>
+            <XAxis xScale={xScale} />
             <YAxis yScale={yScale} />
           </BarChart>
         </Chart>

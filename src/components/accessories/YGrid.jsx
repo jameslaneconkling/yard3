@@ -2,6 +2,12 @@ import React, {
   PropTypes
 }                 from 'react';
 import * as d3    from 'd3';
+import {
+  applyStyles2Selection,
+  extractStyles,
+  stylePropTypes,
+}                          from '../../utils/style';
+
 
 export default class YGrid extends React.Component {
   componentDidMount() {
@@ -23,6 +29,11 @@ export default class YGrid extends React.Component {
         .tickFormat('')
         .tickSizeInner(containerWidth)
     );
+
+    $yGrid.selectAll('path')
+      .attr('stroke', 'none');
+
+    applyStyles2Selection(extractStyles(this.props), $yGrid.selectAll('line'));
   }
 
   render() {
@@ -36,6 +47,11 @@ export default class YGrid extends React.Component {
 }
 
 YGrid.propTypes = {
+  ...stylePropTypes,
   yScale: PropTypes.func.isRequired,
   containerWidth: PropTypes.number
+};
+
+YGrid.defaultProps = {
+  stroke: '#ccc'
 };

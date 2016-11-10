@@ -1,7 +1,16 @@
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
+import {
+  extractStyles,
+  stylePropTypes,
+}                          from '../../utils/style';
 
-const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, children, x0, x1, y0, y1, data }) => {
+
+const AreaChart = (props) => {
+  const { containerWidth, containerHeight, xScale, yScale, children, x0, x1, y0, y1, data } = props;
+  const styles = extractStyles(props);
+
+
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
 
@@ -30,6 +39,7 @@ const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, children, 
   return (
     <g>
       <path
+        {...styles}
         d={area(data)}
         className='area'
       />
@@ -39,6 +49,7 @@ const AreaChart = ({ containerWidth, containerHeight, xScale, yScale, children, 
 };
 
 AreaChart.propTypes = {
+  ...stylePropTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

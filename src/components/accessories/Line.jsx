@@ -3,8 +3,9 @@ import React, {
 }                 from 'react';
 import * as d3    from 'd3';
 import {
-  extractStyles
-}                 from '../../utils/style';
+  extractStyles,
+  stylePropTypes,
+}                          from '../../utils/style';
 
 const Line = props => {
   const {data, xScale, yScale} = props;
@@ -25,14 +26,14 @@ const Line = props => {
 };
 
 Line.propTypes = {
+  ...stylePropTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired
 };
 
 Line.defaultProps = {
-  strokeWidth: 1,
-  fill: 'transparent'
+  fill: 'none'
 };
 
 export default Line;

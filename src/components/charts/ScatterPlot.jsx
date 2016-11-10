@@ -38,7 +38,7 @@ export default class ScatterPlot extends React.Component {
       .attr('cy', d => yScale(y(d)))
       .attr('r', r);
 
-    // TODO - find a better pattern to apply dynamic styles
+    // TODO - should be able to pass enter.merge(update), rather than reselecting?
     applyStyles2Selection(extractStyles(this.props), $chart.selectAll('.dot'));
 
     exit

@@ -2,7 +2,8 @@ import React, {
   PropTypes
 }                 from 'react';
 import {
-  extractStyles
+  extractStyles,
+  stylePropTypes,
 }                 from '../../utils/style';
 
 const Rectangle = props => {
@@ -25,6 +26,7 @@ const Rectangle = props => {
 };
 
 Rectangle.propTypes = {
+  ...stylePropTypes,
   x: PropTypes.array.isRequired,
   y: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
