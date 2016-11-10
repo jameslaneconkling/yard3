@@ -7,6 +7,11 @@ import {
   extractStyles,
   applyStyles2Selection
 }                          from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents,
+  applyEvents2Selection
+}                          from '../../utils/events';
 
 
 export default class ScatterPlot extends React.Component {
@@ -39,7 +44,9 @@ export default class ScatterPlot extends React.Component {
       .attr('r', r);
 
     // TODO - should be able to pass enter.merge(update), rather than reselecting?
-    applyStyles2Selection(extractStyles(this.props), $chart.selectAll('.dot'));
+    const circles = $chart.selectAll('.dot');
+    applyStyles2Selection(extractStyles(this.props), circles);
+    applyEvents2Selection(extractEvents(this.props), circles);
 
     exit
       .remove();
@@ -60,6 +67,7 @@ export default class ScatterPlot extends React.Component {
 
 ScatterPlot.propTypes = {
   ...dynamicStyleTypes,
+  ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

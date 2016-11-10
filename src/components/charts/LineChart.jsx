@@ -4,15 +4,19 @@ import {
   extractStyles,
   staticStyleTypes,
 }                          from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents
+}                from '../../utils/events';
 
 
 const LineChart = (props) => {
   const { containerWidth, containerHeight, xScale, yScale, children, x, y, data } = props;
   const styles = extractStyles(props);
+  const events = extractEvents(props);
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
-
 
   const line = d3.line()
     .x(d => xScale(x(d)))
@@ -22,6 +26,7 @@ const LineChart = (props) => {
     <g>
       <path
         {...styles}
+        {...events}
         d={line}
         className='line'
       />
@@ -32,6 +37,7 @@ const LineChart = (props) => {
 
 LineChart.propTypes = {
   ...staticStyleTypes,
+  ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

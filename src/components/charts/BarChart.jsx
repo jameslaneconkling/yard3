@@ -7,6 +7,11 @@ import {
   extractStyles,
   dynamicStyleTypes,
 }                          from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents,
+  applyEvents2Selection
+}                          from '../../utils/events';
 
 
 export default class BarChart extends React.Component {
@@ -25,11 +30,6 @@ export default class BarChart extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-
-    // const t = d3.transition()
-    //   .duration(500)
-    //   .ease(d3.easeLinear);
-
     const update = $chart.selectAll('.bar')
       .data(data);
     const enter = update.enter();
@@ -38,28 +38,15 @@ export default class BarChart extends React.Component {
     enter
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', d => xScale(x(d)))
-      .attr('y', d => yScale(y(d)))
-      .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(y(d)));
-
-    update
+    .merge(update)
       .attr('width', xScale.bandwidth())
       .attr('height', d => containerHeight - yScale(y(d)))
       .attr('x', d => xScale(x(d)))
       .attr('y', d => yScale(y(d)));
 
-    // or
-    // enter
-    //   .append('rect')
-    //   .attr('class', 'bar')
-    // .merge(update)
-    //   .attr('width', xScale.bandwidth())
-    //   .attr('height', d => containerHeight - yScale(y(d)))
-    //   .attr('x', d => xScale(x(d)))
-    //   .attr('y', d => yScale(y(d)));
-
-    applyStyles2Selection(extractStyles(this.props), $chart.selectAll('.bar'));
+    const bars = $chart.selectAll('.bar');
+    applyStyles2Selection(extractStyles(this.props), bars);
+    applyEvents2Selection(extractEvents(this.props), bars);
 
     exit
       .remove();

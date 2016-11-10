@@ -5,10 +5,16 @@ import {
   extractStyles,
   staticStyleTypes,
 }                 from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents
+}                from '../../utils/events';
+
 
 const Rectangle = props => {
   const {x, y, xScale, yScale, containerWidth, containerHeight} = props;
   const styles = extractStyles(props);
+  const events = extractEvents(props);
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -20,6 +26,7 @@ const Rectangle = props => {
     <g>
       <rect
         {...styles}
+        {...events}
         x={xMin}
         y={yMax}
         width={xMax - xMin}
@@ -31,6 +38,7 @@ const Rectangle = props => {
 
 Rectangle.propTypes = {
   ...staticStyleTypes,
+  ...eventTypes,
   x: PropTypes.array.isRequired,
   y: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,

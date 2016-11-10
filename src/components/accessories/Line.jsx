@@ -6,10 +6,16 @@ import {
   extractStyles,
   staticStyleTypes,
 }                          from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents
+}                from '../../utils/events';
+
 
 const Line = props => {
   const {data, xScale, yScale, containerWidth, containerHeight} = props;
   const styles = extractStyles(props);
+  const events = extractEvents(props);
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -21,8 +27,9 @@ const Line = props => {
   return (
     <g>
       <path
-        d={line(data)}
         {...styles}
+        {...events}
+        d={line(data)}
       />
     </g>
   );
@@ -30,6 +37,7 @@ const Line = props => {
 
 Line.propTypes = {
   ...staticStyleTypes,
+  ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired

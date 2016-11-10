@@ -59,4 +59,6 @@ export const applyStyles2Selection = (styles, selection) => {
       value: styles[name]
     }))
     .forEach(({name, value}) => selection.attr(name, value));
+
+  return selection;
 };

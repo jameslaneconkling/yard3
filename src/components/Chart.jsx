@@ -1,15 +1,22 @@
 import React, {
   PropTypes
 }                from 'react';
+import {
+  eventTypes,
+  extractEvents
+}                from '../utils/events';
+
 
 export default class Chart extends React.Component {
   render() {
     const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = this.props;
     const containerWidth = width - leftMargin - rightMargin;
     const containerHeight = height - topMargin - bottomMargin;
+    const events = extractEvents(this.props);
 
     return (
       <svg
+        {...events}
         ref={el => this.svg = el}
         width={this.props.width}
         height={this.props.height}
@@ -26,6 +33,7 @@ export default class Chart extends React.Component {
 }
 
 Chart.propTypes = {
+  ...eventTypes,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   topMargin: PropTypes.number,

@@ -4,12 +4,16 @@ import {
   extractStyles,
   staticStyleTypes,
 }                          from '../../utils/styles';
+import {
+  eventTypes,
+  extractEvents
+}                from '../../utils/events';
 
 
 const AreaChart = (props) => {
   const { containerWidth, containerHeight, xScale, yScale, children, x0, x1, y0, y1, data } = props;
   const styles = extractStyles(props);
-
+  const events = extractEvents(props);
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -40,6 +44,7 @@ const AreaChart = (props) => {
     <g>
       <path
         {...styles}
+        {...events}
         d={area(data)}
         className='area'
       />
@@ -50,6 +55,7 @@ const AreaChart = (props) => {
 
 AreaChart.propTypes = {
   ...staticStyleTypes,
+  ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
