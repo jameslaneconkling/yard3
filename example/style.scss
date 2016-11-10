@@ -34,10 +34,6 @@ h2 {
     stroke-width: 1;
   }
 
-  .line {
-    stroke: $primary
-  }
-
   .area {
     fill: $primary;
     stroke: darken($primary, 6);

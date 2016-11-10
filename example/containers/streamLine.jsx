@@ -3,10 +3,11 @@ import Rx                 from 'rxjs';
 import * as d3            from 'd3';
 import R                  from 'ramda';
 import {
+  Chart,
   LineChart,
   XAxis,
   YAxis,
-  Chart
+  Line
 }                         from '../../src';
 
 let idx = 0;
@@ -20,7 +21,8 @@ export default class StreamLine extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data1: [],
+      data2: [],
       chartWidth: 600,
       chartHeight: 300
     };
@@ -31,11 +33,14 @@ export default class StreamLine extends React.Component {
   }
 
   subscribe($observable) {
-    return $observable.subscribe(newData => {
-      this.setState({
-        data: R.takeLast(50, [...this.state.data, ...newData])
+    return $observable
+      .map(data => [data, data.map(d => ({key: d.key, value: d.value - 1}))])
+      .subscribe(([newData1, newData2]) => {
+        this.setState({
+          data1: R.takeLast(50, [...this.state.data1, ...newData1]),
+          data2: R.takeLast(50, [...this.state.data2, ...newData2])
+        });
       });
-    });
   }
 
   toggle() {
@@ -45,13 +50,16 @@ export default class StreamLine extends React.Component {
   }
 
   render() {
-    const { data, chartWidth, chartHeight } = this.state;
+    const { data1, data2, chartWidth, chartHeight } = this.state;
+    const x = d => d ? d.key : 0;
+    const y = d => d ? d.value : 0;
 
+    const xDomain = [Math.max(0, x(data1[0])), Math.max(2, x(data1[data1.length -1]))];
     const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.key));
+      .domain(xDomain);
 
     const yScale = d3.scaleLinear()
-      .domain([-1.5, 1.5]);
+      .domain([-2.5, 1.5]);
 
     return (
       <section>
@@ -61,14 +69,32 @@ export default class StreamLine extends React.Component {
           width={chartWidth}
           height={chartHeight}
         >
+          <XAxis xScale={xScale} />
+          <YAxis yScale={yScale} />
           <LineChart
-            data={data}
+            data={data1}
+            x={x}
+            y={y}
             xScale={xScale}
             yScale={yScale}
-          >
-            <XAxis xScale={xScale} />
-            <YAxis yScale={yScale} />
-          </LineChart>
+            stroke={'red'}
+          />
+          <LineChart
+            data={data2}
+            x={x}
+            y={y}
+            xScale={xScale}
+            yScale={yScale}
+            stroke={'blue'}
+          />
+
+          <Line
+            data={[[xDomain[0], 0], [xDomain[1], 0]]}
+            xScale={xScale}
+            yScale={yScale}
+            stroke='#888'
+            strokeWidth='1'
+          />
         </Chart>
 
         <div>
