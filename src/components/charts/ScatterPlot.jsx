@@ -3,7 +3,7 @@ import React, {
 }                          from 'react';
 import * as d3             from 'd3';
 import {
-  stylePropTypes,
+  dynamicStyleTypes,
   extractStyles,
   applyStyles2Selection
 }                          from '../../utils/style';
@@ -59,7 +59,7 @@ export default class ScatterPlot extends React.Component {
 }
 
 ScatterPlot.propTypes = {
-  ...stylePropTypes,
+  ...dynamicStyleTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

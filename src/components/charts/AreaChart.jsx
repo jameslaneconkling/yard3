@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import {
   extractStyles,
-  stylePropTypes,
+  staticStyleTypes,
 }                          from '../../utils/style';
 
 
@@ -49,7 +49,7 @@ const AreaChart = (props) => {
 };
 
 AreaChart.propTypes = {
-  ...stylePropTypes,
+  ...staticStyleTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

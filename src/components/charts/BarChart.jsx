@@ -5,7 +5,7 @@ import * as d3             from 'd3';
 import {
   applyStyles2Selection,
   extractStyles,
-  stylePropTypes,
+  dynamicStyleTypes,
 }                          from '../../utils/style';
 
 
@@ -79,7 +79,7 @@ export default class BarChart extends React.Component {
 }
 
 BarChart.propTypes = {
-  ...stylePropTypes,
+  ...dynamicStyleTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,

@@ -4,7 +4,7 @@ import React, {
 import * as d3    from 'd3';
 import {
   extractStyles,
-  stylePropTypes,
+  staticStyleTypes,
 }                          from '../../utils/style';
 
 const Line = props => {
@@ -26,7 +26,7 @@ const Line = props => {
 };
 
 Line.propTypes = {
-  ...stylePropTypes,
+  ...staticStyleTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired

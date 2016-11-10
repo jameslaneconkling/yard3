@@ -5,7 +5,7 @@ import * as d3    from 'd3';
 import {
   applyStyles2Selection,
   extractStyles,
-  stylePropTypes,
+  dynamicStyleTypes,
 }                          from '../../utils/style';
 
 
@@ -47,7 +47,7 @@ export default class YGrid extends React.Component {
 }
 
 YGrid.propTypes = {
-  ...stylePropTypes,
+  ...dynamicStyleTypes,
   yScale: PropTypes.func.isRequired,
   containerWidth: PropTypes.number
 };

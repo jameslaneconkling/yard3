@@ -3,7 +3,7 @@ import React, {
 }                 from 'react';
 import {
   extractStyles,
-  stylePropTypes,
+  staticStyleTypes,
 }                 from '../../utils/style';
 
 const Rectangle = props => {
@@ -26,7 +26,7 @@ const Rectangle = props => {
 };
 
 Rectangle.propTypes = {
-  ...stylePropTypes,
+  ...staticStyleTypes,
   x: PropTypes.array.isRequired,
   y: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
