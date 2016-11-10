@@ -1,29 +1,12 @@
-import React, { PropTypes } from 'react';
+import React, {
+  PropTypes
+}                from 'react';
 
 export default class Chart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.preRender(props);
-  }
-
-  componentWillUpdate(nextProps) {
-    this.preRender(nextProps);
-  }
-
-  /**
-   * Setup to run before render and rerender
-   * Any properties passed to child components must be available at render time, so all
-   * their setup/update logic must run w/i the constructor and componentWillUpdate hook
-   */
-  preRender(props) {
-    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = props;
-    this.containerWidth = width - leftMargin - rightMargin;
-    this.containerHeight = height - topMargin - bottomMargin;
-  }
-
   render() {
-    const { containerHeight, containerWidth } = this;
-    const { leftMargin, topMargin } = this.props;
+    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = this.props;
+    const containerWidth = width - leftMargin - rightMargin;
+    const containerHeight = height - topMargin - bottomMargin;
 
     return (
       <svg
@@ -44,7 +27,11 @@ export default class Chart extends React.Component {
 
 Chart.propTypes = {
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired
+  height: PropTypes.number.isRequired,
+  topMargin: PropTypes.number,
+  rightMargin: PropTypes.number,
+  bottomMargin: PropTypes.number,
+  leftMargin: PropTypes.number
 };
 
 Chart.defaultProps = {
