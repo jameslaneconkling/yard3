@@ -6,7 +6,7 @@ import {
   applyStyles2Selection,
   extractStyles,
   dynamicStyleTypes,
-}                          from '../../utils/style';
+}                          from '../../utils/styles';
 
 
 export default class XGrid extends React.Component {

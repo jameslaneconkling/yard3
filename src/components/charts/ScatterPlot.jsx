@@ -6,7 +6,7 @@ import {
   dynamicStyleTypes,
   extractStyles,
   applyStyles2Selection
-}                          from '../../utils/style';
+}                          from '../../utils/styles';
 
 
 export default class ScatterPlot extends React.Component {

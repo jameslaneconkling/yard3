@@ -4,7 +4,7 @@ import React, {
 import {
   extractStyles,
   staticStyleTypes,
-}                 from '../../utils/style';
+}                 from '../../utils/styles';
 
 const Rectangle = props => {
   const {x, y, xScale, yScale, containerWidth, containerHeight} = props;

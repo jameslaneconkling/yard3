@@ -5,7 +5,7 @@ import * as d3    from 'd3';
 import {
   extractStyles,
   staticStyleTypes,
-}                          from '../../utils/style';
+}                          from '../../utils/styles';
 
 const Line = props => {
   const {data, xScale, yScale, containerWidth, containerHeight} = props;
