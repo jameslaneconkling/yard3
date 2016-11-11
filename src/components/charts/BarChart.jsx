@@ -67,6 +67,7 @@ export default class BarChart extends React.Component {
 
 BarChart.propTypes = {
   ...dynamicStyleTypes,
+  ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
