@@ -1,17 +1,17 @@
 // https://github.com/gaearon/react-hot-loader/issues/158
-// export { default as BarChart } from './components/BarChart.jsx';
-// export { default as XAxis } from './components/XAxis.jsx';
-import Chart       from './components/Chart.jsx';
-import BarChart    from './components/charts/BarChart.jsx';
-import LineChart   from './components/charts/LineChart.jsx';
-import AreaChart   from './components/charts/AreaChart.jsx';
-import ScatterPlot from './components/charts/ScatterPlot.jsx';
-import Rectangle   from './components/accessories/Rectangle.jsx';
-import Line        from './components/accessories/Line.jsx';
-import XAxis       from './components/accessories/XAxis.jsx';
-import YAxis       from './components/accessories/YAxis.jsx';
-import XGrid       from './components/accessories/XGrid.jsx';
-import YGrid       from './components/accessories/YGrid.jsx';
+// export { default as BarChart } from './components/BarChart';
+// export { default as XAxis } from './components/XAxis';
+import Chart from './components/Chart';
+import BarChart from './components/charts/BarChart';
+import LineChart from './components/charts/LineChart';
+import AreaChart from './components/charts/AreaChart';
+import ScatterPlot from './components/charts/ScatterPlot';
+import Rectangle from './components/accessories/Rectangle';
+import Line from './components/accessories/Line';
+import XAxis from './components/accessories/XAxis';
+import YAxis from './components/accessories/YAxis';
+import XGrid from './components/accessories/XGrid';
+import YGrid from './components/accessories/YGrid';
 
 export {
   Chart,

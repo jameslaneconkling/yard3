@@ -28,8 +28,8 @@ export const staticStyleTypes = {
   strokeMiterlimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export const extractStyles = props => {
-  return [
+export const extractStyles = props => (
+  [
     ['opacity', props.opacity],
     ['fill', props.fill],
     ['fillOpacity', props.fillOpacity],
@@ -40,17 +40,18 @@ export const extractStyles = props => {
     ['strokeLinejoin', props.strokeLinejoin],
     ['strokeDasharray', props.strokeDasharray],
     ['strokeDashoffset', props.strokeDashoffset],
-    ['strokeMiterlimit', props.strokeMiterlimit],
+    ['strokeMiterlimit', props.strokeMiterlimit]
   ]
     .filter(tuple => tuple[1])
     .reduce((styleObj, [key, value]) => {
       styleObj[key] = value;
       return styleObj;
-    }, {});
-};
+    }, {})
+);
 
 // TODO - find a better pattern to apply dynamic styles
-//        ideally, d3-selection-multi or selection.call() could handle this directly on the enter.merge(update) selection
+//        ideally, d3-selection-multi or selection.call()
+//        could handle this directly on the enter.merge(update) selection
 //        rather than needing to reselect
 export const applyStyles2Selection = (styles, selection) => {
   Object.keys(styles)
@@ -58,7 +59,7 @@ export const applyStyles2Selection = (styles, selection) => {
       name: name.replace(/([a-z][A-Z])/g, s => `${s[0]}-${s[1].toLowerCase()}`), // react expects camelCase props, while D3 (and the SVG spec) expect dasherized props
       value: styles[name]
     }))
-    .forEach(({name, value}) => selection.attr(name, value));
+    .forEach(({ name, value }) => selection.attr(name, value));
 
   return selection;
 };

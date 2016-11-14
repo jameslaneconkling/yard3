@@ -21,8 +21,8 @@ export const eventTypes = {
   onMouseUp: PropTypes.func
 };
 
-export const extractEvents = props => {
-  return [
+export const extractEvents = props => (
+  [
     ['onClick', props.onClick],
     ['onContentMenu', props.onContentMenu],
     ['onDoubleClick', props.onDoubleClick],
@@ -46,16 +46,17 @@ export const extractEvents = props => {
     .reduce((eventObj, [key, value]) => {
       eventObj[key] = value;
       return eventObj;
-    }, {});
-};
+    }, {})
+);
 
 export const applyEvents2Selection = (events, selection) => {
   Object.keys(events)
     .map(name => ({
-      name: name.replace(/^on/, '').toLowerCase(), // react expects event names (https://facebook.github.io/react/docs/events.html#mouse-events), while D3 expects event types (https://developer.mozilla.org/en-US/docs/Web/Events#Standard_events)
-      value: events[name]                                                        // TODO - this won't work for onDoubleClick
+      name: name.replace(/^on/, '').toLowerCase(), // react expects event names (https://facebook.github.io/react/docs/events.html#mouse-events)
+                                                   // while D3 expects event types (https://developer.mozilla.org/en-US/docs/Web/Events#Standard_events)
+      value: events[name]                          // TODO - this won't work for onDoubleClick
     }))
-    .forEach(({name, value}) => selection.on(name, value));
+    .forEach(({ name, value }) => selection.on(name, value));
 
   return selection;
 };

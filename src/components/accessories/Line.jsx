@@ -1,19 +1,19 @@
 import React, {
   PropTypes
-}                 from 'react';
-import * as d3    from 'd3';
+} from 'react';
+import * as d3 from 'd3';
 import {
   extractStyles,
-  staticStyleTypes,
-}                          from '../../utils/styles';
+  staticStyleTypes
+} from '../../utils/styles';
 import {
   eventTypes,
   extractEvents
-}                from '../../utils/events';
+} from '../../utils/events';
 
 
-const Line = props => {
-  const {data, xScale, yScale, containerWidth, containerHeight} = props;
+const Line = (props) => {
+  const { data, xScale, yScale, containerWidth, containerHeight } = props;
   const styles = extractStyles(props);
   const events = extractEvents(props);
 

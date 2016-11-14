@@ -1,7 +1,7 @@
 import React, {
   PropTypes
-}                          from 'react';
-import * as d3             from 'd3';
+} from 'react';
+import * as d3 from 'd3';
 
 
 export default class YAxis extends React.Component {
@@ -19,7 +19,7 @@ export default class YAxis extends React.Component {
 
     yScale.rangeRound([containerHeight, 0]);
 
-    $yAxis.call( d3.axisLeft(yScale).tickPadding(10) )
+    $yAxis.call(d3.axisLeft(yScale).tickPadding(10))
       .append('text')
         .attr('y', 6)
         .attr('dy', '0.71em')
