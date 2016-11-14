@@ -1,17 +1,17 @@
 import React, {
   PropTypes
-}                          from 'react';
-import * as d3             from 'd3';
+} from 'react';
+import * as d3 from 'd3';
 import {
   applyStyles2Selection,
   extractStyles,
-  dynamicStyleTypes,
-}                          from '../../utils/styles';
+  dynamicStyleTypes
+} from '../../utils/styles';
 import {
   eventTypes,
   extractEvents,
   applyEvents2Selection
-}                          from '../../utils/events';
+} from '../../utils/events';
 
 
 export default class BarChart extends React.Component {
@@ -57,9 +57,11 @@ export default class BarChart extends React.Component {
 
     return (
       <g
-        ref={el => this.$chart = el}
+        ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
+        { React.Children.map(children, child =>
+          React.cloneElement(child, { containerWidth, containerHeight })
+        ) }
       </g>
     );
   }

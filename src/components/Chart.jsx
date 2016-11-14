@@ -1,10 +1,10 @@
 import React, {
   PropTypes
-}                from 'react';
+} from 'react';
 import {
   eventTypes,
   extractEvents
-}                from '../utils/events';
+} from '../utils/events';
 
 
 export default class Chart extends React.Component {
@@ -17,15 +17,17 @@ export default class Chart extends React.Component {
     return (
       <svg
         {...events}
-        ref={el => this.svg = el}
-        width={this.props.width}
-        height={this.props.height}
-        className='chart'
+        ref={(el) => { this.svg = el; }}
+        width={width}
+        height={height}
+        className="chart"
       >
         <g
           transform={`translate(${leftMargin},${topMargin})`}
         >
-          { React.Children.map(this.props.children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
+          { React.Children.map(this.props.children, child =>
+            React.cloneElement(child, { containerWidth, containerHeight })
+          ) }
         </g>
       </svg>
     );

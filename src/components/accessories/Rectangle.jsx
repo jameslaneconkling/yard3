@@ -1,18 +1,18 @@
 import React, {
   PropTypes
-}                 from 'react';
+} from 'react';
 import {
   extractStyles,
-  staticStyleTypes,
-}                 from '../../utils/styles';
+  staticStyleTypes
+} from '../../utils/styles';
 import {
   eventTypes,
   extractEvents
-}                from '../../utils/events';
+} from '../../utils/events';
 
 
-const Rectangle = props => {
-  const {x, y, xScale, yScale, containerWidth, containerHeight} = props;
+const Rectangle = (props) => {
+  const { x, y, xScale, yScale, containerWidth, containerHeight } = props;
   const styles = extractStyles(props);
   const events = extractEvents(props);
 

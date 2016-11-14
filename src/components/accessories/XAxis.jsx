@@ -1,7 +1,7 @@
 import React, {
   PropTypes
-}                 from 'react';
-import * as d3    from 'd3';
+} from 'react';
+import * as d3 from 'd3';
 
 
 export default class XAxis extends React.Component {
@@ -28,8 +28,8 @@ export default class XAxis extends React.Component {
   render() {
     return (
       <g
-        ref={el => this.$xAxis = el}
-        className='xaxis'
+        ref={(el) => { this.$xAxis = el; }}
+        className="xaxis"
         transform={`translate(0,${this.props.containerHeight})`}
       />
     );

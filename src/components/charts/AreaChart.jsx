@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import {
   extractStyles,
-  staticStyleTypes,
-}                          from '../../utils/styles';
+  staticStyleTypes
+} from '../../utils/styles';
 import {
   eventTypes,
   extractEvents
-}                from '../../utils/events';
+} from '../../utils/events';
 
 
 const AreaChart = (props) => {
@@ -46,9 +46,11 @@ const AreaChart = (props) => {
         {...styles}
         {...events}
         d={area(data)}
-        className='area'
+        className="area"
       />
-      { React.Children.map(children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
+      { React.Children.map(children, child =>
+        React.cloneElement(child, { containerWidth, containerHeight })
+      ) }
     </g>
   );
 };

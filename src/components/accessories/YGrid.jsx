@@ -1,12 +1,12 @@
 import React, {
   PropTypes
-}                 from 'react';
-import * as d3    from 'd3';
+} from 'react';
+import * as d3 from 'd3';
 import {
   applyStyles2Selection,
   extractStyles,
-  dynamicStyleTypes,
-}                          from '../../utils/styles';
+  dynamicStyleTypes
+} from '../../utils/styles';
 
 
 export default class YGrid extends React.Component {
@@ -39,8 +39,8 @@ export default class YGrid extends React.Component {
   render() {
     return (
       <g
-        ref={el => this.$yGrid = el}
-        className='ygrid'
+        ref={(el) => { this.$yGrid = el; }}
+        className="ygrid"
       />
     );
   }

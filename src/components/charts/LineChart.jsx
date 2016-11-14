@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import {
   extractStyles,
-  staticStyleTypes,
-}                          from '../../utils/styles';
+  staticStyleTypes
+} from '../../utils/styles';
 import {
   eventTypes,
   extractEvents
-}                from '../../utils/events';
+} from '../../utils/events';
 
 
 const LineChart = (props) => {
@@ -28,9 +28,11 @@ const LineChart = (props) => {
         {...styles}
         {...events}
         d={line}
-        className='line'
+        className="line"
       />
-      { React.Children.map(children, child => React.cloneElement(child, {containerWidth, containerHeight})) }
+      { React.Children.map(children, child =>
+        React.cloneElement(child, { containerWidth, containerHeight })
+      ) }
     </g>
   );
 };

@@ -29,8 +29,8 @@ export default class YAxis extends React.Component {
   render() {
     return (
       <g
-        ref={el => this.$yAxis = el}
-        className='yaxis'
+        ref={(el) => { this.$yAxis = el; }}
+        className="yaxis"
       />
     );
   }
