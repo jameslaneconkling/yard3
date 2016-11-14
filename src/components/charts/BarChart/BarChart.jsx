@@ -3,18 +3,18 @@ import React, {
 } from 'react';
 import * as d3 from 'd3';
 import {
-  dynamicStyleTypes,
+  applyStyles2Selection,
   extractStyles,
-  applyStyles2Selection
-} from '../../utils/styles';
+  dynamicStyleTypes
+} from '../../../utils/styles';
 import {
   eventTypes,
   extractEvents,
   applyEvents2Selection
-} from '../../utils/events';
+} from '../../../utils/events';
 
 
-export default class ScatterPlot extends React.Component {
+export default class BarChart extends React.Component {
   componentDidMount() {
     this.update();
   }
@@ -24,29 +24,29 @@ export default class ScatterPlot extends React.Component {
   }
 
   update() {
-    const { data, x, y, r, containerWidth, containerHeight, yScale, xScale } = this.props;
+    const { data, x, y, containerWidth, containerHeight, yScale, xScale } = this.props;
     const $chart = d3.select(this.$chart);
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-    const update = $chart.selectAll('.dot')
+    const update = $chart.selectAll('.bar')
       .data(data);
     const enter = update.enter();
     const exit = update.exit();
 
     enter
-      .append('circle')
-      .attr('class', 'dot')
+      .append('rect')
+      .attr('class', 'bar')
     .merge(update)
-      .attr('cx', d => xScale(x(d)))
-      .attr('cy', d => yScale(y(d)))
-      .attr('r', r);
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => containerHeight - yScale(y(d)))
+      .attr('x', d => xScale(x(d)))
+      .attr('y', d => yScale(y(d)));
 
-    // TODO - should be able to pass enter.merge(update), rather than reselecting?
-    const circles = $chart.selectAll('.dot');
-    applyStyles2Selection(extractStyles(this.props), circles);
-    applyEvents2Selection(extractEvents(this.props), circles);
+    const bars = $chart.selectAll('.bar');
+    applyStyles2Selection(extractStyles(this.props), bars);
+    applyEvents2Selection(extractEvents(this.props), bars);
 
     exit
       .remove();
@@ -67,7 +67,7 @@ export default class ScatterPlot extends React.Component {
   }
 }
 
-ScatterPlot.propTypes = {
+BarChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
@@ -75,13 +75,11 @@ ScatterPlot.propTypes = {
   yScale: PropTypes.func.isRequired,
   x: PropTypes.func,
   y: PropTypes.func,
-  r: PropTypes.func,
   containerWidth: PropTypes.number,
   containerHeight: PropTypes.number
 };
 
-ScatterPlot.defaultProps = {
+BarChart.defaultProps = {
   x: d => d.key,
-  y: d => d.value,
-  r: () => 5
+  y: d => d.value
 };

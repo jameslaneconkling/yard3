@@ -4,7 +4,7 @@ import React, {
 import {
   eventTypes,
   extractEvents
-} from '../utils/events';
+} from '../../../utils/events';
 
 
 export default class Chart extends React.Component {
