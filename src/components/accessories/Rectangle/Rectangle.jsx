@@ -4,11 +4,11 @@ import React, {
 import {
   extractStyles,
   staticStyleTypes
-} from '../../utils/styles';
+} from '../../../utils/styles';
 import {
   eventTypes,
   extractEvents
-} from '../../utils/events';
+} from '../../../utils/events';
 
 
 const Rectangle = (props) => {
