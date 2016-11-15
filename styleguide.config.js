@@ -3,7 +3,17 @@ const path = require('path');
 module.exports = {
   title: 'YARD',
 
-  components: './src/components/**/*.jsx',
+  // components: 'src/components/**/*.jsx',
+  sections: [
+    {
+      name: 'Charts',
+      components: 'src/components/charts/**/*.jsx'
+    },
+    {
+      name: 'Accessories',
+      components: 'src/components/accessories/**/*.jsx'
+    }
+  ],
 
   updateWebpackConfig(webpackConfig) {
     const dir = path.join(__dirname, 'src');

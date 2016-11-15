@@ -12,8 +12,8 @@ import {
 
 let idx = 0;
 const $stream = Rx.Observable.interval(100)
-  .map(() => idx++*0.15)
-  .map(x => ([{key: x, value: Math.sin(x)}]));
+  .map(() => idx++ * 0.15)
+  .map(x => ([{ key: x, value: Math.sin(x) }]));
   // .scan((acc, values) => R.takeLast(50, [...acc, ...values]), []);  // tail last 50 entries
 
 
@@ -29,12 +29,12 @@ export default class StreamLine extends React.Component {
 
     this.$subscription = null;
 
-    this.toggle= this.toggle.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   subscribe($observable) {
     return $observable
-      .map(data => [data, data.map(d => ({key: d.key, value: d.value - 1}))])
+      .map(data => [data, data.map(d => ({ key: d.key, value: d.value - 1 }))])
       .subscribe(([newData1, newData2]) => {
         this.setState({
           data1: R.takeLast(50, [...this.state.data1, ...newData1]),
@@ -77,7 +77,7 @@ export default class StreamLine extends React.Component {
             y={y}
             xScale={xScale}
             yScale={yScale}
-            stroke={'red'}
+            stroke="red"
           />
           <LineChart
             data={data2}
@@ -85,15 +85,15 @@ export default class StreamLine extends React.Component {
             y={y}
             xScale={xScale}
             yScale={yScale}
-            stroke={'blue'}
+            stroke="blue"
           />
 
           <Line
             data={[[xDomain[0], 0], [xDomain[1], 0]]}
             xScale={xScale}
             yScale={yScale}
-            stroke='#888'
-            strokeWidth='1'
+            stroke="#888"
+            strokeWidth="1"
           />
         </Chart>
 
