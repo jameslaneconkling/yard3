@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   title: 'YARD',
 
-  // components: 'src/components/**/*.jsx',
+  styleguideDir: 'docs',
+
   sections: [
     {
       name: 'Charts',
