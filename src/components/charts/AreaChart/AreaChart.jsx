@@ -64,9 +64,7 @@ AreaChart.propTypes = {
   x0: PropTypes.func.isRequired,
   x1: PropTypes.func,
   y0: PropTypes.func.isRequired,
-  y1: PropTypes.func,
-  containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  y1: PropTypes.func
 };
 
 AreaChart.defaultProps = {

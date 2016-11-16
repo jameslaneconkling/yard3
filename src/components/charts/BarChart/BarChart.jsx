@@ -74,9 +74,7 @@ BarChart.propTypes = {
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   x: PropTypes.func,
-  y: PropTypes.func,
-  containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  y: PropTypes.func
 };
 
 BarChart.defaultProps = {

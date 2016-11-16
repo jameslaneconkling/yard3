@@ -75,9 +75,7 @@ ScatterPlot.propTypes = {
   yScale: PropTypes.func.isRequired,
   x: PropTypes.func,
   y: PropTypes.func,
-  r: PropTypes.func,
-  containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  r: PropTypes.func
 };
 
 ScatterPlot.defaultProps = {
