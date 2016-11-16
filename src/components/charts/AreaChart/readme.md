@@ -1,8 +1,22 @@
-## AreaChart
+A simple area or bivariate area chart.
+
+Pass only `x0` and `y0` props to generate an area chart; pass `x0`, `y0`, and `y1` to generate a horizontal bivariate chart;  pass `x0`, `x1`, and `y0` to generate a vertical bivariate chart.
 
 ```
-const data = require('../../../../example/data/temp');
 const d3 = require('d3');
+const data = require('sample_datasets').new_york_temperature;
+/*
+data = [{
+    "date": "2010-10-01T04:00:00.000Z",
+    "high": 59.5,
+    "low": 57
+  },
+  {
+    "date": "2010-10-02T04:00:00.000Z",
+    "high": 59.5,
+    "low": 53.4
+  }, ...]
+*/
 
 data.forEach(d => d.date = new Date(d.date));
 

@@ -46,7 +46,8 @@ LineChart.propTypes = {
   x: PropTypes.func,
   y: PropTypes.func,
   containerWidth: PropTypes.number,
-  containerHeight: PropTypes.number
+  containerHeight: PropTypes.number,
+  fill: PropTypes.string                  // a sane style default to prevent line from having a fill; propbably don't overwrite
 };
 
 LineChart.defaultProps = {
