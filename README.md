@@ -14,7 +14,22 @@ The philosophy of this library is to take care of rendering, while leaving all d
 
 Yard is built to be highly composable, breaking components down into small pieces that can be easily customized and combined to make complex visualizations.  E.g, to create a multi-series line chart with axes and a simple horizontal grid:
 
+![multi-series line chart](https://cloud.githubusercontent.com/assets/4389360/20370175/46fecf26-ac2b-11e6-8d27-579866b4dd93.png)
+
 ```javascript
+const data = [
+  {
+    "date": new Date("2011-10-01T04:00:00.000Z"),
+    "New York": 63.4,
+    "San Francisco": 62.7
+  },
+  {
+    "date": new Date("2011-10-02T04:00:00.000Z"),
+    "New York": 58,
+    "San Francisco": 59.9
+  }, ...
+];
+
 const nyY = d => d['New York'];
 const sfY = d => d['San Francisco'];
 const x = d => d.date;
