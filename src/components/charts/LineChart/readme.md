@@ -18,6 +18,7 @@ const yScale = d3.scaleLinear()
   width="600"
   height="300"
 >
+  <YGrid yScale={yScale} strokeDasharray={'2, 3'} />
   <XAxis xScale={xScale} />
   <YAxis yScale={yScale} />
   <LineChart
