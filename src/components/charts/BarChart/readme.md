@@ -23,6 +23,9 @@ const yScale = d3.scaleLinear()
     y={y}
     xScale={xScale}
     yScale={yScale}
+    fill="#607D8B"
+    stroke={d3.color('#607D8B').darker(1).toString()}
+    strokeWidth="0.5"
   />
 </Chart>
 ```
