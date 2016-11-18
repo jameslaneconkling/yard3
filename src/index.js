@@ -5,6 +5,7 @@ import Chart from './components/charts/Chart';
 import BarChart from './components/charts/BarChart';
 import LineChart from './components/charts/LineChart';
 import AreaChart from './components/charts/AreaChart';
+import DonutChart from './components/charts/DonutChart';
 import ScatterPlot from './components/charts/ScatterPlot';
 import Rectangle from './components/accessories/Rectangle';
 import Line from './components/accessories/Line';
@@ -19,6 +20,7 @@ export {
   LineChart,
   AreaChart,
   ScatterPlot,
+  DonutChart,
   Rectangle,
   Line,
   XAxis,
