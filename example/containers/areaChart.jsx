@@ -68,6 +68,7 @@ export default class AreaChartContainer extends React.Component {
             yScale={yScale}
             x0={d => d.date}
             y0={d => d.high}
+            fill={() => 'red'}
           />
         </Chart>
       </section>
