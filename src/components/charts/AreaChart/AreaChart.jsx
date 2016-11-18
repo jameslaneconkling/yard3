@@ -19,26 +19,11 @@ const AreaChart = (props) => {
   yScale.rangeRound([containerHeight, 0]);
 
   // TODO - this could be more elegant if composed
-  const area = d3.area();
-
-  if (x1) {
-    area
-      .x0(d => xScale(x0(d)))
-      .x1(d => xScale(x1(d)));
-  } else {
-    area
-      .x0(d => xScale(x0(d)));
-  }
-
-  if (y1) {
-    area
-      .y0(d => yScale(y0(d)))
-      .y1(d => yScale(y1(d)));
-  } else {
-    area
-      .y0(d => yScale(y0(d)))
-      .y1(containerHeight);
-  }
+  const area = d3.area()
+    .x0(d => xScale(x0(d)))
+    .x1(x1 ? d => xScale(x1(d)) : undefined)
+    .y0(d => yScale(y0(d)))
+    .y1(y1 ? d => yScale(y1(d)) : containerHeight);
 
   return (
     <g>
