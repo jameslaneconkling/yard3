@@ -36,12 +36,12 @@ export default class Chart extends React.Component {
 
 Chart.propTypes = {
   ...eventTypes,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  topMargin: PropTypes.number,
-  rightMargin: PropTypes.number,
-  bottomMargin: PropTypes.number,
-  leftMargin: PropTypes.number
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  topMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  rightMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  bottomMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  leftMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 Chart.defaultProps = {
