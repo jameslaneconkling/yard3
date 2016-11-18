@@ -1,1 +1,3 @@
-export { default } from './XGrid';
+import XGrid from './XGrid';
+
+export default XGrid;

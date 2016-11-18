@@ -1,1 +1,3 @@
-export { default } from './YAxis';
+import YAxis from './YAxis';
+
+export default YAxis;

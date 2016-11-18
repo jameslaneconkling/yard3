@@ -1,1 +1,3 @@
-export { default } from './Rectangle';
+import Rectangle from './Rectangle';
+
+export default Rectangle;

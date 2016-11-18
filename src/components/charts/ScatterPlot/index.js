@@ -1,1 +1,3 @@
-export { default } from './ScatterPlot';
+import ScatterPlot from './ScatterPlot';
+
+export default ScatterPlot;

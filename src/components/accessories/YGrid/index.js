@@ -1,1 +1,3 @@
-export { default } from './YGrid';
+import YGrid from './YGrid';
+
+export default YGrid;

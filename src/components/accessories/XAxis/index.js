@@ -1,1 +1,3 @@
-export { default } from './XAxis';
+import XAxis from './XAxis';
+
+export default XAxis;
