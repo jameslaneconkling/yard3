@@ -2,43 +2,65 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import {
   extractStyles,
-  staticStyleTypes
+  dynamicStyleTypes,
+  applyStyles2Selection
 } from '../../../utils/styles';
 import {
   eventTypes,
-  extractEvents
+  extractEvents,
+  applyEvents2Selection
 } from '../../../utils/events';
 
 
-const LineChart = (props) => {
-  const { containerWidth, containerHeight, xScale, yScale, children, x, y, data } = props;
-  const styles = extractStyles(props);
-  const events = extractEvents(props);
+class LineChart extends React.Component {
+  componentDidMount() {
+    this.update();
+  }
 
-  xScale.rangeRound([0, containerWidth]);
-  yScale.rangeRound([containerHeight, 0]);
+  componentDidUpdate() {
+    this.update();
+  }
 
-  const line = d3.line()
-    .x(d => xScale(x(d)))
-    .y(d => yScale(y(d)))(data);
+  update() {
+    const { containerWidth, containerHeight, xScale, yScale, x, y, data } = this.props;
 
-  return (
-    <g>
-      <path
-        {...styles}
-        {...events}
-        d={line}
-        className="line"
-      />
-      { React.Children.map(children, child =>
-        React.cloneElement(child, { containerWidth, containerHeight })
-      ) }
-    </g>
-  );
-};
+    xScale.rangeRound([0, containerWidth]);
+    yScale.rangeRound([containerHeight, 0]);
+
+    const $chart = d3.select(this.$chart);
+
+    const line = d3.line()
+      .x(d => xScale(x(d)))
+      .y(d => yScale(y(d)));
+
+    $chart.selectAll('path').remove();
+
+    $chart.append('path')
+      .attr('class', 'line')
+      .attr('d', line(data));
+
+    const $line = $chart.selectAll('.line');
+    applyStyles2Selection(extractStyles(this.props), $line);
+    applyEvents2Selection(extractEvents(this.props), $line);
+  }
+
+  render() {
+    const { containerWidth, containerHeight, children } = this.props;
+
+    return (
+      <g
+        ref={(el) => { this.$chart = el; }}
+      >
+        { React.Children.map(children, child =>
+          React.cloneElement(child, { containerWidth, containerHeight })
+        ) }
+      </g>
+    );
+  }
+}
 
 LineChart.propTypes = {
-  ...staticStyleTypes,
+  ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,

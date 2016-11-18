@@ -2,46 +2,67 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import {
   extractStyles,
-  staticStyleTypes
+  dynamicStyleTypes,
+  applyStyles2Selection
 } from '../../../utils/styles';
 import {
   eventTypes,
-  extractEvents
+  extractEvents,
+  applyEvents2Selection
 } from '../../../utils/events';
 
 
-const AreaChart = (props) => {
-  const { containerWidth, containerHeight, xScale, yScale, children, x0, x1, y0, y1, data } = props;
-  const styles = extractStyles(props);
-  const events = extractEvents(props);
+class AreaChart extends React.Component {
+  componentDidMount() {
+    this.update();
+  }
 
-  xScale.rangeRound([0, containerWidth]);
-  yScale.rangeRound([containerHeight, 0]);
+  componentDidUpdate() {
+    this.update();
+  }
 
-  // TODO - this could be more elegant if composed
-  const area = d3.area()
-    .x0(d => xScale(x0(d)))
-    .x1(x1 ? d => xScale(x1(d)) : undefined)
-    .y0(d => yScale(y0(d)))
-    .y1(y1 ? d => yScale(y1(d)) : containerHeight);
+  update() {
+    const { containerWidth, containerHeight, xScale, yScale, x0, x1, y0, y1, data } = this.props;
 
-  return (
-    <g>
-      <path
-        {...styles}
-        {...events}
-        d={area(data)}
-        className="area"
-      />
-      { React.Children.map(children, child =>
-        React.cloneElement(child, { containerWidth, containerHeight })
-      ) }
-    </g>
-  );
-};
+    xScale.rangeRound([0, containerWidth]);
+    yScale.rangeRound([containerHeight, 0]);
+
+    const $chart = d3.select(this.$chart);
+
+    const area = d3.area()
+      .x0(d => xScale(x0(d)))
+      .x1(x1 ? d => xScale(x1(d)) : undefined)
+      .y0(d => yScale(y0(d)))
+      .y1(y1 ? d => yScale(y1(d)) : containerHeight);
+
+    $chart.selectAll('path').remove();
+
+    $chart.append('path')
+      .attr('class', 'area')
+      .attr('d', area(data));
+
+    const $area = $chart.selectAll('.area');
+    applyStyles2Selection(extractStyles(this.props), $area);
+    applyEvents2Selection(extractEvents(this.props), $area);
+  }
+
+  render() {
+    const { containerWidth, containerHeight, children } = this.props;
+
+    return (
+      <g
+        ref={(el) => { this.$chart = el; }}
+      >
+        { React.Children.map(children, child =>
+          React.cloneElement(child, { containerWidth, containerHeight })
+        ) }
+      </g>
+    );
+  }
+}
 
 AreaChart.propTypes = {
-  ...staticStyleTypes,
+  ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
   xScale: PropTypes.func.isRequired,

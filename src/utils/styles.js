@@ -1,31 +1,31 @@
 import { PropTypes } from 'react';
 
 export const dynamicStyleTypes = {
-  opacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  fill: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  fillOpacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  stroke: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  strokeWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  strokeOpacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  strokeLinecap: PropTypes.oneOfType([PropTypes.oneOf(['butt', 'round', 'square']), PropTypes.func]),
-  strokeLinejoin: PropTypes.oneOfType([PropTypes.oneOf(['miter', 'round', 'bevel']), PropTypes.func]),
-  strokeDasharray: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  strokeDashoffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  strokeMiterlimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func])
+  opacity:             PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+  fill:                PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  fillOpacity:         PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+  stroke:              PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  strokeWidth:         PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+  strokeOpacity:       PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+  strokeLinecap:       PropTypes.oneOfType([PropTypes.oneOf(['butt', 'round', 'square']), PropTypes.func]),
+  strokeLinejoin:      PropTypes.oneOfType([PropTypes.oneOf(['miter', 'round', 'bevel']), PropTypes.func]),
+  strokeDasharray:     PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  strokeDashoffset:    PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
+  strokeMiterlimit:    PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func])
 };
 
 export const staticStyleTypes = {
-  opacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  fill: PropTypes.string,
-  fillOpacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  stroke: PropTypes.string,
-  strokeWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  strokeOpacity: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  strokeLinecap: PropTypes.oneOf(['butt', 'round', 'square']),
-  strokeLinejoin: PropTypes.oneOf(['miter', 'round', 'bevel']),
-  strokeDasharray: PropTypes.string,
-  strokeDashoffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  strokeMiterlimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  opacity:             PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  fill:                PropTypes.string,
+  fillOpacity:         PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  stroke:              PropTypes.string,
+  strokeWidth:         PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  strokeOpacity:       PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  strokeLinecap:       PropTypes.oneOf(['butt', 'round', 'square']),
+  strokeLinejoin:      PropTypes.oneOf(['miter', 'round', 'bevel']),
+  strokeDasharray:     PropTypes.string,
+  strokeDashoffset:    PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  strokeMiterlimit:    PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export const extractStyles = props => (
