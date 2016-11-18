@@ -48,8 +48,7 @@ export default class YGrid extends React.Component {
 
 YGrid.propTypes = {
   ...dynamicStyleTypes,
-  yScale: PropTypes.func.isRequired,
-  containerWidth: PropTypes.number
+  yScale: PropTypes.func.isRequired
 };
 
 YGrid.defaultProps = {

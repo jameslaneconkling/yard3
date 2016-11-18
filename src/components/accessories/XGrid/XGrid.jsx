@@ -48,8 +48,7 @@ export default class XGrid extends React.Component {
 
 XGrid.propTypes = {
   ...dynamicStyleTypes,
-  xScale: PropTypes.func.isRequired,
-  containerHeight: PropTypes.number
+  xScale: PropTypes.func.isRequired
 };
 
 XGrid.defaultProps = {

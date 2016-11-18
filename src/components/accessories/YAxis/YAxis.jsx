@@ -37,6 +37,5 @@ export default class YAxis extends React.Component {
 }
 
 YAxis.propTypes = {
-  yScale: PropTypes.func.isRequired,
-  containerHeight: PropTypes.number
+  yScale: PropTypes.func.isRequired
 };
