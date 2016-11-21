@@ -30,7 +30,7 @@ export default class StackedBarChart extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-    // const update = $chart.selectAll('.bar')
+    // const update = $chart.selectAll('.serie')
     //   .data(d3.stack().keys(keys)(data));
     // const enter = update.enter();
     // const exit = update.exit();
@@ -41,7 +41,11 @@ export default class StackedBarChart extends React.Component {
       .append('g')
       .attr('class', 'serie')
     .selectAll('.bar')
-      .data(d => d)
+      .data((serie) => {
+        // attach serie key to each bar
+        serie.forEach((d) => { d.key = serie.key; });
+        return serie;
+      })
       .enter()
       .append('rect')
       .attr('class', 'bar')
@@ -56,9 +60,9 @@ export default class StackedBarChart extends React.Component {
     //   .attr('width', xScale.bandwidth())
     //   .attr('height', d => yScale(d[0]) - yScale(d[1]));
 
-    const series = $chart.selectAll('.serie');
-    applyStyles2Selection(extractStyles(this.props), series);
-    applyEvents2Selection(extractEvents(this.props), series);
+    const bars = $chart.selectAll('.bar');
+    applyStyles2Selection(extractStyles(this.props), bars);
+    applyEvents2Selection(extractEvents(this.props), bars);
 
     // exit
     //   .remove();

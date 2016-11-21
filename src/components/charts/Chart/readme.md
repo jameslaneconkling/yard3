@@ -7,8 +7,8 @@ const d3 = require('d3');
 
 const xAxisScale = d3.scaleLinear().domain([-100, 100]);
 const yAxisScale = d3.scaleLinear().domain([-1, 1]);
-const xGridScale = d3.scaleLinear().domain([-100, 100]);
-const yGridScale = d3.scaleLinear().domain([-1, 1]);
+const xGridScale = d3.scaleBand().domain(xAxisScale.ticks(4).map(xAxisScale.tickFormat(4, 's')));
+const yGridScale = d3.scaleBand().domain(yAxisScale.ticks(4).map(yAxisScale.tickFormat(4, 's')));
 
 <Chart
   width="600"

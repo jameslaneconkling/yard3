@@ -1,6 +1,7 @@
 ```
 const d3 = require('d3');
-const data = require('sample_datasets').state_population_by_age;
+const data = require('sample_datasets').state_population_by_age
+  .sort(function(a, b) { return b.total - a.total; });
 
 const keys = ['Under 5 Years', '5 to 13 Years', '14 to 17 Years', '18 to 24 Years', '25 to 44 Years', '45 to 64 Years', '65 Years and Over'];
 
@@ -18,7 +19,7 @@ const yScaleAxis = d3.scaleBand()
 
 const colorScale = d3.scaleOrdinal()
   .domain(keys)
-  .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+  .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
 
 
 
@@ -34,7 +35,11 @@ const colorScale = d3.scaleOrdinal()
     x={x}
     xScale={xScale}
     yScale={yScale}
-    fill={d => colorScale(d.key)}
+    fill={d => {
+      return colorScale(d.key)
+    }}
+    stroke="#ccc"
+    strokeWidth="0.3"
   />
 </Chart>
 ```
