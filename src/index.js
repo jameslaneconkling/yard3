@@ -3,6 +3,7 @@
 // export { default as XAxis } from './components/XAxis';
 import Chart from './components/charts/Chart';
 import BarChart from './components/charts/BarChart';
+import StackedBarChart from './components/charts/StackedBarChart';
 import LineChart from './components/charts/LineChart';
 import AreaChart from './components/charts/AreaChart';
 import DonutChart from './components/charts/DonutChart';
@@ -17,6 +18,7 @@ import YGrid from './components/accessories/YGrid';
 export {
   Chart,
   BarChart,
+  StackedBarChart,
   LineChart,
   AreaChart,
   ScatterPlot,

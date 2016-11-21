@@ -1,14 +1,18 @@
 import React              from 'react';
 import * as d3            from 'd3';
 import {
+  state_population_by_age
+}                         from 'sample_datasets';
+import {
   BarChart,
+  StackedBarChart,
   XAxis,
   YAxis,
   Chart
 }                         from '../../src';
 
 
-const generateData = length => d3.range(1, length + 1).map(idx => ({key: idx, value: Math.random()}));
+const generateData = length => d3.range(1, length + 1).map(idx => ({ key: idx, value: Math.random() }));
 
 export default class RandomBar extends React.Component {
   constructor(props) {
@@ -16,6 +20,7 @@ export default class RandomBar extends React.Component {
 
     this.state = {
       data: generateData(20),
+      populationData: state_population_by_age,
       chartWidth: 600,
       chartHeight: 300
     };
@@ -28,13 +33,13 @@ export default class RandomBar extends React.Component {
   }
 
   randomize() {
-    this.setState({data: generateData(this.state.data.length)});
+    this.setState({ data: generateData(this.state.data.length) });
   }
 
   add() {
-    const idx = this.state.data[this.state.data.length -1].key + 1;
+    const idx = this.state.data[this.state.data.length - 1].key + 1;
     this.setState({
-      data: [...this.state.data, {key: idx, value: Math.random()}]
+      data: [...this.state.data, { key: idx, value: Math.random() }]
     });
   }
 
@@ -42,20 +47,20 @@ export default class RandomBar extends React.Component {
     const data = this.state.data;
     const idx = Math.floor(Math.random() * data.length);
     this.setState({
-      data: [...data.slice(0,idx), ...data.slice(idx + 1, data.length)]
+      data: [...data.slice(0, idx), ...data.slice(idx + 1, data.length)]
     });
   }
 
   shrink() {
-    this.setState({chartWidth: this.state.chartWidth - 80});
+    this.setState({ chartWidth: this.state.chartWidth - 80 });
   }
 
   grow() {
-    this.setState({chartWidth: this.state.chartWidth + 80});
+    this.setState({ chartWidth: this.state.chartWidth + 80 });
   }
 
   render() {
-    const { data } = this.state;
+    const { data, populationData } = this.state;
 
     // TODO - scales should be validated to make sure they are appropriate for the chart type
     const xScale = d3.scaleBand()
@@ -64,6 +69,19 @@ export default class RandomBar extends React.Component {
 
     const yScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d.value));
+
+    const xPopAccessor = d => d.State;
+    const xScalePop = d3.scaleBand()
+      .padding(0.1)
+      .domain(populationData.map(xPopAccessor));
+    const xScalePopAxis = d3.scaleBand()
+      .domain(populationData.filter((d, i) => i % 2 === 0).map(xPopAccessor));
+
+    const yPopAccessor = d => d['5 to 13 Years'];
+    const yScalePop = d3.scaleLinear()
+      .domain(d3.extent(populationData, yPopAccessor));
+    const yScalePopAxis = d3.scaleBand()
+      .domain(yScalePop.ticks(8).map(yScalePop.tickFormat(8, 's')));
 
     return (
       <section>
@@ -88,6 +106,21 @@ export default class RandomBar extends React.Component {
           <button onClick={this.shrink}>shrink</button>
           <button onClick={this.grow}>grow</button>
         </div>
+
+        <Chart
+          width={this.state.chartWidth}
+          height={this.state.chartHeight}
+        >
+          <YAxis yScale={yScalePopAxis} />
+          <XAxis xScale={xScalePopAxis} />
+          <StackedBarChart
+            data={populationData}
+            x={xPopAccessor}
+            y={yPopAccessor}
+            xScale={xScalePop}
+            yScale={yScalePop}
+          />
+        </Chart>
       </section>
     );
   }
