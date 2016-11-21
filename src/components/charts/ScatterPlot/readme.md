@@ -12,8 +12,6 @@ const region = d => d.region;
 const xExtent = d3.extent(data, income);
 const yExtent = d3.extent(data, lifeExpectancy);
 
-const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
 const xScale = d3.scaleLinear()
   .domain([xExtent[0] - 100, xExtent[1] + 100]);
 
@@ -21,6 +19,9 @@ const yScale = d3.scaleLinear()
   .domain([yExtent[0] - 5, yExtent[1] + 5]);
 
 const rScale = d3.scaleSqrt().domain([0, 5e8]).range([2, 40]);
+
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
 
 <Chart
   width="600"
