@@ -30,51 +30,64 @@ export default class StackedBarChart extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-    // const update = $chart.selectAll('.serie')
-    //   .data(d3.stack().keys(keys)(data));
-    // const enter = update.enter();
-    // const exit = update.exit();
+    // add/update/remove Series
+    const serieUpdate = $chart.selectAll('.serie')
+      .data(d3.stack().keys(keys)(data));
+    // const serieEnter = serieUpdate.enter();
+    // const serieExit = serieUpdate.exit();
 
-    $chart.selectAll('.serie')
-      .data(d3.stack().keys(keys)(data))
-      .enter()
-      .append('g')
-      .attr('class', 'serie')
-    .selectAll('.bar')
+    // serieEnter
+    //   .append('g')
+    //   .attr('class', 'serie');
+
+    // serieExit
+    //   .remove();
+
+    // d3.stack().keys(keys)(data).forEach(s => {
+    //   $chart.select('g.serie')
+    // });
+
+    // add/update/remove Bars
+    const barUpdate = serieUpdate.merge(serieUpdate.enter())
+      .selectAll('.bar')
       .data((serie) => {
         // attach serie key to each bar
         serie.forEach((d) => { d.key = serie.key; });
         return serie;
-      })
-      .enter()
+      });
+    const barEnter = barUpdate.enter();
+    const barExit = barUpdate.exit();
+
+    barEnter
       .append('rect')
       .attr('class', 'bar')
+    .merge(barUpdate)
       .attr('x', d => xScale(x(d.data)))
       .attr('y', d => yScale(d[1]))
       .attr('width', xScale.bandwidth())
       .attr('height', d => yScale(d[0]) - yScale(d[1]));
 
-    // update
-    //   .attr('x', d => xScale(x(d.data)))
-    //   .attr('y', d => yScale(d[1]))
-    //   .attr('width', xScale.bandwidth())
-    //   .attr('height', d => yScale(d[0]) - yScale(d[1]));
+    barExit
+      .remove();
 
     const bars = $chart.selectAll('.bar');
     applyStyles2Selection(extractStyles(this.props), bars);
     applyEvents2Selection(extractEvents(this.props), bars);
-
-    // exit
-    //   .remove();
   }
 
   render() {
-    const { containerHeight, containerWidth, children } = this.props;
+    const { containerHeight, containerWidth, children, keys } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
+        {keys.map(key => (
+          <g
+            className="serie"
+            key={key}
+          />
+        ))}
         { React.Children.map(children, child =>
           React.cloneElement(child, { containerWidth, containerHeight })
         ) }
