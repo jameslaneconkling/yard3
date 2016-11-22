@@ -1,13 +1,8 @@
 import React              from 'react';
 import * as d3            from 'd3';
 import {
-  state_population_by_age
-}                         from 'sample_datasets';
-import {
   BarChart,
-  StackedBarChart,
   XAxis,
-  YAxis,
   Chart
 }                         from '../../src';
 
@@ -20,7 +15,6 @@ export default class RandomBar extends React.Component {
 
     this.state = {
       data: generateData(20),
-      populationData: state_population_by_age,
       chartWidth: 600,
       chartHeight: 300
     };
@@ -60,7 +54,7 @@ export default class RandomBar extends React.Component {
   }
 
   render() {
-    const { data, populationData } = this.state;
+    const { data } = this.state;
 
     // TODO - scales should be validated to make sure they are appropriate for the chart type
     const xScale = d3.scaleBand()
@@ -69,19 +63,6 @@ export default class RandomBar extends React.Component {
 
     const yScale = d3.scaleLinear()
       .domain(d3.extent(data, d => d.value));
-
-    const xPopAccessor = d => d.State;
-    const xScalePop = d3.scaleBand()
-      .padding(0.1)
-      .domain(populationData.map(xPopAccessor));
-    const xScalePopAxis = d3.scaleBand()
-      .domain(populationData.filter((d, i) => i % 2 === 0).map(xPopAccessor));
-
-    const yPopAccessor = d => d['5 to 13 Years'];
-    const yScalePop = d3.scaleLinear()
-      .domain(d3.extent(populationData, yPopAccessor));
-    const yScalePopAxis = d3.scaleBand()
-      .domain(yScalePop.ticks(8).map(yScalePop.tickFormat(8, 's')));
 
     return (
       <section>
@@ -106,21 +87,6 @@ export default class RandomBar extends React.Component {
           <button onClick={this.shrink}>shrink</button>
           <button onClick={this.grow}>grow</button>
         </div>
-
-        <Chart
-          width={this.state.chartWidth}
-          height={this.state.chartHeight}
-        >
-          <YAxis yScale={yScalePopAxis} />
-          <XAxis xScale={xScalePopAxis} />
-          <StackedBarChart
-            data={populationData}
-            x={xPopAccessor}
-            y={yPopAccessor}
-            xScale={xScalePop}
-            yScale={yScalePop}
-          />
-        </Chart>
       </section>
     );
   }
