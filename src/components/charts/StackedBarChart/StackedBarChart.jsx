@@ -48,7 +48,7 @@ export default class StackedBarChart extends React.Component {
     // });
 
     // add/update/remove Bars
-    const barUpdate = serieUpdate.merge(serieUpdate.enter())
+    const barUpdate = serieUpdate // .merge(serieUpdate.enter())
       .selectAll('.bar')
       .data((serie) => {
         // attach serie key to each bar
@@ -63,9 +63,9 @@ export default class StackedBarChart extends React.Component {
       .attr('class', 'bar')
     .merge(barUpdate)
       .attr('x', d => xScale(x(d.data)))
-      .attr('y', d => yScale(d[1]))
+      .attr('y', d => yScale(d[1]) || 0) // TODO - filter out bars w/ no height/y, i.e. those added to a serie that don't have corresponding data
       .attr('width', xScale.bandwidth())
-      .attr('height', d => yScale(d[0]) - yScale(d[1]));
+      .attr('height', d => yScale(d[0]) - yScale(d[1]) || 0);
 
     barExit
       .remove();
@@ -88,6 +88,7 @@ export default class StackedBarChart extends React.Component {
             key={key}
           />
         ))}
+
         { React.Children.map(children, child =>
           React.cloneElement(child, { containerWidth, containerHeight })
         ) }
