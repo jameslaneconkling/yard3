@@ -71,7 +71,6 @@ const loaders = PROD ?
 const plugins = PROD ?
   [
     // new ExtractTextPlugin('style.css'),
-    new HtmlWebpackPlugin({ template: 'example/index.html' }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
