@@ -6,7 +6,6 @@
     "lint": "eslint './src/**/*'",
     "dev": "webpack-dev-server --devtool eval --progress",
     "build": "NODE_ENV=production webpack --progress",
-    "publish": "npm run build && npm publish",
     "test": "echo \"Error: no tests ...yet\" && exit 1",
     "styleguide-server": "styleguidist server",
     "styleguide-build": "styleguidist build"
