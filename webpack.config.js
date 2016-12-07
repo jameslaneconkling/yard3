@@ -1,19 +1,93 @@
+/* eslint-disable indent */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-multi-spaces */
 const webpack           = require('webpack');
 const path              = require('path');
 const validate          = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = 'localhost';
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const PROD = process.env.NODE_ENV === 'production';
 
-module.exports = validate({
-  entry: [
-    ...(!PROD ? [`webpack-dev-server/client?http://${HOST}:${PORT}`] : []),
-    ...(!PROD ? ['webpack/hot/only-dev-server'] : []),
+const entry = PROD ?
+  [
+    './src/index.js'
+  ] :
+  [
+    `webpack-dev-server/client?http://${HOST}:${PORT}`,
+    'webpack/hot/only-dev-server',
     './example/index.jsx'
-  ],
+  ];
+
+const loaders = PROD ?
+  [
+    {
+      test: /\.jsx?$/,
+      include: path.join(__dirname, 'src'),
+      loaders: ['babel']
+    }
+    // {
+    //   test: /\.css$/,
+    //   loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+    //   include: path.join(__dirname, 'example')
+    // },
+    // {
+    //   test: /\.scss$/,
+    //   loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader?sourceMap'),
+    //   include: path.join(__dirname, 'example')
+    // }
+  ] :
+  [
+    {
+      test: /\.jsx?$/,
+      include: [
+        path.join(__dirname, 'src'),
+        path.join(__dirname, 'example')
+      ],
+      loaders: [
+        'react-hot',
+        'babel'
+      ]
+    },
+    {
+      test: /\.json$/,
+      include: path.join(__dirname, 'example'),
+      loader: 'json'
+    },
+    {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader',
+      include: path.join(__dirname, 'example')
+    },
+    {
+      test: /\.scss$/,
+      loader: 'style-loader!css-loader!sass-loader?sourceMap',
+      include: path.join(__dirname, 'example')
+    }
+  ];
+
+const plugins = PROD ?
+  [
+    // new ExtractTextPlugin('style.css'),
+    new HtmlWebpackPlugin({ template: 'example/index.html' }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      mangle: false
+    })
+  ] :
+  [
+    new HtmlWebpackPlugin({ template: 'example/index.html' }),
+    new webpack.HotModuleReplacementPlugin()
+  ];
+
+
+
+module.exports = validate({
+  entry,
 
   output: {
     path: path.join(__dirname, 'dist'),
@@ -21,49 +95,10 @@ module.exports = validate({
   },
 
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        include: [
-          path.join(__dirname, 'src'),
-          path.join(__dirname, 'example')
-        ],
-        loaders: [
-          ...(!PROD ? ['react-hot'] : []),
-          'babel'
-        ]
-      },
-      {
-        test: /\.json$/,
-        include: path.join(__dirname, 'example'),
-        loader: 'json'
-      },
-      {
-        test: /\.css$/,
-        loader: PROD ? ExtractTextPlugin.extract('style-loader', 'css-loader') : 'style-loader!css-loader',
-        include: path.join(__dirname, 'example')
-      },
-      {
-        test: /\.scss$/,
-        loader: PROD ? ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader?sourceMap') : 'style-loader!css-loader!sass-loader?sourceMap',
-        include: path.join(__dirname, 'example')
-      }
-    ]
+    loaders
   },
 
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'example/index.html'
-    }),
-    ...(!PROD ? [new webpack.HotModuleReplacementPlugin()] : []),
-    ...(PROD ? [new ExtractTextPlugin('style.css')] : []),
-    ...(PROD ? [new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      mangle: false
-    })] : [])
-  ],
+  plugins,
 
   devtool: PROD ? 'source-map' : 'eval-source-map',
 
