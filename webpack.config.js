@@ -5,16 +5,13 @@ const webpack           = require('webpack');
 const path              = require('path');
 const validate          = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = 'localhost';
 const PORT = process.env.PORT || 8080;
 const PROD = process.env.NODE_ENV === 'production';
 
 const entry = PROD ?
-  [
-    './src/index.js'
-  ] :
+  './src/index.js' :
   [
     `webpack-dev-server/client?http://${HOST}:${PORT}`,
     'webpack/hot/only-dev-server',
@@ -28,16 +25,6 @@ const loaders = PROD ?
       include: path.join(__dirname, 'src'),
       loaders: ['babel']
     }
-    // {
-    //   test: /\.css$/,
-    //   loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
-    //   include: path.join(__dirname, 'example')
-    // },
-    // {
-    //   test: /\.scss$/,
-    //   loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader?sourceMap'),
-    //   include: path.join(__dirname, 'example')
-    // }
   ] :
   [
     {
@@ -70,7 +57,6 @@ const loaders = PROD ?
 
 const plugins = PROD ?
   [
-    // new ExtractTextPlugin('style.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -90,7 +76,8 @@ module.exports = validate({
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'index.js'
+    filename: 'index.js',
+    libraryTarget: PROD ? 'umd' : undefined
   },
 
   module: {
