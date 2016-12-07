@@ -1,6 +1,6 @@
 {
   "name": "yard3",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "yet another react-d3 integration library",
   "scripts": {
     "lint": "eslint './src/**/*'",
