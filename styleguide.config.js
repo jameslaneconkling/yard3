@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  title: 'YARD',
+  title: 'YARD3',
 
   styleguideDir: 'docs',
 

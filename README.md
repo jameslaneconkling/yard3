@@ -67,7 +67,7 @@ const yScale = d3.scaleLinear()
 ```
 
 ### Documentation
-[here](https://jameslaneconkling.github.io/yard/)
+[here](https://jameslaneconkling.github.io/yard3/)
 
 ### Development
 
