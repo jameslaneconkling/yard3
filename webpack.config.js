@@ -9,15 +9,18 @@ const PORT = 8080;
 const PROD = process.env.NODE_ENV === 'production';
 
 module.exports = validate({
-  entry: [
-    ...(!PROD ? [`webpack-dev-server/client?http://${HOST}:${PORT}`] : []),
-    ...(!PROD ? ['webpack/hot/only-dev-server'] : []),
-    './example/index.jsx'
-  ],
+  entry: PROD ?
+    './src/index.js' :
+    [
+      ...(!PROD ? [`webpack-dev-server/client?http://${HOST}:${PORT}`] : []),
+      ...(!PROD ? ['webpack/hot/only-dev-server'] : []),
+      './example/index.jsx'
+    ],
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'index.js'
+    filename: 'index.js',
+    libraryTarget: PROD ? 'umd' : undefined
   },
 
   module: {
@@ -26,7 +29,7 @@ module.exports = validate({
         test: /\.jsx?$/,
         include: [
           path.join(__dirname, 'src'),
-          path.join(__dirname, 'example')
+          ...(!PROD ? [path.join(__dirname, 'example')] : [])
         ],
         loaders: [
           ...(!PROD ? ['react-hot'] : []),
@@ -52,9 +55,9 @@ module.exports = validate({
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
+    ...(!PROD ? [new HtmlWebpackPlugin({
       template: 'example/index.html'
-    }),
+    })] : []),
     ...(!PROD ? [new webpack.HotModuleReplacementPlugin()] : []),
     ...(PROD ? [new ExtractTextPlugin('style.css')] : []),
     ...(PROD ? [new webpack.optimize.UglifyJsPlugin({
