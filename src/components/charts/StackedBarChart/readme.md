@@ -26,15 +26,15 @@ const colorScale = d3.scaleOrdinal()
 <Chart
   width="600"
   height="300"
+  xScale={xScale}
+  yScale={yScale}
 >
-  <YAxis yScale={yScaleAxis} />
-  <XAxis xScale={xScaleAxis} />
+  <YAxis />
+  <XAxis />
   <StackedBarChart
     data={data}
     keys={keys}
     x={x}
-    xScale={xScale}
-    yScale={yScale}
     fill={d => {
       return colorScale(d.key)
     }}

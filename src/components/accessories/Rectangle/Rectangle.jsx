@@ -12,9 +12,12 @@ import {
 
 
 const Rectangle = (props) => {
-  const { x, y, xScale, yScale, containerWidth, containerHeight } = props;
+  const { x, y, containerWidth, containerHeight } = props;
   const styles = extractStyles(props);
   const events = extractEvents(props);
+
+  const xScale = this.props.xScale || this.context.xScale;
+  const yScale = this.props.yScale || this.context.yScale;
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -41,8 +44,13 @@ Rectangle.propTypes = {
   ...eventTypes,
   x: PropTypes.array.isRequired,
   y: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
+};
+
+Rectangle.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 export default Rectangle;

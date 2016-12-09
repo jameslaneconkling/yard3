@@ -22,7 +22,9 @@ class LineChart extends React.Component {
   }
 
   update() {
-    const { containerWidth, containerHeight, xScale, yScale, x, y, data } = this.props;
+    const { containerWidth, containerHeight, x, y, data } = this.props;
+    const xScale = this.props.xScale || this.context.xScale;
+    const yScale = this.props.yScale || this.context.yScale;
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
@@ -63,8 +65,8 @@ LineChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func,
   fill: PropTypes.string                  // a sane style default to prevent line from having a fill; propbably don't overwrite
@@ -74,6 +76,11 @@ LineChart.defaultProps = {
   x: d => d.key,
   y: d => d.value,
   fill: 'none'
+};
+
+LineChart.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 export default LineChart;

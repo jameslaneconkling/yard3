@@ -8,6 +8,13 @@ import {
 
 
 export default class Chart extends React.Component {
+  getChildContext() {
+    return {
+      xScale: this.props.xScale,
+      yScale: this.props.yScale
+    };
+  }
+
   render() {
     const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = this.props;
     const containerWidth = width - leftMargin - rightMargin;
@@ -41,7 +48,9 @@ Chart.propTypes = {
   topMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   rightMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   bottomMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  leftMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  leftMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 Chart.defaultProps = {
@@ -49,4 +58,9 @@ Chart.defaultProps = {
   rightMargin: 20,
   bottomMargin: 30,
   leftMargin: 40
+};
+
+Chart.childContextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };

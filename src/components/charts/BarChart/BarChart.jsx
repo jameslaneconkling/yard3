@@ -24,8 +24,10 @@ export default class BarChart extends React.Component {
   }
 
   update() {
-    const { data, x, y, containerWidth, containerHeight, yScale, xScale } = this.props;
+    const { data, x, y, containerWidth, containerHeight } = this.props;
     const $chart = d3.select(this.$chart);
+    const xScale = this.props.xScale || this.context.xScale;
+    const yScale = this.props.yScale || this.context.yScale;
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
@@ -71,8 +73,8 @@ BarChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func
 };
@@ -80,4 +82,9 @@ BarChart.propTypes = {
 BarChart.defaultProps = {
   x: d => d.key,
   y: d => d.value
+};
+
+BarChart.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };

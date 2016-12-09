@@ -19,8 +19,9 @@ export default class YGrid extends React.Component {
   }
 
   update() {
-    const { yScale, containerWidth, containerHeight } = this.props;
+    const { containerWidth, containerHeight } = this.props;
     const $yGrid = d3.select(this.$yGrid);
+    const yScale = this.props.yScale || this.context.yScale;
 
     yScale.rangeRound([containerHeight, 0]);
 
@@ -48,9 +49,13 @@ export default class YGrid extends React.Component {
 
 YGrid.propTypes = {
   ...dynamicStyleTypes,
-  yScale: PropTypes.func.isRequired
+  yScale: PropTypes.func
 };
 
 YGrid.defaultProps = {
   stroke: '#ccc'
+};
+
+YGrid.contextTypes = {
+  yScale: PropTypes.func
 };

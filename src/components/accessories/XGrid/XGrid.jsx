@@ -19,8 +19,9 @@ export default class XGrid extends React.Component {
   }
 
   update() {
-    const { xScale, containerHeight, containerWidth } = this.props;
+    const { containerHeight, containerWidth } = this.props;
     const $xGrid = d3.select(this.$xGrid);
+    const xScale = this.props.xScale || this.context.xScale;
 
     xScale.rangeRound([0, containerWidth]);
 
@@ -48,9 +49,13 @@ export default class XGrid extends React.Component {
 
 XGrid.propTypes = {
   ...dynamicStyleTypes,
-  xScale: PropTypes.func.isRequired
+  xScale: PropTypes.func
 };
 
 XGrid.defaultProps = {
   stroke: '#ccc'
+};
+
+XGrid.contextTypes = {
+  xScale: PropTypes.func
 };

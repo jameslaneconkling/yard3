@@ -22,7 +22,9 @@ class AreaChart extends React.Component {
   }
 
   update() {
-    const { containerWidth, containerHeight, xScale, yScale, x0, x1, y0, y1, data } = this.props;
+    const { containerWidth, containerHeight, x0, x1, y0, y1, data } = this.props;
+    const xScale = this.props.xScale || this.context.xScale;
+    const yScale = this.props.yScale || this.context.yScale;
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
@@ -65,8 +67,8 @@ AreaChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
   x0: PropTypes.func.isRequired,
   x1: PropTypes.func,
   y0: PropTypes.func.isRequired,
@@ -76,6 +78,11 @@ AreaChart.propTypes = {
 AreaChart.defaultProps = {
   x0: d => d.key,
   y0: d => d.value
+};
+
+AreaChart.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 export default AreaChart;

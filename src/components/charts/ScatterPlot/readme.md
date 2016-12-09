@@ -26,11 +26,11 @@ const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 <Chart
   width="600"
   height="300"
+  xScale={xScale}
+  yScale={yScale}
 >
   <ScatterPlot
     data={data.sort((d0, d1) => population(d1) - population(d0))}
-    xScale={xScale}
-    yScale={yScale}
     x={income}
     y={lifeExpectancy}
     r={d => rScale(population(d))}
@@ -39,7 +39,7 @@ const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
     stroke="#444"
     strokeWidth={1}
   />
-  <XAxis xScale={xScale} />
-  <YAxis yScale={yScale} />
+  <XAxis />
+  <YAxis />
 </Chart>
 ```

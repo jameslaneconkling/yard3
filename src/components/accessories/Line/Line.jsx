@@ -13,9 +13,11 @@ import {
 
 
 const Line = (props) => {
-  const { data, xScale, yScale, containerWidth, containerHeight } = props;
+  const { data, containerWidth, containerHeight } = props;
   const styles = extractStyles(props);
   const events = extractEvents(props);
+  const xScale = this.props.xScale || this.context.xScale;
+  const yScale = this.props.yScale || this.context.yScale;
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -39,13 +41,18 @@ Line.propTypes = {
   ...staticStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 Line.defaultProps = {
   fill: 'none',
   stroke: '#000'
+};
+
+Line.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 export default Line;
