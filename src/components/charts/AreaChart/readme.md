@@ -29,17 +29,14 @@ const yScale = d3.scaleLinear()
 <Chart
   width="600"
   height="300"
+  xScale={xScale}
+  yScale={yScale}
 >
-  <YGrid
-    yScale={yScale}
-    strokeDasharray={'2, 3'}
-  />
-  <XAxis xScale={xScale} />
-  <YAxis yScale={yScale} />
+  <YGrid strokeDasharray={'2, 3'} />
+  <XAxis />
+  <YAxis />
   <AreaChart
     data={data}
-    xScale={xScale}
-    yScale={yScale}
     x0={d => new Date(d.date)}
     y0={d => d.high}
     y1={d => d.low}

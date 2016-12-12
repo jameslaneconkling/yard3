@@ -12,10 +12,13 @@ import {
 } from '../../../utils/events';
 
 
-const Line = (props) => {
-  const { data, xScale, yScale, containerWidth, containerHeight } = props;
+const Line = (props, context) => {
+  const { data } = props;
+  const { containerWidth, containerHeight } = context;
   const styles = extractStyles(props);
   const events = extractEvents(props);
+  const xScale = props.xScale || context.xScale;
+  const yScale = props.yScale || context.yScale;
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
@@ -39,13 +42,20 @@ Line.propTypes = {
   ...staticStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 Line.defaultProps = {
   fill: 'none',
   stroke: '#000'
+};
+
+Line.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default Line;

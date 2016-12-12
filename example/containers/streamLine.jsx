@@ -68,30 +68,26 @@ export default class StreamLine extends React.Component {
         <Chart
           width={chartWidth}
           height={chartHeight}
+          xScale={xScale}
+          yScale={yScale}
         >
-          <XAxis xScale={xScale} />
-          <YAxis yScale={yScale} />
+          <XAxis />
+          <YAxis />
           <LineChart
             data={data1}
             x={x}
             y={y}
-            xScale={xScale}
-            yScale={yScale}
             stroke="red"
           />
           <LineChart
             data={data2}
             x={x}
             y={y}
-            xScale={xScale}
-            yScale={yScale}
             stroke="blue"
           />
 
           <Line
             data={[[xDomain[0], 0], [xDomain[1], 0]]}
-            xScale={xScale}
-            yScale={yScale}
             stroke="#888"
             strokeWidth="1"
           />

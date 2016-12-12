@@ -14,15 +14,15 @@ const yScale = d3.scaleLinear()
 <Chart
   width="600"
   height="300"
+  xScale={xScale}
+  yScale={yScale}
 >
-  <XAxis xScale={xScale} />
-  <YAxis yScale={yScale} />
+  <XAxis />
+  <YAxis />
   <BarChart
     data={data}
     x={x}
     y={y}
-    xScale={xScale}
-    yScale={yScale}
     fill="#607D8B"
     stroke={d3.color('#607D8B').darker(1).toString()}
     strokeWidth="0.5"

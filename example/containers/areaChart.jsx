@@ -35,17 +35,14 @@ export default class AreaChartContainer extends React.Component {
         <Chart
           width={chartWidth}
           height={chartHeight}
+          xScale={xScale}
+          yScale={yScale}
         >
-          <YGrid
-            yScale={yScale}
-            strokeDasharray={'2, 3'}
-          />
-          <XAxis xScale={xScale} />
-          <YAxis yScale={yScale} />
+          <YGrid strokeDasharray={'2, 3'} />
+          <XAxis />
+          <YAxis />
           <AreaChart
             data={data}
-            xScale={xScale}
-            yScale={yScale}
             x0={d => d.date}
             y0={d => d.high}
             y1={d => d.low}
@@ -55,17 +52,14 @@ export default class AreaChartContainer extends React.Component {
         <Chart
           width={chartWidth}
           height={chartHeight}
+          xScale={xScale}
+          yScale={yScale}
         >
-          <YGrid
-            yScale={yScale}
-            strokeDasharray={'2, 3'}
-          />
-          <XAxis xScale={xScale} />
-          <YAxis yScale={yScale} />
+          <YGrid strokeDasharray={'2, 3'} />
+          <XAxis />
+          <YAxis />
           <AreaChart
             data={data}
-            xScale={xScale}
-            yScale={yScale}
             x0={d => d.date}
             y0={d => d.high}
             fill={() => 'red'}

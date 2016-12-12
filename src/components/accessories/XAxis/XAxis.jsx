@@ -14,7 +14,8 @@ export default class XAxis extends React.Component {
   }
 
   update() {
-    const { xScale, containerWidth } = this.props;
+    const { containerWidth } = this.context;
+    const xScale = this.props.xScale || this.context.xScale;
     const $xAxis = d3.select(this.$xAxis);
 
     xScale.rangeRound([0, containerWidth]);
@@ -30,12 +31,18 @@ export default class XAxis extends React.Component {
       <g
         ref={(el) => { this.$xAxis = el; }}
         className="xaxis"
-        transform={`translate(0,${this.props.containerHeight})`}
+        transform={`translate(0,${this.context.containerHeight})`}
       />
     );
   }
 }
 
 XAxis.propTypes = {
-  xScale: PropTypes.func.isRequired
+  xScale: PropTypes.func
+};
+
+XAxis.contextTypes = {
+  xScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

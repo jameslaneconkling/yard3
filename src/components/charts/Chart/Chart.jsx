@@ -8,10 +8,22 @@ import {
 
 
 export default class Chart extends React.Component {
+  getChildContext() {
+    const {
+      xScale, yScale,
+      width, leftMargin, rightMargin,
+      height, topMargin, bottomMargin
+    } = this.props;
+    return {
+      xScale,
+      yScale,
+      containerWidth: width - leftMargin - rightMargin,
+      containerHeight: height - topMargin - bottomMargin
+    };
+  }
+
   render() {
-    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = this.props;
-    const containerWidth = width - leftMargin - rightMargin;
-    const containerHeight = height - topMargin - bottomMargin;
+    const { width, height, topMargin, leftMargin } = this.props;
     const events = extractEvents(this.props);
 
     return (
@@ -25,9 +37,7 @@ export default class Chart extends React.Component {
         <g
           transform={`translate(${leftMargin},${topMargin})`}
         >
-          { React.Children.map(this.props.children, child =>
-            React.cloneElement(child, { containerWidth, containerHeight })
-          ) }
+          {this.props.children}
         </g>
       </svg>
     );
@@ -41,7 +51,9 @@ Chart.propTypes = {
   topMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   rightMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   bottomMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  leftMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  leftMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  xScale: PropTypes.func,
+  yScale: PropTypes.func
 };
 
 Chart.defaultProps = {
@@ -49,4 +61,11 @@ Chart.defaultProps = {
   rightMargin: 20,
   bottomMargin: 30,
   leftMargin: 40
+};
+
+Chart.childContextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

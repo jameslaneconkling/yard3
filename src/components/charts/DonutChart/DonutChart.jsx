@@ -22,7 +22,8 @@ class DonutChart extends React.Component {
   }
 
   update() {
-    const { value, data, innerRadius, outerRadius, containerHeight, containerWidth } = this.props;
+    const { value, data, innerRadius, outerRadius } = this.props;
+    const { containerHeight, containerWidth } = this.context;
 
     // TODO - expose sort, sortValue, startAngle, endAngle, padAngle
     const pie = d3.pie()
@@ -55,15 +56,14 @@ class DonutChart extends React.Component {
   }
 
   render() {
-    const { containerWidth, containerHeight, children } = this.props;
+    const { children } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     return (
       <g
         ref={(el) => { this.$chart = el; }}
         transform={`translate(${containerWidth / 2}, ${containerHeight / 2})`}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        {children}
       </g>
     );
   }
@@ -81,6 +81,11 @@ DonutChart.propTypes = {
 DonutChart.defaultProps = {
   value: d => d,
   innerRadius: 40
+};
+
+DonutChart.contextTypes = {
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default DonutChart;

@@ -24,8 +24,11 @@ export default class ScatterPlot extends React.Component {
   }
 
   update() {
-    const { data, x, y, r, containerWidth, containerHeight, yScale, xScale } = this.props;
+    const { data, x, y, r } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
+    const xScale = this.props.xScale || this.context.xScale;
+    const yScale = this.props.yScale || this.context.yScale;
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
@@ -53,15 +56,13 @@ export default class ScatterPlot extends React.Component {
   }
 
   render() {
-    const { containerHeight, containerWidth, children } = this.props;
+    const { children } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -71,8 +72,8 @@ ScatterPlot.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func,
   r: PropTypes.func
@@ -82,4 +83,11 @@ ScatterPlot.defaultProps = {
   x: d => d.key,
   y: d => d.value,
   r: () => 5
+};
+
+ScatterPlot.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

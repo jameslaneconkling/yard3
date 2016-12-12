@@ -24,8 +24,11 @@ export default class BarChart extends React.Component {
   }
 
   update() {
-    const { data, x, y, containerWidth, containerHeight, yScale, xScale } = this.props;
+    const { data, x, y } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
+    const xScale = this.props.xScale || this.context.xScale;
+    const yScale = this.props.yScale || this.context.yScale;
 
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
@@ -53,15 +56,13 @@ export default class BarChart extends React.Component {
   }
 
   render() {
-    const { containerHeight, containerWidth, children } = this.props;
+    const { children } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -71,8 +72,8 @@ BarChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func
 };
@@ -80,4 +81,11 @@ BarChart.propTypes = {
 BarChart.defaultProps = {
   x: d => d.key,
   y: d => d.value
+};
+
+BarChart.contextTypes = {
+  xScale: PropTypes.func,
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
