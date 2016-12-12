@@ -39,39 +39,30 @@ export default class AvgBar extends React.Component {
         <Chart
           width={chartWidth}
           height={chartHeight}
+          xScale={xScale}
+          yScale={yScale}
         >
-          <LineChart
-            data={data}
-            xScale={xScale}
-            yScale={yScale}
-          >
-            <Rectangle
-              x={xExtent}
-              y={[-1, 1]}
-              fill='orange'
-              fillOpacity='0.3'
-              xScale={xScale}
-              yScale={yScale}
-            />
-            <XGrid xScale={xScale} />
-            <YGrid yScale={yScale} />
-            <Line
-              data={[[-10,0], [10,0]]}
-              stroke='red'
-              strokeWidth='5'
-              strokeOpacity='0.3'
-              xScale={xScale}
-              yScale={yScale}
-            />
-            <Line
-              data={[[-10,-0.5], [-2,0.2], [4, -0.1], [10,0.5]]}
-              stroke='red'
-              xScale={xScale}
-              yScale={yScale}
-            />
-            <XAxis xScale={xScale} />
-            <YAxis yScale={yScale} />
-          </LineChart>
+          <LineChart data={data} />
+          <XGrid />
+          <YGrid />
+          <XAxis />
+          <YAxis />
+          <Rectangle
+            x={xExtent}
+            y={[-1, 1]}
+            fill='orange'
+            fillOpacity='0.3'
+          />
+          <Line
+            data={[[-10,0], [10,0]]}
+            stroke='red'
+            strokeWidth='5'
+            strokeOpacity='0.3'
+          />
+          <Line
+            data={[[-10,-0.5], [-2,0.2], [4, -0.1], [10,0.5]]}
+            stroke='red'
+          />
         </Chart>
       </section>
     );

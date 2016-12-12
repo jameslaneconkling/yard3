@@ -43,24 +43,22 @@ const yScale = d3.scaleLinear()
 <Chart
   width="600"
   height="300"
+  xScale={xScale}
+  yScale={yScale}
 >
-  <YGrid yScale={yScale} strokeDasharray={'2, 3'} />
-  <XAxis xScale={xScale} />
-  <YAxis yScale={yScale} />
+  <YGrid strokeDasharray={'2, 3'} />
+  <XAxis />
+  <YAxis />
   <LineChart
     data={data}
     x={x}
     y={nyY}
-    xScale={xScale}
-    yScale={yScale}
     stroke="red"
   />
   <LineChart
     data={data}
     x={x}
     y={sfY}
-    xScale={xScale}
-    yScale={yScale}
     stroke="blue"
   />
 </Chart>

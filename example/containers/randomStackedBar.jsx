@@ -87,18 +87,16 @@ export default class RandomStackedBar extends React.Component {
         <Chart
           width="600"
           height="300"
+          xScale={xScale}
+          yScale={yScale}
         >
-          <YAxis yScale={yScale} />
-          <XAxis xScale={xScale} />
+          <YAxis />
+          <XAxis />
           <StackedBarChart
             data={data}
             keys={keys}
             x={x}
-            xScale={xScale}
-            yScale={yScale}
-            fill={d => {
-              return colorScale(d.key)
-            }}
+            fill={d => colorScale(d.key)}
           />
         </Chart>
 

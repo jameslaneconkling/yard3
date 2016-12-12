@@ -56,11 +56,11 @@ export default class PlotExample extends React.Component {
         <Chart
           width={this.state.chartWidth}
           height={this.state.chartHeight}
+          xScale={xScale}
+          yScale={yScale}
         >
           <ScatterPlot
             data={data.sort((d0, d1) => population(d1) - population(d0))}
-            xScale={xScale}
-            yScale={yScale}
             x={income}
             y={lifeExpectancy}
             r={d => rScale(population(d))}
@@ -69,8 +69,8 @@ export default class PlotExample extends React.Component {
             stroke='#444'
             strokeWidth={1}
           />
-          <XAxis xScale={xScale} />
-          <YAxis yScale={yScale} />
+          <XAxis />
+          <YAxis />
         </Chart>
         <div>
           <button onClick={this.forward}>+</button>
