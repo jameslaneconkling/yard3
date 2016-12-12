@@ -1,3 +1,4 @@
+/* eslint-disable key-spacing */
 import { PropTypes } from 'react';
 
 export const dynamicStyleTypes = {

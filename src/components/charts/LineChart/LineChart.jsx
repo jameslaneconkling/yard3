@@ -68,7 +68,10 @@ LineChart.propTypes = {
   yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func,
-  fill: PropTypes.string                  // a sane style default to prevent line from having a fill; propbably don't overwrite
+  /**
+   * a sane style default to prevent line from having a fill--propbably don't overwrite
+   */
+  fill: PropTypes.string
 };
 
 LineChart.defaultProps = {
