@@ -12,8 +12,9 @@ import {
 } from '../../../utils/events';
 
 
-const Line = (props) => {
-  const { data, containerWidth, containerHeight } = props;
+const Line = (props, context) => {
+  const { data } = props;
+  const { containerWidth, containerHeight } = context;
   const styles = extractStyles(props);
   const events = extractEvents(props);
   const xScale = props.xScale || context.xScale;
@@ -52,7 +53,9 @@ Line.defaultProps = {
 
 Line.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default Line;

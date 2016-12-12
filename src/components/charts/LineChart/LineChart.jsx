@@ -22,7 +22,8 @@ class LineChart extends React.Component {
   }
 
   update() {
-    const { containerWidth, containerHeight, x, y, data } = this.props;
+    const { containerWidth, containerHeight } = this.context;
+    const { x, y, data } = this.props;
     const xScale = this.props.xScale || this.context.xScale;
     const yScale = this.props.yScale || this.context.yScale;
 
@@ -47,15 +48,13 @@ class LineChart extends React.Component {
   }
 
   render() {
-    const { containerWidth, containerHeight, children } = this.props;
+    const { children } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -80,7 +79,9 @@ LineChart.defaultProps = {
 
 LineChart.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default LineChart;

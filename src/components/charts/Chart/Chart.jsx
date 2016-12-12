@@ -9,16 +9,21 @@ import {
 
 export default class Chart extends React.Component {
   getChildContext() {
+    const {
+      xScale, yScale,
+      width, leftMargin, rightMargin,
+      height, topMargin, bottomMargin
+    } = this.props;
     return {
-      xScale: this.props.xScale,
-      yScale: this.props.yScale
+      xScale,
+      yScale,
+      containerWidth: width - leftMargin - rightMargin,
+      containerHeight: height - topMargin - bottomMargin
     };
   }
 
   render() {
-    const { width, height, bottomMargin, topMargin, leftMargin, rightMargin } = this.props;
-    const containerWidth = width - leftMargin - rightMargin;
-    const containerHeight = height - topMargin - bottomMargin;
+    const { width, height, topMargin, leftMargin } = this.props;
     const events = extractEvents(this.props);
 
     return (
@@ -32,9 +37,7 @@ export default class Chart extends React.Component {
         <g
           transform={`translate(${leftMargin},${topMargin})`}
         >
-          { React.Children.map(this.props.children, child =>
-            React.cloneElement(child, { containerWidth, containerHeight })
-          ) }
+          {this.props.children}
         </g>
       </svg>
     );
@@ -62,5 +65,7 @@ Chart.defaultProps = {
 
 Chart.childContextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

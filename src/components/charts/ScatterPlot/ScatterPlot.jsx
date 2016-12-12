@@ -24,7 +24,8 @@ export default class ScatterPlot extends React.Component {
   }
 
   update() {
-    const { data, x, y, r, containerWidth, containerHeight } = this.props;
+    const { data, x, y, r } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
     const xScale = this.props.xScale || this.context.xScale;
     const yScale = this.props.yScale || this.context.yScale;
@@ -55,15 +56,13 @@ export default class ScatterPlot extends React.Component {
   }
 
   render() {
-    const { containerHeight, containerWidth, children } = this.props;
+    const { children } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -88,5 +87,7 @@ ScatterPlot.defaultProps = {
 
 ScatterPlot.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

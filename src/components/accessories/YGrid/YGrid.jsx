@@ -19,7 +19,7 @@ export default class YGrid extends React.Component {
   }
 
   update() {
-    const { containerWidth, containerHeight } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const $yGrid = d3.select(this.$yGrid);
     const yScale = this.props.yScale || this.context.yScale;
 
@@ -57,5 +57,7 @@ YGrid.defaultProps = {
 };
 
 YGrid.contextTypes = {
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

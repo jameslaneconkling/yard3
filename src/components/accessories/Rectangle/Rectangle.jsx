@@ -11,8 +11,9 @@ import {
 } from '../../../utils/events';
 
 
-const Rectangle = (props) => {
-  const { x, y, containerWidth, containerHeight } = props;
+const Rectangle = (props, context) => {
+  const { containerWidth, containerHeight } = context;
+  const { x, y } = props;
   const styles = extractStyles(props);
   const events = extractEvents(props);
 
@@ -50,7 +51,9 @@ Rectangle.propTypes = {
 
 Rectangle.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default Rectangle;

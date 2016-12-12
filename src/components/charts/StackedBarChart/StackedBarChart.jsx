@@ -24,7 +24,8 @@ export default class StackedBarChart extends React.Component {
   }
 
   update() {
-    const { data, x, keys, containerWidth, containerHeight } = this.props;
+    const { data, x, keys } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
     const xScale = this.props.xScale || this.context.xScale;
     const yScale = this.props.yScale || this.context.yScale;
@@ -78,7 +79,7 @@ export default class StackedBarChart extends React.Component {
   }
 
   render() {
-    const { containerHeight, containerWidth, children, keys } = this.props;
+    const { children, keys } = this.props;
 
     return (
       <g
@@ -91,9 +92,7 @@ export default class StackedBarChart extends React.Component {
           />
         ))}
 
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -115,5 +114,7 @@ StackedBarChart.defaultProps = {
 
 StackedBarChart.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

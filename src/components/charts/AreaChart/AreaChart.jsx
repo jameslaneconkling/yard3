@@ -22,7 +22,8 @@ class AreaChart extends React.Component {
   }
 
   update() {
-    const { containerWidth, containerHeight, x0, x1, y0, y1, data } = this.props;
+    const { x0, x1, y0, y1, data } = this.props;
+    const { containerWidth, containerHeight } = this.context;
     const xScale = this.props.xScale || this.context.xScale;
     const yScale = this.props.yScale || this.context.yScale;
 
@@ -49,15 +50,13 @@ class AreaChart extends React.Component {
   }
 
   render() {
-    const { containerWidth, containerHeight, children } = this.props;
+    const { children } = this.props;
 
     return (
       <g
         ref={(el) => { this.$chart = el; }}
       >
-        { React.Children.map(children, child =>
-          React.cloneElement(child, { containerWidth, containerHeight })
-        ) }
+        { children }
       </g>
     );
   }
@@ -82,7 +81,9 @@ AreaChart.defaultProps = {
 
 AreaChart.contextTypes = {
   xScale: PropTypes.func,
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default AreaChart;

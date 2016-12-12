@@ -19,7 +19,7 @@ export default class XGrid extends React.Component {
   }
 
   update() {
-    const { containerHeight, containerWidth } = this.props;
+    const { containerHeight, containerWidth } = this.context;
     const $xGrid = d3.select(this.$xGrid);
     const xScale = this.props.xScale || this.context.xScale;
 
@@ -57,5 +57,7 @@ XGrid.defaultProps = {
 };
 
 XGrid.contextTypes = {
-  xScale: PropTypes.func
+  xScale: PropTypes.func,
+  containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

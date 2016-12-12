@@ -14,7 +14,7 @@ export default class YAxis extends React.Component {
   }
 
   update() {
-    const { containerHeight } = this.props;
+    const { containerHeight } = this.context;
     const $yAxis = d3.select(this.$yAxis);
     const yScale = this.props.yScale || this.context.yScale;
 
@@ -41,4 +41,7 @@ YAxis.propTypes = {
   yScale: PropTypes.func
 };
 
-YAxis.contextTypes = YAxis.propTypes;
+YAxis.contextTypes = {
+  yScale: PropTypes.func,
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+};
