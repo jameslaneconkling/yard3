@@ -16,8 +16,8 @@ const Rectangle = (props) => {
   const styles = extractStyles(props);
   const events = extractEvents(props);
 
-  const xScale = this.props.xScale || this.context.xScale;
-  const yScale = this.props.yScale || this.context.yScale;
+  const xScale = props.xScale || context.xScale;
+  const yScale = props.yScale || context.yScale;
 
   xScale.rangeRound([0, containerWidth]);
   yScale.rangeRound([containerHeight, 0]);
