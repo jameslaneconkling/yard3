@@ -43,10 +43,9 @@ export const extractEvents = props => (
     ['onMouseUp', props.onMouseUp]
   ]
     .filter(tuple => tuple[1])
-    .reduce((eventObj, [key, value]) => {
-      eventObj[key] = value;
-      return eventObj;
-    }, {})
+    .reduce((eventObj, [key, value]) =>
+      Object.assign(eventObj, { [key]: value }),
+    {})
 );
 
 export const applyEvents2Selection = (events, selection) => {
