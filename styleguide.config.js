@@ -8,6 +8,7 @@ module.exports = {
   sections: [
     {
       name: 'Charts',
+      content: 'src/components/charts/readme.md',
       components: 'src/components/charts/**/*.jsx'
     },
     {
