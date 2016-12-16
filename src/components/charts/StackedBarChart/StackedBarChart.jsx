@@ -103,7 +103,7 @@ StackedBarChart.propTypes = {
   ...eventTypes,
   data: PropTypes.array.isRequired,
   keys: PropTypes.arrayOf(
-    PropTypes.oneOfType(PropTypes.string, PropTypes.number)
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
   xScale: PropTypes.func,
   yScale: PropTypes.func,
