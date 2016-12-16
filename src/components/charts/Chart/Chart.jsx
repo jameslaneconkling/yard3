@@ -5,6 +5,10 @@ import {
   eventTypes,
   extractEvents
 } from '../../../utils/events';
+import {
+  styleTypes,
+  extractStyles
+} from '../../../utils/styles';
 
 
 export default class Chart extends React.Component {
@@ -25,9 +29,11 @@ export default class Chart extends React.Component {
   render() {
     const { width, height, topMargin, leftMargin } = this.props;
     const events = extractEvents(this.props);
+    const styles = extractStyles(this.props);
 
     return (
       <svg
+        {...styles}
         {...events}
         ref={(el) => { this.svg = el; }}
         width={width}
@@ -46,6 +52,7 @@ export default class Chart extends React.Component {
 
 Chart.propTypes = {
   ...eventTypes,
+  ...styleTypes,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   topMargin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
