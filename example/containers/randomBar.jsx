@@ -24,6 +24,10 @@ export default class RandomBar extends React.Component {
     this.remove = this.remove.bind(this);
     this.shrink = this.shrink.bind(this);
     this.grow = this.grow.bind(this);
+
+    // this.showTooltip = this.showTooltip.bind(this);
+    this.moveTooltip = this.moveTooltip.bind(this);
+    this.hideTooltip = this.hideTooltip.bind(this);
   }
 
   randomize() {
@@ -53,6 +57,19 @@ export default class RandomBar extends React.Component {
     this.setState({ chartWidth: this.state.chartWidth + 80 });
   }
 
+  // showTooltip() {
+  //   this.setState({ shouldShowTooltip: true });
+  // }
+
+  moveTooltip() {
+    const { clientX: x, clientY: y } = d3.event;
+    this.setState({ tooltipPosition: [`${x}px`, `${y - 20}px`] });
+  }
+
+  hideTooltip() {
+    this.setState({ tooltipPosition: false });
+  }
+
   render() {
     const { data } = this.state;
 
@@ -68,6 +85,15 @@ export default class RandomBar extends React.Component {
       <section>
         <h2>Chart 1</h2>
 
+        {this.state.tooltipPosition &&
+          <div
+            ref={(el) => { this.tooltip = el; }}
+            style={{ position: 'absolute', top: this.state.tooltipPosition[1], left: this.state.tooltipPosition[0] }}
+          >
+            <strong>xy - {this.state.tooltipPosition[0]} : {this.state.tooltipPosition[1]}</strong>
+          </div>
+        }
+
         <Chart
           width={this.state.chartWidth}
           height={this.state.chartHeight}
@@ -75,10 +101,13 @@ export default class RandomBar extends React.Component {
           xScale={xScale}
           yScale={yScale}
         >
+
           <XAxis />
           <BarChart
             data={this.state.data}
             fill="#607D8B"
+            onMouseMove={this.moveTooltip}
+            onMouseOut={this.hideTooltip}
           />
         </Chart>
 
