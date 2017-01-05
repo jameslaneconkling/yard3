@@ -14,6 +14,7 @@ import XAxis from './components/accessories/XAxis';
 import YAxis from './components/accessories/YAxis';
 import XGrid from './components/accessories/XGrid';
 import YGrid from './components/accessories/YGrid';
+import Tooltip from './components/accessories/Tooltip';
 
 export {
   Chart,
@@ -28,5 +29,6 @@ export {
   XAxis,
   YAxis,
   XGrid,
-  YGrid
+  YGrid,
+  Tooltip
 };
