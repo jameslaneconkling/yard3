@@ -3,21 +3,25 @@ import React, {
 } from 'react';
 
 
-const Tooltip = ({ x, y, xOffset, yOffset, children }) => (
-  (typeof x === 'number' || typeof x === 'string') &&
-  (typeof y === 'number' || typeof y === 'string') ?
-    <div
-      style={{
-        position: 'absolute',
-        top: y + yOffset,
-        left: x + xOffset,
-        pointerEvents: 'none'
-      }}
-    >
-      { children }
-    </div>
-  : <noscript />
-);
+const Tooltip = ({ x, y, xOffset, yOffset, children }) => {
+  if (typeof x === 'number' && typeof y === 'number') {
+    return (
+      <div
+        className="yard3-tooltip"
+        style={{
+          position: 'absolute',
+          top: y + yOffset,
+          left: x + xOffset,
+          pointerEvents: 'none'
+        }}
+      >
+        { children }
+      </div>
+    );
+  }
+
+  return <noscript />;
+};
 
 Tooltip.propTypes = {
   x: PropTypes.number,
