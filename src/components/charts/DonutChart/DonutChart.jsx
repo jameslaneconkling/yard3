@@ -22,18 +22,27 @@ class DonutChart extends React.Component {
   }
 
   update() {
-    const { value, data, innerRadius, outerRadius } = this.props;
+    let { outerRadius, innerRadius } = this.props;
+    const { value, data } = this.props;
     const { containerHeight, containerWidth } = this.context;
 
     // TODO - expose sort, sortValue, startAngle, endAngle, padAngle
     const pie = d3.pie()
       .value(value);
 
+    // TODO - figure out where to store styles for tooltip and create default styles
+    var tt = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style('position', 'absolute')
+      .style("opacity", 0);
+
     // TODO - this doens't need to be recreated w/ each update,
     // unless innerRadius/outerRadius change
+    outerRadius = outerRadius || (Math.min(containerHeight, containerWidth) - 10) / 2;
+    innerRadius = innerRadius || outerRadius - 40;
     const arc = d3.arc()
       .innerRadius(innerRadius)
-      .outerRadius(outerRadius || (Math.min(containerHeight, containerWidth) - 10) / 2);
+      .outerRadius(outerRadius);
 
     const $chart = d3.select(this.$chart);
     const update = $chart.selectAll('.slice')
@@ -44,6 +53,19 @@ class DonutChart extends React.Component {
     enter
       .append('path')
       .attr('class', 'slice')
+      .on("mouseover", function(d) {
+        tt.transition()
+          .duration(200)
+          .style("opacity", .9);
+        tt.html(d.value.toFixed(2))
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+        tt.transition()
+          .duration(200)
+          .style("opacity", 0);
+      })
     .merge(update)
       .attr('d', d => arc(d));
 
@@ -69,18 +91,18 @@ class DonutChart extends React.Component {
   }
 }
 
+// TODO - add showTooltip bool as well as tooltip map func data => tooltipHtml
 DonutChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
   value: PropTypes.func,
   innerRadius: PropTypes.number,
-  outerRadius: PropTypes.number
+  outerRadius: PropTypes.number,
 };
 
 DonutChart.defaultProps = {
-  value: d => d,
-  innerRadius: 40
+  value: d => d
 };
 
 DonutChart.contextTypes = {
