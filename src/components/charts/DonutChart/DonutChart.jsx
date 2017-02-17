@@ -22,19 +22,13 @@ class DonutChart extends React.Component {
   }
 
   update() {
-    let { outerRadius, innerRadius } = this.props;
+    let { outerRadius, innerRadius, centerText, centerLabel } = this.props;
     const { value, data } = this.props;
     const { containerHeight, containerWidth } = this.context;
 
     // TODO - expose sort, sortValue, startAngle, endAngle, padAngle
     const pie = d3.pie()
       .value(value);
-
-    // TODO - figure out where to store styles for tooltip and create default styles
-    var tt = d3.select("body").append("div")
-      .attr("class", "tooltip")
-      .style('position', 'absolute')
-      .style("opacity", 0);
 
     // TODO - this doens't need to be recreated w/ each update,
     // unless innerRadius/outerRadius change
@@ -53,21 +47,28 @@ class DonutChart extends React.Component {
     enter
       .append('path')
       .attr('class', 'slice')
-      .on("mouseover", function(d) {
-        tt.transition()
-          .duration(200)
-          .style("opacity", .9);
-        tt.html(d.value.toFixed(2))
-          .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY - 28) + "px");
-      })
-      .on("mouseout", function(d) {
-        tt.transition()
-          .duration(200)
-          .style("opacity", 0);
-      })
     .merge(update)
       .attr('d', d => arc(d));
+
+    enter
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('dy', +10)
+      .style('font-size', 24)
+      .text(function(d) {
+        return centerText;
+      });
+
+    enter
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('fill', '#aaa')
+      .attr('dy', function(d) {
+        return -20;
+      })
+      .text(function(d) {
+        return centerLabel;
+      });
 
     const slices = $chart.selectAll('.slice');
     applyStyles2Selection(extractStyles(this.props), slices);
@@ -99,10 +100,14 @@ DonutChart.propTypes = {
   value: PropTypes.func,
   innerRadius: PropTypes.number,
   outerRadius: PropTypes.number,
+  centerText: PropTypes.string,
+  centerLabel: PropTypes.string
 };
 
 DonutChart.defaultProps = {
-  value: d => d
+  value: d => d,
+  centerText: null,
+  centerLabel: null
 };
 
 DonutChart.contextTypes = {
