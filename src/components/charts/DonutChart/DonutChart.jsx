@@ -22,7 +22,8 @@ class DonutChart extends React.Component {
   }
 
   update() {
-    const { value, data, innerRadius, outerRadius } = this.props;
+    let { outerRadius, innerRadius, centerText, centerLabel } = this.props;
+    const { value, data } = this.props;
     const { containerHeight, containerWidth } = this.context;
 
     // TODO - expose sort, sortValue, startAngle, endAngle, padAngle
@@ -31,9 +32,11 @@ class DonutChart extends React.Component {
 
     // TODO - this doens't need to be recreated w/ each update,
     // unless innerRadius/outerRadius change
+    outerRadius = outerRadius || (Math.min(containerHeight, containerWidth) - 10) / 2;
+    innerRadius = innerRadius || outerRadius - 40;
     const arc = d3.arc()
       .innerRadius(innerRadius)
-      .outerRadius(outerRadius || (Math.min(containerHeight, containerWidth) - 10) / 2);
+      .outerRadius(outerRadius);
 
     const $chart = d3.select(this.$chart);
     const update = $chart.selectAll('.slice')
@@ -46,6 +49,26 @@ class DonutChart extends React.Component {
       .attr('class', 'slice')
     .merge(update)
       .attr('d', d => arc(d));
+
+    enter
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('dy', +10)
+      .style('font-size', 24)
+      .text(function(d) {
+        return centerText;
+      });
+
+    enter
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('fill', '#aaa')
+      .attr('dy', function(d) {
+        return -20;
+      })
+      .text(function(d) {
+        return centerLabel;
+      });
 
     const slices = $chart.selectAll('.slice');
     applyStyles2Selection(extractStyles(this.props), slices);
@@ -69,18 +92,22 @@ class DonutChart extends React.Component {
   }
 }
 
+// TODO - add showTooltip bool as well as tooltip map func data => tooltipHtml
 DonutChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
   value: PropTypes.func,
   innerRadius: PropTypes.number,
-  outerRadius: PropTypes.number
+  outerRadius: PropTypes.number,
+  centerText: PropTypes.string,
+  centerLabel: PropTypes.string
 };
 
 DonutChart.defaultProps = {
   value: d => d,
-  innerRadius: 40
+  centerText: null,
+  centerLabel: null
 };
 
 DonutChart.contextTypes = {
