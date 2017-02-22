@@ -52,7 +52,7 @@
     "webpack-dev-server": "^1.16.2",
     "webpack-validator": "^2.2.9"
   },
-  "peerDependencies": {
+  "dependencies": {
     "d3": "^4.3.0",
     "react": "^0.14.7"
   },
