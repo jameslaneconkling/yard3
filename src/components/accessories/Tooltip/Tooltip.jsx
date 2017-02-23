@@ -12,7 +12,10 @@ const Tooltip = ({ x, y, xOffset, yOffset, children }) => {
           position: 'absolute',
           top: y + yOffset,
           left: x + xOffset,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          color: '#333',
+          fontWeight: 'bold',
+          zIndex: 9999999,
         }}
       >
         { children }
