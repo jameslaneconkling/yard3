@@ -100,7 +100,7 @@ DonutChart.propTypes = {
   value: PropTypes.func,
   innerRadius: PropTypes.number,
   outerRadius: PropTypes.number,
-  centerText: PropTypes.string,
+  centerText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   centerLabel: PropTypes.string
 };
 
