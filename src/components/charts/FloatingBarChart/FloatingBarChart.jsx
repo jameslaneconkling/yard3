@@ -24,7 +24,7 @@ export default class FloatingBarChart extends React.Component {
   }
 
   update() {
-    const { data, x, yTop, yBottom } = this.props;
+    const { data, x, yTop, yBottom, yTopLabel } = this.props;
     const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
     const xScale = this.props.xScale || this.context.xScale;
@@ -46,6 +46,26 @@ export default class FloatingBarChart extends React.Component {
       .attr('height', d => containerHeight - yScale(yTop(d)) - (containerHeight - yScale(yBottom(d))))
       .attr('x', d => xScale(x(d)))
       .attr('y', d => yScale(yTop(d)));
+
+    $chart
+      .selectAll('.bar-top-label')
+      .data(data)
+      .enter()
+      .append('text')
+      .classed('bar-label', true)
+      .attr('y', function(d, i) {
+        return yScale(yTop(d));
+      })
+      .attr('x', function(d, i) {
+        return xScale(x(d));
+      })
+      .attr('dx', function(d, i) {
+        return 5
+      })
+      .attr('dy', -5)
+      .text(function(d, i) {
+        return yTopLabel(d);
+      });
 
     const bars = $chart.selectAll('.bar');
     applyStyles2Selection(extractStyles(this.props), bars);
@@ -82,13 +102,19 @@ FloatingBarChart.propTypes = {
   yScale: PropTypes.func,
   x: PropTypes.func,
   yTop: PropTypes.func,
-  yBottom: PropTypes.func
+  yBottom: PropTypes.func,
+  yTopLabel: PropTypes.func,
+  yBottomLabel: PropTypes.func,
+  // tooltipText: PropTypes.func,
 };
 
 FloatingBarChart.defaultProps = {
   x: d => d.key,
   yTop: d => d.topValue,
-  yBottom: d => d.bottomValue
+  yBottom: d => d.bottomValue,
+  yTopLabel: d => d.topLabel,
+  yBottomLabel: d => d.bottomLabel,
+  // tooltipText: d => `${d.bottomLabel} - ${d.topLabel}`,
 };
 
 FloatingBarChart.contextTypes = {
