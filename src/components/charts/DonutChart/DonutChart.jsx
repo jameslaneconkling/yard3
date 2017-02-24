@@ -52,6 +52,7 @@ class DonutChart extends React.Component {
 
     enter
       .append('text')
+      .classed('yard3-donut-chart-value', true)
       .style('text-anchor', 'middle')
       .attr('dy', +10)
       .style('font-size', 24)
@@ -61,6 +62,7 @@ class DonutChart extends React.Component {
 
     enter
       .append('text')
+      .classed('yard3-donut-chart-label', true)
       .style('text-anchor', 'middle')
       .attr('fill', '#aaa')
       .attr('dy', function(d) {

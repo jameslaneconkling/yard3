@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = {
   title: 'YARD3',
 
+  serverPort: 4000,
+
   styleguideDir: 'docs',
 
   sections: [
