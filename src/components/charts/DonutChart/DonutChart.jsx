@@ -55,7 +55,6 @@ class DonutChart extends React.Component {
       .classed('yard3-donut-chart-value', true)
       .style('text-anchor', 'middle')
       .attr('dy', +10)
-      .style('font-size', 24)
       .text(function(d) {
         return centerText;
       });
