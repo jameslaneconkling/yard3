@@ -1,4 +1,6 @@
-All charts and accessories should be nested within a containing `<Chart>` element.  Internally, the Chart component defines the visualization's width, height, and margins, as well as the default styles, passing these properties to all children.
+All charts and accessories should be nested within a containing `<Chart>` element.
+
+Internally, the Chart component defines the visualization's width, height, and margins, as well as the default styles, passing these properties to all children.
 
 ```
 const d3 = require('d3');

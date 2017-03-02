@@ -7,8 +7,11 @@ module.exports = {
 
   sections: [
     {
-      name: 'Charts',
-      content: 'src/components/charts/readme.md',
+      name: 'YARD3',
+      content: 'src/components/container/readme.md',
+      components: 'src/components/container/Chart/Chart.jsx'
+    },
+    {
       components: 'src/components/charts/**/*.jsx'
     },
     {
