@@ -54,23 +54,19 @@ export default class FloatingBarChart extends React.Component {
       .append('text')
       .classed('bar-top-label', true);
 
-
     $chart
       .selectAll('.bar-top-label')
+      .attr('text-anchor', 'middle')
       .attr('y', function(d, i) {
         return yScale(yTop(d));
       })
       .attr('x', function(d, i) {
-        return xScale(x(d));
-      })
-      .attr('dx', function(d, i) {
-        return 5
+        return xScale(x(d)) + (xScale.bandwidth() / 2);
       })
       .attr('dy', -5)
       .text(function(d, i) {
         return yTopLabel(d);
       });
-
 
     $chart
       .selectAll('.bar-top-label')
@@ -90,7 +86,9 @@ export default class FloatingBarChart extends React.Component {
 
     return (
       <g
-        ref={(el) => { this.$chart = el; }}
+        ref={(el) => {
+          this.$chart = el;
+        }}
       >
         { children }
       </g>
