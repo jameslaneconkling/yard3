@@ -14,7 +14,7 @@ import {
 } from '../../../utils/events';
 
 
-export default class GroupedBarChart extends React.Component {
+export default class GroupedStackedBarChart extends React.Component {
   componentDidMount() {
     this.update();
   }
@@ -24,62 +24,64 @@ export default class GroupedBarChart extends React.Component {
   }
 
   update() {
-    console.log('update');
-    const { data, xScale, yScale, groupKey, xGroupScale, colorScale, keys, x, y } = this.props;
+    const {
+      data,
+      xScale,
+      yScale,
+      groupKey,
+      xGroupScale,
+      colorScale,
+      keys,
+      stackKeys,
+      x,
+      y
+    } = this.props;
+
     const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
-
-    console.log($chart);
-
-    // const groupKey = d => d.State;
-    //
-    // const xGroupScale = d3
-    //  .scaleBand()
-    //  .padding(0.1)
-    //  .domain(data.map(groupKey));
-    //
-    // const xScale = d3
-    //  .scaleBand()
-    //  .padding(0.1)
-    //  .domain(keys);
-    //
-    // const yScale = d3
-    //  .scaleLinear()
-    //  .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]);
-    //
-    // const colorScale = d3.scaleOrdinal()
-    //  .range(['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown']);
 
     xGroupScale.rangeRound([0, containerWidth]);
     xScale.rangeRound([0, xGroupScale.bandwidth()]);
     yScale.rangeRound([containerHeight, 0]);
-
-    // const update = $chart
-    //   .selectAll('.chart-group')
-    //   .data(data);
-
-
-    // const enter = update.enter();
-    // const exit = update.exit();
-
-    console.log('here');
 
     // create groups
     $chart
       .selectAll('g')
       .data(data)
       .enter()
+      // create group for every state
       .append('g')
-        .attr('transform', d => `translate(${xGroupScale(groupKey(d))}, 0)`)
-      .selectAll('rect')
-      .data(d => keys.map(key => ({ key, value: d[key] })))
+      .attr('transform', d => `translate(${xGroupScale(groupKey(d))}, 0)`)
+      .classed('state-group', true)
+      .selectAll('g')
+      .data((d) => {
+        return keys.map(key => ({ key, value: d[key] }));
+      })
       .enter()
-        .append('rect')
-        .attr('width', xScale.bandwidth())
-        .attr('height', d => containerHeight - yScale(y(d)))
-        .attr('x', d => xScale(x(d)))
-        .attr('y', d => yScale(y(d)))
-        .attr('fill', d => colorScale(x(d)));
+      // create group for every age group
+      .append('g')
+      .attr('transform', d => `translate(${xScale(x(d))}, 0)`)
+      .classed('age-group', true)
+      .selectAll('.age-group')
+      .data((d) => {
+        let currentTop = 0;
+        const toReturn = stackKeys.map((stackKey) => {
+          const value = d.value[stackKey];
+          const newTop = currentTop + value;
+          const mapped = { stackKey, value, yTop: newTop, yBottom: currentTop };
+          currentTop = newTop;
+          return mapped;
+        });
+        return toReturn;
+      })
+      .enter()
+      .append('rect')
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => containerHeight - yScale(d.value))
+      .attr('x', d => xScale(x(d)))
+      .attr('y', d => yScale(d.yTop))
+      .attr('fill', d => colorScale(d.stackKey))
+      .classed('age-group', true);
 
     const bars = $chart.selectAll('.bar');
     applyStyles2Selection(extractStyles(this.props), bars);
@@ -104,7 +106,7 @@ export default class GroupedBarChart extends React.Component {
   }
 }
 
-GroupedBarChart.propTypes = {
+GroupedStackedBarChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
@@ -112,19 +114,20 @@ GroupedBarChart.propTypes = {
   yScale: PropTypes.func,
   groupKey: PropTypes.func,
   keys: PropTypes.arrayOf(PropTypes.string),
+  stackKeys: PropTypes.arrayOf(PropTypes.string),
   xGroupScale: PropTypes.func,
   colorScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func
 };
 
-GroupedBarChart.defaultProps = {
+GroupedStackedBarChart.defaultProps = {
   x: d => d.key,
   y: d => d.value
 };
 
 
-GroupedBarChart.contextTypes = {
+GroupedStackedBarChart.contextTypes = {
   xScale: PropTypes.func,
   yScale: PropTypes.func,
   containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
