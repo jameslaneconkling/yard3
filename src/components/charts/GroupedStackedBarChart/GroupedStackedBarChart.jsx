@@ -33,8 +33,7 @@ export default class GroupedStackedBarChart extends React.Component {
       colorScale,
       keys,
       stackKeys,
-      x,
-      y
+      x
     } = this.props;
 
     const { containerWidth, containerHeight } = this.context;
