@@ -3,6 +3,8 @@
 // export { default as XAxis } from './components/XAxis';
 import Chart from './components/charts/Chart';
 import BarChart from './components/charts/BarChart';
+import GroupedBarChart from './components/charts/GroupedBarChart';
+import GroupedStackedBarChart from './components/charts/GroupedStackedBarChart';
 import FloatingBarChart from './components/charts/FloatingBarChart';
 import StackedBarChart from './components/charts/StackedBarChart';
 import LineChart from './components/charts/LineChart';
@@ -20,6 +22,8 @@ import Tooltip from './components/accessories/Tooltip';
 export {
   Chart,
   BarChart,
+  GroupedBarChart,
+  GroupedStackedBarChart,
   FloatingBarChart,
   StackedBarChart,
   LineChart,
