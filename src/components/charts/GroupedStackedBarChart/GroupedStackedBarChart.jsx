@@ -100,7 +100,7 @@ export default class GroupedStackedBarChart extends React.Component {
       .enter()
       .append('rect')
       .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - d.valueScaled)
+      .attr('height', d => (containerHeight - d.valueScaled) || 1)
       .attr('x', d => xScale(x(d)))
       .attr('y', d => d.yTopScaled)
       .attr('fill', d => colorScale(d.blockKey))
