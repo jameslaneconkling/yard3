@@ -28,11 +28,8 @@ export default class GroupedStackedBarChart extends React.Component {
       data,
       xScale,
       yScale,
-      groupKey,
       xGroupScale,
       colorScale,
-      keys,
-      stackKeys,
       x
     } = this.props;
 
@@ -50,29 +47,44 @@ export default class GroupedStackedBarChart extends React.Component {
       .enter()
       // create group for every state
       .append('g')
-      .attr('transform', d => `translate(${xGroupScale(groupKey(d))}, 0)`)
-      .classed('state-group', true)
+      .attr('transform', d => {
+        // console.log(d);
+        return `translate(${xGroupScale(d.groupKey)}, 0)`
+      })
+      .classed('group', true)
       .selectAll('g')
       .data((d) => {
-        return keys.map(key => ({ key, value: d[key] }));
+        // console.log(d);
+        return d.data.map(bar => {
+          // console.log(bar);
+          return {
+            key: bar.barKey,
+            data: bar.data
+          }
+        });
       })
       .enter()
       // create group for every age group
       .append('g')
-      .attr('transform', d => `translate(${xScale(x(d))}, 0)`)
+      .attr('transform', d => {
+        // console.log(d);
+        // console.log(x(d));
+        // console.log(xScale(x(d)));
+        return `translate(${xScale(x(d))}, 0)`
+      })
       .classed('age-group', true)
       .selectAll('.age-group')
       .data((d) => {
         let currentTop = 0;
         let currentTopScaled = yScale(currentTop);
-        return stackKeys.map((stackKey) => {
-          const value = d.value[stackKey];
+        return d.data.map((block) => {
+          const value = block.value;
           const valueScaled = yScale(value);
           const newTop = currentTop + value;
           const scaledHeight = containerHeight - valueScaled;
           const newTopScaled = currentTopScaled - scaledHeight;
           const mapped = {
-            stackKey,
+            blockKey: block.blockKey,
             value,
             valueScaled,
             yTop: newTop,
@@ -91,7 +103,7 @@ export default class GroupedStackedBarChart extends React.Component {
       .attr('height', d => containerHeight - d.valueScaled)
       .attr('x', d => xScale(x(d)))
       .attr('y', d => d.yTopScaled)
-      .attr('fill', d => colorScale(d.stackKey))
+      .attr('fill', d => colorScale(d.blockKey))
       .classed('age-group', true);
 
     const bars = $chart.selectAll('.bar');
@@ -120,21 +132,25 @@ export default class GroupedStackedBarChart extends React.Component {
 GroupedStackedBarChart.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
+
+  // keys: PropTypes.arrayOf(PropTypes.string),
+  // stackKeys: PropTypes.arrayOf(PropTypes.string),
+  // groupKey: PropTypes.func,
+
+  xGroupScale: PropTypes.func,
   xScale: PropTypes.func,
   yScale: PropTypes.func,
-  groupKey: PropTypes.func,
-  keys: PropTypes.arrayOf(PropTypes.string),
-  stackKeys: PropTypes.arrayOf(PropTypes.string),
-  xGroupScale: PropTypes.func,
   colorScale: PropTypes.func,
+
   x: PropTypes.func,
   y: PropTypes.func
 };
 
 GroupedStackedBarChart.defaultProps = {
   x: d => d.key,
-  y: d => d.value
+  y: d => d.value,
+  data: [],
 };
 
 
