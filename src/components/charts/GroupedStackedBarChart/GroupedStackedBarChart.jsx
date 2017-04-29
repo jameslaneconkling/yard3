@@ -99,6 +99,7 @@ export default class GroupedStackedBarChart extends React.Component {
       })
       .enter()
       .append('rect')
+      .classed('block', true)
       .attr('width', xScale.bandwidth())
       .attr('height', d => (containerHeight - d.valueScaled) || 1)
       .attr('x', d => xScale(x(d)))
@@ -106,9 +107,9 @@ export default class GroupedStackedBarChart extends React.Component {
       .attr('fill', d => colorScale(d.blockKey))
       .classed('age-group', true);
 
-    const bars = $chart.selectAll('.bar');
-    applyStyles2Selection(extractStyles(this.props), bars);
-    applyEvents2Selection(extractEvents(this.props), bars);
+    const blocks = $chart.selectAll('.block');
+    applyStyles2Selection(extractStyles(this.props), blocks);
+    applyEvents2Selection(extractEvents(this.props), blocks);
 
     // exit
     //   .remove();
