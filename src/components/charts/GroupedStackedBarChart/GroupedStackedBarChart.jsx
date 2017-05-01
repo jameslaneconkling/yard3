@@ -13,7 +13,6 @@ import {
   applyEvents2Selection
 } from '../../../utils/events';
 
-
 export default class GroupedStackedBarChart extends React.Component {
   componentDidMount() {
     this.update();
@@ -48,15 +47,12 @@ export default class GroupedStackedBarChart extends React.Component {
       // create group for every state
       .append('g')
       .attr('transform', d => {
-        // console.log(d);
         return `translate(${xGroupScale(d.groupKey)}, 0)`
       })
       .classed('group', true)
       .selectAll('g')
       .data((d) => {
-        // console.log(d);
         return d.data.map(bar => {
-          // console.log(bar);
           return {
             key: bar.barKey,
             data: bar.data
@@ -64,16 +60,12 @@ export default class GroupedStackedBarChart extends React.Component {
         });
       })
       .enter()
-      // create group for every age group
       .append('g')
       .attr('transform', d => {
-        // console.log(d);
-        // console.log(x(d));
-        // console.log(xScale(x(d)));
         return `translate(${xScale(x(d))}, 0)`
       })
-      .classed('age-group', true)
-      .selectAll('.age-group')
+      .classed('bar', true)
+      .selectAll('.bar')
       .data((d) => {
         let currentTop = 0;
         let currentTopScaled = yScale(currentTop);
@@ -104,8 +96,14 @@ export default class GroupedStackedBarChart extends React.Component {
       .attr('height', d => (containerHeight - d.valueScaled) || 1)
       .attr('x', d => xScale(x(d)))
       .attr('y', d => d.yTopScaled)
-      .attr('fill', d => colorScale(d.blockKey))
-      .classed('age-group', true);
+      .attr('fill', d => {
+        console.log('a');
+        console.log(d.blockKey);
+        const color = colorScale(d.blockKey);
+        console.log(color);
+        return color;
+      })
+      .classed('bar', true);
 
     const blocks = $chart.selectAll('.block');
     applyStyles2Selection(extractStyles(this.props), blocks);
@@ -135,10 +133,6 @@ GroupedStackedBarChart.propTypes = {
   ...eventTypes,
   data: PropTypes.array,
 
-  // keys: PropTypes.arrayOf(PropTypes.string),
-  // stackKeys: PropTypes.arrayOf(PropTypes.string),
-  // groupKey: PropTypes.func,
-
   xGroupScale: PropTypes.func,
   xScale: PropTypes.func,
   yScale: PropTypes.func,
@@ -153,7 +147,6 @@ GroupedStackedBarChart.defaultProps = {
   y: d => d.value,
   data: [],
 };
-
 
 GroupedStackedBarChart.contextTypes = {
   xScale: PropTypes.func,
