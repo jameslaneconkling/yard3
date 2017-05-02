@@ -29,6 +29,7 @@ export default class GroupedStackedBarChart extends React.Component {
       yScale,
       xGroupScale,
       colorScale,
+      mouseEventSelector,
       x
     } = this.props;
 
@@ -44,32 +45,20 @@ export default class GroupedStackedBarChart extends React.Component {
       .selectAll('g')
       .data(data)
       .enter()
-      // create group for every state
       .append('g')
-      .attr('transform', d => {
-        return `translate(${xGroupScale(d.groupKey)}, 0)`
-      })
+      .attr('transform', d => `translate(${xGroupScale(d.groupKey)}, 0)`)
       .classed('group', true)
       .selectAll('g')
-      .data((d) => {
-        return d.data.map(bar => {
-          return {
-            key: bar.barKey,
-            data: bar.data
-          }
-        });
-      })
+      .data((group) => group.data.map(bar => bar))
       .enter()
       .append('g')
-      .attr('transform', d => {
-        return `translate(${xScale(x(d))}, 0)`
-      })
+      .attr('transform', bar => `translate(${xScale(bar.barKey)}, 0)`)
       .classed('bar', true)
       .selectAll('.bar')
-      .data((d) => {
+      .data((bar) => {
         let currentTop = 0;
         let currentTopScaled = yScale(currentTop);
-        return d.data.map((block) => {
+        return bar.data.map((block) => {
           const value = block.value;
           const valueScaled = yScale(value);
           const newTop = currentTop + value;
@@ -82,7 +71,8 @@ export default class GroupedStackedBarChart extends React.Component {
             yTop: newTop,
             yBottom: currentTop,
             yTopScaled: newTopScaled,
-            yBottomScaled: currentTopScaled
+            yBottomScaled: currentTopScaled,
+            data: block.data,
           };
           currentTop = newTop;
           currentTopScaled = newTopScaled;
@@ -91,23 +81,17 @@ export default class GroupedStackedBarChart extends React.Component {
       })
       .enter()
       .append('rect')
+      .attr('class', d => d.class)
       .classed('block', true)
       .attr('width', xScale.bandwidth())
       .attr('height', d => (containerHeight - d.valueScaled) || 1)
       .attr('x', d => xScale(x(d)))
       .attr('y', d => d.yTopScaled)
-      .attr('fill', d => {
-        console.log('a');
-        console.log(d.blockKey);
-        const color = colorScale(d.blockKey);
-        console.log(color);
-        return color;
-      })
-      .classed('bar', true);
+      .attr('fill', d => d.fill || colorScale(d.blockKey));
 
-    const blocks = $chart.selectAll('.block');
-    applyStyles2Selection(extractStyles(this.props), blocks);
-    applyEvents2Selection(extractEvents(this.props), blocks);
+    const selected = $chart.selectAll(mouseEventSelector || '.block');
+    applyStyles2Selection(extractStyles(this.props), selected);
+    applyEvents2Selection(extractEvents(this.props), selected);
 
     // exit
     //   .remove();
@@ -137,6 +121,8 @@ GroupedStackedBarChart.propTypes = {
   xScale: PropTypes.func,
   yScale: PropTypes.func,
   colorScale: PropTypes.func,
+
+  mouseEventSelector: PropTypes.string,
 
   x: PropTypes.func,
   y: PropTypes.func
