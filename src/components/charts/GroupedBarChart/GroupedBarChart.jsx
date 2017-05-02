@@ -24,45 +24,13 @@ export default class GroupedBarChart extends React.Component {
   }
 
   update() {
-    console.log('update');
     const { data, xScale, yScale, groupKey, xGroupScale, colorScale, keys, x, y } = this.props;
     const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
 
-    console.log($chart);
-
-    // const groupKey = d => d.State;
-    //
-    // const xGroupScale = d3
-    //  .scaleBand()
-    //  .padding(0.1)
-    //  .domain(data.map(groupKey));
-    //
-    // const xScale = d3
-    //  .scaleBand()
-    //  .padding(0.1)
-    //  .domain(keys);
-    //
-    // const yScale = d3
-    //  .scaleLinear()
-    //  .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]);
-    //
-    // const colorScale = d3.scaleOrdinal()
-    //  .range(['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown']);
-
     xGroupScale.rangeRound([0, containerWidth]);
     xScale.rangeRound([0, xGroupScale.bandwidth()]);
     yScale.rangeRound([containerHeight, 0]);
-
-    // const update = $chart
-    //   .selectAll('.chart-group')
-    //   .data(data);
-
-
-    // const enter = update.enter();
-    // const exit = update.exit();
-
-    console.log('here');
 
     // create groups
     $chart
