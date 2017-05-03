@@ -1,4 +1,6 @@
 ```
+const ContainerDimensions = require('react-container-dimensions').default;
+
 const d3 = require('d3');
 const data = [
   {
@@ -39,10 +41,10 @@ const data = [
       "total": 0.000004,
       "data": [{ "blockKey": "labor", "groupKey": "March-2017", "value": 0.000004 }]
     }, {
-      "barKey": "AmazonRDS",
+      "barKey": "bread",
       "groupKey": "March-2017",
       "total": 24.016228,
-      "data": [{ "blockKey": "AmazonRDS", "groupKey": "March-2017", "value": 24.016228 }]
+      "data": [{ "blockKey": "bread", "groupKey": "March-2017", "value": 24.016228 }]
     }, {
       "barKey": "delivery",
       "groupKey": "March-2017",
@@ -183,22 +185,26 @@ const yScale = d3
 const colorScale = d3.scaleOrdinal()
   .range(['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown']);
 
-<Chart
-  width="600"
-  height="300"
-  xScale={xGroupScale}
-  yScale={yScale}
-  leftMargin={50}
->
-  <XAxis />
-  <YAxis tickFormat={d3.format('.3s')}/>
-  <GroupedStackedBarChart
-    data={data}
-    xGroupScale={xGroupScale}
-    xScale={xScale}
-    yScale={yScale}
-    colorScale={colorScale}
-  />
-</Chart>
-
+<div style={{height: 300}}>
+  <ContainerDimensions>
+    {({ height, width }) => (
+      <Chart
+        width={width}
+        height={height}
+        xScale={xGroupScale}
+        yScale={yScale}
+      >
+        <XAxis />
+        <YAxis tickFormat={d3.format('.3s')}/>
+        <GroupedStackedBarChart
+          data={data}
+          xGroupScale={xGroupScale}
+          xScale={xScale}
+          yScale={yScale}
+          colorScale={colorScale}
+        />
+      </Chart>
+    )}
+  </ContainerDimensions>
+</div>
 ```
