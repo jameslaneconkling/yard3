@@ -56,11 +56,7 @@ export default class GroupedStackedBarChart extends React.Component {
 
     const barUpdate = $chart
       .selectAll('.group').selectAll('.bar')
-      .data((group) => group.data.map(bar => {
-        var bar = bar;
-        console.log(bar);
-        return bar;
-      }), (d) => d ? `${d.groupKey}-${d.barKey}` : this.id);
+      .data((group) => group.data.map(bar => bar), (d) => d ? `${d.groupKey}-${d.barKey}` : this.id);
 
     barUpdate
       .enter()
@@ -68,11 +64,7 @@ export default class GroupedStackedBarChart extends React.Component {
       .classed('bar', true)
       .attr('id', (d) => `${d.groupKey}-${d.barKey}`)
       .merge(barUpdate)
-      .attr('transform', bar => {
-        const a = `translate(${xScale(bar.barKey)}, 0)`;
-        console.log(a);
-        return a;
-      });
+      .attr('transform', bar => `translate(${xScale(bar.barKey)}, 0)`);
 
     const blockUpdate = $chart
       .selectAll('.group').selectAll('.bar').selectAll('.block')
