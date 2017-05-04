@@ -86,6 +86,7 @@ export default class GroupedStackedBarChart extends React.Component {
             yTopScaled: newTopScaled,
             yBottomScaled: currentTopScaled,
             data: block.data,
+            fill: block.fill
           };
           currentTop = newTop;
           currentTopScaled = newTopScaled;
