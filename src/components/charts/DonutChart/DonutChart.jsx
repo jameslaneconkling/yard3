@@ -22,6 +22,7 @@ class DonutChart extends React.Component {
   }
 
   update() {
+    console.log('update');
     let { outerRadius, innerRadius, centerText, centerLabel } = this.props;
     const { value, data } = this.props;
     const { containerHeight, containerWidth } = this.context;
@@ -50,7 +51,16 @@ class DonutChart extends React.Component {
     .merge(update)
       .attr('d', d => arc(d));
 
-    enter
+
+    d3.select(this.$chart)
+      .selectAll('.yard3-donut-chart-value')
+      .remove();
+
+    d3.select(this.$chart)
+      .selectAll('.yard3-donut-chart-label')
+      .remove();
+
+    d3.select(this.$chart)
       .append('text')
       .classed('yard3-donut-chart-value', true)
       .style('text-anchor', 'middle')
@@ -59,7 +69,7 @@ class DonutChart extends React.Component {
         return centerText;
       });
 
-    enter
+    d3.select(this.$chart)
       .append('text')
       .classed('yard3-donut-chart-label', true)
       .style('text-anchor', 'middle')
