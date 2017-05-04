@@ -22,7 +22,6 @@ class DonutChart extends React.Component {
   }
 
   update() {
-    console.log('update');
     let { outerRadius, innerRadius, centerText, centerLabel } = this.props;
     const { value, data } = this.props;
     const { containerHeight, containerWidth } = this.context;
