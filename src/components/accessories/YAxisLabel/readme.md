@@ -52,9 +52,11 @@ const colorScale = d3.scaleOrdinal()
         height={height}
         xScale={xGroupScale}
         yScale={yScale}
+        leftMargin={70}
       >
         <XAxis />
         <YAxis tickFormat={d3.format('.3s')}/>
+        <YAxisLabel label="cost (in us dollars)" />
         <GroupedStackedBarChart
           data={data}
           xGroupScale={xGroupScale}
