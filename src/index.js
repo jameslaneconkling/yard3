@@ -15,6 +15,7 @@ import Rectangle from './components/accessories/Rectangle';
 import Line from './components/accessories/Line';
 import XAxis from './components/accessories/XAxis';
 import YAxis from './components/accessories/YAxis';
+import YAxisLabel from './components/accessories/YAxisLabel';
 import XGrid from './components/accessories/XGrid';
 import YGrid from './components/accessories/YGrid';
 import Tooltip from './components/accessories/Tooltip';
@@ -34,6 +35,7 @@ export {
   Line,
   XAxis,
   YAxis,
+  YAxisLabel,
   XGrid,
   YGrid,
   Tooltip
