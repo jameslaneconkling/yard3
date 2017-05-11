@@ -114,7 +114,6 @@ class Visualization extends React.Component {
     // otherwise, pass the nearest relatively positioned element to d3.mouse()
     // to calculate the mouse position relative to that element
 
-    console.log(d);
     const [tooltipX, tooltipY] = d3.mouse(this.$visContainer);
     this.setState({ tooltipX, tooltipY, tooltipData: d.data });
   }
