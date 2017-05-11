@@ -23,72 +23,8 @@ class LineChartWithDots extends React.Component {
 
   update() {
     const { containerWidth, containerHeight } = this.context;
-    const { x, y, r } = this.props;
+    const { data, r, colorScale } = this.props;
 
-    const data = [
-      {
-        xValue: 1,
-        data: [
-          {
-            lineKey: 'a',
-            lineLabel: 'A',
-            value: 1
-          },
-          {
-            lineKey: 'b',
-            lineLabel: 'B',
-            value: 2
-          },
-          {
-            lineKey: 'c',
-            lineLabel: 'C',
-            value: 3
-          }
-        ]
-      },
-      {
-        xValue: 2,
-        data: [
-          {
-            lineKey: 'a',
-            lineLabel: 'A',
-            value: 2
-          },
-          {
-            lineKey: 'b',
-            lineLabel: 'B',
-            value: 3
-          },
-          {
-            lineKey: 'c',
-            lineLabel: 'C',
-            value: 4
-          }
-        ]
-      },
-      {
-        xValue: 3,
-        data: [
-          {
-            lineKey: 'a',
-            lineLabel: 'A',
-            value: 10
-          },
-          {
-            lineKey: 'b',
-            lineLabel: 'B',
-            value: 7
-          },
-          {
-            lineKey: 'c',
-            lineLabel: 'C',
-            value: 0
-          }
-        ]
-      }
-    ];
-
-    // todo: do better :(
     const flattenUnique = (arrs) => {
       const newArr = [];
       arrs.forEach((arr) => {
@@ -131,7 +67,7 @@ class LineChartWithDots extends React.Component {
 
     enter.append('path')
       .attr("fill", "none")
-      .attr("stroke", "red")
+      .attr("stroke", colorScale)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 1.5)
@@ -154,20 +90,18 @@ class LineChartWithDots extends React.Component {
     dotUpdate
       .enter()
       .append('circle')
-      .attr('fill', () => 'blue')
+      .attr('fill', () => 'white')
+      .attr('stroke', colorScale)
+      .attr('stroke-width', 3)
       .merge(dotUpdate)
-      .attr('cx', d => {
-        console.log(d);
-        return xScale(d[0])
-      })
+      .attr('cx', d => xScale(d[0]))
       .attr('cy', d => yScale(d[1]))
       .attr('r', r);
-
 
     const $line = $chart.selectAll('.line');
     applyStyles2Selection(extractStyles(this.props), $line);
 
-    const circles = $chart.selectAll('.dot');
+    const circles = $chart.selectAll('.dot-group');
     applyStyles2Selection(extractStyles(this.props), circles);
     applyEvents2Selection(extractEvents(this.props), circles);
 
@@ -197,6 +131,7 @@ LineChartWithDots.propTypes = {
   yScale: PropTypes.func,
   x: PropTypes.func,
   y: PropTypes.func,
+  colorScale: PropTypes.func,
   /**
    * a sane style default to prevent line from having a fill--propbably don't overwrite
    */
@@ -208,7 +143,8 @@ LineChartWithDots.defaultProps = {
   x: d => d[0],
   y: d => d[1],
   fill: 'none',
-  r: () => 5
+  r: () => 5,
+  colorScale: () => 'black',
 };
 
 LineChartWithDots.contextTypes = {
