@@ -8,6 +8,7 @@ import GroupedStackedBarChart from './components/charts/GroupedStackedBarChart';
 import GroupedLayeredBarChart from './components/charts/GroupedLayeredBarChart';
 import FloatingBarChart from './components/charts/FloatingBarChart';
 import StackedBarChart from './components/charts/StackedBarChart';
+import MultilineChartWithDots from './components/charts/MultilineChartWithDots';
 import LineChart from './components/charts/LineChart';
 import AreaChart from './components/charts/AreaChart';
 import DonutChart from './components/charts/DonutChart';
@@ -30,6 +31,7 @@ export {
   FloatingBarChart,
   StackedBarChart,
   LineChart,
+  MultilineChartWithDots,
   AreaChart,
   ScatterPlot,
   DonutChart,

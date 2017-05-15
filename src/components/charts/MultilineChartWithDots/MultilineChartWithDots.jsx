@@ -12,7 +12,7 @@ import {
 } from '../../../utils/events';
 
 
-class LineChartWithDots extends React.Component {
+class MultilineChartWithDots extends React.Component {
   componentDidMount() {
     this.update();
   }
@@ -85,13 +85,17 @@ class LineChartWithDots extends React.Component {
     const dotUpdate = $chart
       .selectAll('.dot-group')
       .selectAll('.dot')
+
+      // probably need to pass lineKey here so that
       .data(d => d.data.map(point => [d.xValue, point.value]));
 
     dotUpdate
       .enter()
       .append('circle')
       .attr('fill', () => 'white')
-      .attr('stroke', colorScale)
+
+      // it can be used here
+      .attr('stroke', d => colorScale(d))
       .attr('stroke-width', 3)
       .merge(dotUpdate)
       .attr('cx', d => xScale(d[0]))
@@ -123,7 +127,7 @@ class LineChartWithDots extends React.Component {
   }
 }
 
-LineChartWithDots.propTypes = {
+MultilineChartWithDots.propTypes = {
   ...dynamicStyleTypes,
   ...eventTypes,
   data: PropTypes.array.isRequired,
@@ -139,7 +143,7 @@ LineChartWithDots.propTypes = {
   r: PropTypes.func
 };
 
-LineChartWithDots.defaultProps = {
+MultilineChartWithDots.defaultProps = {
   x: d => d[0],
   y: d => d[1],
   fill: 'none',
@@ -147,11 +151,11 @@ LineChartWithDots.defaultProps = {
   colorScale: () => 'black',
 };
 
-LineChartWithDots.contextTypes = {
+MultilineChartWithDots.contextTypes = {
   xScale: PropTypes.func,
   yScale: PropTypes.func,
   containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export default LineChartWithDots;
+export default MultilineChartWithDots;
