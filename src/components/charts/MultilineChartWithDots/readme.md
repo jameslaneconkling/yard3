@@ -158,7 +158,7 @@ class Visualization extends React.Component {
           <YGrid strokeDasharray={'2, 3'} />
           <XAxis />
           <YAxis />
-          <LineChartWithDots
+          <MultilineChartWithDots
             data={data}
             onMouseMove={this.moveTooltip}
             onMouseLeave={this.hideTooltip}
