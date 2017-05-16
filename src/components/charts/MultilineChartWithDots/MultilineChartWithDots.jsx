@@ -65,7 +65,7 @@ class MultilineChartWithDots extends React.Component {
     $chart.selectAll('path').remove();
     $chart.selectAll('circle').remove();
 
-    enter.append('path')
+    enter.insert('path')
       .attr("fill", "none")
       .attr("stroke", colorScale)
       .attr("stroke-linejoin", "round")
@@ -73,7 +73,7 @@ class MultilineChartWithDots extends React.Component {
       .attr("stroke-width", 1.5)
       .attr('d', line);
 
-    const dotGroupUpdate = $chart.selectAll('.dot')
+    const dotGroupUpdate = $chart.selectAll('.dot-group')
       .data(data);
     const dotExit = dotGroupUpdate.exit();
 
