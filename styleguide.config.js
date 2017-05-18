@@ -34,7 +34,12 @@ module.exports = {
         test: /\.css$/,
         include: dir,
         loader: 'style!css?modules&importLoaders=1'
-      }
+      },
+      // {
+      //   test: /\.svg/,
+      //   include: dir,
+      //   loader: 'svg-url-loader'
+      // }
     );
 
     return webpackConfig;

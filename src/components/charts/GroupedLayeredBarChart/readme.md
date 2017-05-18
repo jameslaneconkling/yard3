@@ -4,7 +4,7 @@ const ContainerDimensions = require('react-container-dimensions').default;
 const d3 = require('d3');
 const data = require('../../../../example/data/groupedLayeredBarChartData.js');
 
-const yMax = d3.max(data, (group) => d3.max(group.data, (bar) => d3.max([bar.backgroundBar.value, bar.foregroundBar.value])));
+const yMax = d3.max(data, (group) => d3.max(group.data, (bar) => d3.max(bar.data, block => block.value)));
 // console.log('yMax');
 // console.log(yMax);
 

@@ -33,9 +33,6 @@ export default class GroupedLayeredBarChart extends React.Component {
       x
     } = this.props;
 
-    console.log('data');
-    console.log(JSON.stringify(data));
-
     const { containerWidth, containerHeight } = this.context;
     const $chart = d3.select(this.$chart);
 
@@ -71,31 +68,15 @@ export default class GroupedLayeredBarChart extends React.Component {
 
     const blockUpdate = $chart
       .selectAll('.group').selectAll('.bar').selectAll('.block')
-      .data((bar) => {
-        let currentTop = 0;
-        let currentTopScaled = yScale(currentTop);
-        return bar.data.map((block) => {
-          const value = block.value;
-          const valueScaled = yScale(value);
-          const newTop = currentTop + value;
-          const scaledHeight = containerHeight - valueScaled;
-          const newTopScaled = currentTopScaled - scaledHeight;
-          const mapped = {
-            blockKey: block.blockKey,
-            value,
-            valueScaled,
-            yTop: newTop,
-            yBottom: currentTop,
-            yTopScaled: newTopScaled,
-            yBottomScaled: currentTopScaled,
-            data: block.data,
-            fill: block.fill
-          };
-          currentTop = newTop;
-          currentTopScaled = newTopScaled;
-          return mapped;
-        }, (d) => d ? `${d.groupKey}-${d.barKey}-${d.blockKey}` : this.id);
-      });
+      .data((bar) => bar.data.map((block) => ({
+        blockKey: block.blockKey,
+        barKey: block.barKey,
+        groupKey: block.groupKey,
+        value: block.value,
+        data: block.data,
+        fill: block.fill,
+        class: block.class
+      })), (d) => d ? `${d.groupKey}-${d.barKey}-${d.blockKey}` : this.id);
 
     blockUpdate
       .enter()
@@ -105,9 +86,9 @@ export default class GroupedLayeredBarChart extends React.Component {
       .attr('id', (d) => `${d.groupKey}-${d.barKey}-${d.blockKey}`)
       .merge(blockUpdate)
       .attr('width', xScale.bandwidth())
-      .attr('height', d => (containerHeight - d.valueScaled) || 1)
-      .attr('x', d => xScale(x(d)))
-      .attr('y', d => d.yTopScaled)
+      .attr('height', d => containerHeight - yScale(d.value))
+      .attr('x', d => xScale(d.value))
+      .attr('y', d => yScale(d.value))
       .attr('fill', d => d.fill || colorScale(d.blockKey));
 
     const selected = $chart.selectAll(mouseEventSelector || '.block');
@@ -145,14 +126,9 @@ GroupedLayeredBarChart.propTypes = {
   colorScale: PropTypes.func,
 
   mouseEventSelector: PropTypes.string,
-
-  x: PropTypes.func,
-  y: PropTypes.func
 };
 
 GroupedLayeredBarChart.defaultProps = {
-  x: d => d.key,
-  y: d => d.value,
   data: [],
 };
 
