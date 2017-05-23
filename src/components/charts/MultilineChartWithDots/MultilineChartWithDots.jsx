@@ -39,10 +39,26 @@ class MultilineChartWithDots extends React.Component {
 
     const keys = flattenUnique(data.map((pot) => pot.data.map((coord) => coord.lineKey)));
 
-    const lineData = keys.map(key => data.map(d => {
-      const point = d.data.find(point => point.lineKey === key);
-      return [d.xValue, point.value];
-    }));
+    const lineData = keys.map(key => {
+      let fill;
+      let stroke;
+
+      const points = data.map(d => {
+        const point = d.data.find(point => point.lineKey === key);
+        fill = point.fill;
+        stroke = point.stroke;
+        return {
+          x: d.xValue,
+          y: point.value,
+        };
+      });
+      return {
+        stroke: stroke,
+        fill: fill,
+        lineKey: key,
+        p: points,
+      };
+    });
 
     const xScale = this.props.xScale || this.context.xScale;
     const yScale = this.props.yScale || this.context.yScale;
@@ -55,25 +71,27 @@ class MultilineChartWithDots extends React.Component {
     const update = $chart
       .selectAll('.line')
       .data(lineData);
+
     const enter = update.enter();
     const exit = update.exit();
 
     const line = d3.line()
-      .x(d => xScale(d[0]))
-      .y(d => yScale(d[1]));
+      .x(d => xScale(d.x))
+      .y(d => yScale(d.y));
 
     $chart.selectAll('path').remove();
     $chart.selectAll('circle').remove();
 
     enter.insert('path')
-      .attr("fill", "none")
-      .attr("stroke", colorScale)
+      .attr('stroke', d => d.stroke || colorScale(d.lineKey))
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 1.5)
-      .attr('d', line);
+      .attr("fill", 'none')
+      .attr('d', d => line(d.p));
 
-    const dotGroupUpdate = $chart.selectAll('.dot-group')
+    const dotGroupUpdate = $chart
+      .selectAll('.dot-group')
       .data(data);
     const dotExit = dotGroupUpdate.exit();
 
@@ -85,22 +103,24 @@ class MultilineChartWithDots extends React.Component {
     const dotUpdate = $chart
       .selectAll('.dot-group')
       .selectAll('.dot')
-
-      // probably need to pass lineKey here so that
-      .data(d => d.data.map(point => [d.xValue, point.value]));
+      .data(d => d.data.map(point => ({
+        x: d.xValue,
+        y: point.value,
+        lineKey: point.lineKey,
+        stroke: point.stroke,
+        fill: point.fill,
+      })));
 
     dotUpdate
       .enter()
       .append('circle')
-      .attr('fill', () => 'white')
-
-      // it can be used here
-      .attr('stroke', d => colorScale(d))
       .attr('stroke-width', 3)
       .merge(dotUpdate)
-      .attr('cx', d => xScale(d[0]))
-      .attr('cy', d => yScale(d[1]))
-      .attr('r', r);
+      .attr('cx', d => xScale(d.x))
+      .attr('cy', d => yScale(d.y))
+      .attr('fill', d => d.fill || colorScale(d.lineKey))
+      .attr('stroke', d => d.stroke || colorScale(d.lineKey))
+      .attr('r', r || this.props.r);
 
     const $line = $chart.selectAll('.line');
     applyStyles2Selection(extractStyles(this.props), $line);
@@ -139,14 +159,12 @@ MultilineChartWithDots.propTypes = {
   /**
    * a sane style default to prevent line from having a fill--propbably don't overwrite
    */
-  fill: PropTypes.string,
   r: PropTypes.func
 };
 
 MultilineChartWithDots.defaultProps = {
   x: d => d[0],
   y: d => d[1],
-  fill: 'none',
   r: () => 5,
   colorScale: () => 'black',
 };
