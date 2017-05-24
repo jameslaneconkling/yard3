@@ -53,8 +53,8 @@ class MultilineChartWithDots extends React.Component {
         };
       });
       return {
-        stroke: stroke,
-        fill: fill,
+        stroke,
+        fill,
         lineKey: key,
         p: points,
       };
@@ -66,23 +66,24 @@ class MultilineChartWithDots extends React.Component {
     xScale.rangeRound([0, containerWidth]);
     yScale.rangeRound([containerHeight, 0]);
 
-    const $chart = d3.select(this.$chart);
-
-    const update = $chart
-      .selectAll('.line')
-      .data(lineData);
-
-    const enter = update.enter();
-    const exit = update.exit();
-
     const line = d3.line()
       .x(d => xScale(d.x))
       .y(d => yScale(d.y));
 
-    $chart.selectAll('path').remove();
-    $chart.selectAll('circle').remove();
+    const $chart = d3.select(this.$chart);
 
-    enter.insert('path')
+    const lineUpdate = $chart
+      .selectAll('.line')
+      .data(lineData, d => d ? d.lineKey : this['data-lineKey']);
+
+    const lineEnter = lineUpdate.enter();
+    const lineExit = lineUpdate.exit();
+
+    lineEnter
+      .insert('path')
+      .classed('line', true)
+      .attr('data-lineKey', d => d.lineKey)
+      .merge(lineUpdate)
       .attr('stroke', d => d.stroke || colorScale(d.lineKey))
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
@@ -92,12 +93,13 @@ class MultilineChartWithDots extends React.Component {
 
     const dotGroupUpdate = $chart
       .selectAll('.dot-group')
-      .data(data);
+      .data(data, d => d ? d.xValue : this['data-xValue']);
     const dotExit = dotGroupUpdate.exit();
 
     dotGroupUpdate
       .enter()
       .append('g')
+      .attr('pointer-events', 'none')
       .classed('dot-group', true);
 
     const dotUpdate = $chart
@@ -109,11 +111,15 @@ class MultilineChartWithDots extends React.Component {
         lineKey: point.lineKey,
         stroke: point.stroke,
         fill: point.fill,
-      })));
+        tooltipData: d.data,
+      })), d => d ? d.lineKey : this['data-lineKey']);
 
     dotUpdate
       .enter()
       .append('circle')
+      .classed('dot', true)
+      .style('pointer-events', 'all')
+      .attr('pointer-events', 'all')
       .attr('stroke-width', 3)
       .merge(dotUpdate)
       .attr('cx', d => xScale(d.x))
@@ -122,14 +128,14 @@ class MultilineChartWithDots extends React.Component {
       .attr('stroke', d => d.stroke || colorScale(d.lineKey))
       .attr('r', r || this.props.r);
 
-    const $line = $chart.selectAll('.line');
-    applyStyles2Selection(extractStyles(this.props), $line);
+    // const dotGroup = $chart.selectAll('.dot-group');
+    // applyEvents2Selection(extractEvents(this.props), dotGroup);
 
-    const circles = $chart.selectAll('.dot-group');
-    applyStyles2Selection(extractStyles(this.props), circles);
-    applyEvents2Selection(extractEvents(this.props), circles);
+    const dots = $chart.selectAll('.dot');
+    applyEvents2Selection(extractEvents(this.props), dots);
 
     dotExit.remove();
+    lineExit.remove();
   }
 
   render() {
