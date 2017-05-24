@@ -5,8 +5,6 @@ const d3 = require('d3');
 const data = require('../../../../example/data/groupedLayeredBarChartData.js');
 
 const yMax = d3.max(data, (group) => d3.max(group.data, (bar) => d3.max(bar.data, block => block.value)));
-// console.log('yMax');
-// console.log(yMax);
 
 const yMin = 0;
 
@@ -27,8 +25,6 @@ const flattenUnique = (arrs) => {
   return newArr;
 };
 const keys = flattenUnique(data.map((group) => group.data.map((stack) => stack.barKey)));
-// console.log('keys');
-// console.log(keys);
 
 const xScale = d3
   .scaleBand()

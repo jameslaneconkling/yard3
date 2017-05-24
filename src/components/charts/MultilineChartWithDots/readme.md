@@ -81,8 +81,6 @@ const flattenUnique = (arrs) => {
   return newArr;
 };
 // const keys = flattenUnique(data.map((group) => group.data.map((stack) => stack.barKey)));
-// console.log('keys');
-// console.log(keys);
 
 const xScale = d3.scaleTime()
   .domain([1, 3]);
@@ -114,14 +112,17 @@ class Visualization extends React.Component {
     // otherwise, pass the nearest relatively positioned element to d3.mouse()
     // to calculate the mouse position relative to that element
 
+    console.log(d);
+
     const [tooltipX, tooltipY] = d3.mouse(this.$visContainer);
-    this.setState({ tooltipX, tooltipY, tooltipData: d.data });
+    this.setState({ tooltipX, tooltipY, tooltipData: d.tooltipData });
   }
 
   hideTooltip() {
     this.setState({
       tooltipX: null,
       tooltipY: null,
+      tooltipData: [],
     });
   }
 
