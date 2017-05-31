@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint './src/**/*'",
     "dev": "webpack-dev-server --devtool eval --progress",
-    "build": "NODE_ENV=production babel ./src/index.js -d dist/ ",
+    "build": "rm -rf dist && babel -d dist src",
     "prepublish": "npm run build",
     "test": "echo \"Error: no tests ...yet\" && exit 1",
     "styleguide-server": "styleguidist server",
@@ -57,7 +57,7 @@
     "d3": "^4.3.0",
     "react": "*"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "svg-url-loader": "^2.0.2"
   }

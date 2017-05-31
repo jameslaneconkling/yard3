@@ -3,6 +3,7 @@
 node_modules/
 docs/
 example/
+src/
 
 npm-debug.log
 styleguide.config.js
