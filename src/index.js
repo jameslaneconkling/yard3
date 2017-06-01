@@ -1,6 +1,3 @@
-// https://github.com/gaearon/react-hot-loader/issues/158
-// export { default as BarChart } from './components/BarChart';
-// export { default as XAxis } from './components/XAxis';
 import Chart from './components/container/Chart';
 import BarChart from './components/charts/BarChart';
 import GroupedBarChart from './components/charts/GroupedBarChart';
