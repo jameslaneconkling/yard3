@@ -69,8 +69,6 @@ const plugins = PROD ?
     new webpack.HotModuleReplacementPlugin()
   ];
 
-
-
 module.exports = validate({
   entry,
 

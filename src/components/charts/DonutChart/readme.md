@@ -13,6 +13,8 @@ const generateData = length => d3.range(1, length + 1).map(idx => ({key: idx, va
     fill={d => colorScale(d.value)}
     stroke="#DDD"
     strokeWidth="1"
+    centerText="centerText"
+    centerLabel="centerLabel"
   />
 </Chart>
 ```
