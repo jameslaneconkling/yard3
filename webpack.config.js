@@ -52,11 +52,7 @@ const loaders = PROD ?
       test: /\.scss$/,
       loader: 'style-loader!css-loader!sass-loader?sourceMap',
       include: path.join(__dirname, 'example')
-    },
-    // {
-    //   test: /\.svg/,
-    //   loader: 'svg-url-loader'
-    // }
+    }
   ];
 
 const plugins = PROD ?
@@ -72,8 +68,6 @@ const plugins = PROD ?
     new HtmlWebpackPlugin({ template: 'example/index.html' }),
     new webpack.HotModuleReplacementPlugin()
   ];
-
-
 
 module.exports = validate({
   entry,

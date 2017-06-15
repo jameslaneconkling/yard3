@@ -55,10 +55,7 @@
   },
   "peerDependencies": {
     "d3": "^4.3.0",
-    "react": "*"
+    "react": ">0.14"
   },
-  "main": "dist/index.js",
-  "dependencies": {
-    "svg-url-loader": "^2.0.2"
-  }
+  "main": "dist/index.js"
 }
