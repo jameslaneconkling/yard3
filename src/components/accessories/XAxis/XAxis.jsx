@@ -20,7 +20,7 @@ export default class XAxis extends React.Component {
 
     xScale.rangeRound([0, containerWidth]);
 
-    let axis = d3.axisBottom(xScale).ticks(d3.timeHour.every(3));
+    let axis = d3.axisBottom(xScale).tickPadding(10);
 
     if(this.props.tickFormat){
       axis = axis.tickFormat(this.props.tickFormat);
