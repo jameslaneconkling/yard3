@@ -30,8 +30,7 @@ export default class GroupedStackedBarChart extends React.Component {
       xGroupScale,
       colorScale,
       mouseEventSelector,
-      x,
-      minPixelsShown
+      x
     } = this.props;
 
     const { containerWidth, containerHeight } = this.context;
@@ -95,9 +94,6 @@ export default class GroupedStackedBarChart extends React.Component {
         }, (d) => d ? `${d.groupKey}-${d.barKey}-${d.blockKey}` : this.id);
       });
 
-    const getY = (d, containerHeight, minPixelsShown) => {
-    };
-
     blockUpdate
       .enter()
       .append('rect')
@@ -106,14 +102,9 @@ export default class GroupedStackedBarChart extends React.Component {
       .attr('id', (d) => `${d.groupKey}-${d.barKey}-${d.blockKey}`)
       .merge(blockUpdate)
       .attr('width', xScale.bandwidth())
-      .attr('height', d => d3.max([containerHeight - d.valueScaled, minPixelsShown]))
+      .attr('height', d => (containerHeight - d.valueScaled) || 1)
       .attr('x', d => xScale(x(d)))
-      .attr('y', (d) => {
-        if (d.yTopScaled - containerHeight < minPixelsShown) {
-          return containerHeight - minPixelsShown;
-        }
-        return d.yTopScaled;
-      })
+      .attr('y', d => d.yTopScaled)
       .attr('fill', d => d.fill || colorScale(d.blockKey));
 
     const selected = $chart.selectAll(mouseEventSelector || '.block');
@@ -149,7 +140,6 @@ GroupedStackedBarChart.propTypes = {
   xScale: PropTypes.func,
   yScale: PropTypes.func,
   colorScale: PropTypes.func,
-  minPixelsShown: PropTypes.number,
 
   mouseEventSelector: PropTypes.string,
 
@@ -160,7 +150,6 @@ GroupedStackedBarChart.propTypes = {
 GroupedStackedBarChart.defaultProps = {
   x: d => d.key,
   y: d => d.value,
-  minPixelsShown: 0,
   data: [],
 };
 
