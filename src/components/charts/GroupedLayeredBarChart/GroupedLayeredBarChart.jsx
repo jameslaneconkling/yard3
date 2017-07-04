@@ -88,15 +88,15 @@ export default class GroupedLayeredBarChart extends React.Component {
       .merge(blockUpdate)
       .attr('width', xScale.bandwidth())
       .attr('height', d => {
-        if ((containerHeight - yScale(d.value)) === 0) {
+        if ((containerHeight - yScale(d.value)) < minPixelsShown) {
           return minPixelsShown;
         }
         return containerHeight - yScale(d.value);
       })
       .attr('x', d => xScale(d.value))
       .attr('y', d => {
-        if (yScale(d.value) === containerHeight) {
-          return yScale(d.value) - minPixelsShown;
+        if (yScale(d.value) - containerHeight > -minPixelsShown) {
+          return containerHeight - minPixelsShown;
         }
         return yScale(d.value);
       })
