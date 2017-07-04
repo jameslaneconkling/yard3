@@ -109,7 +109,7 @@ export default class GroupedStackedBarChart extends React.Component {
       .attr('height', d => d3.max([containerHeight - d.valueScaled, minPixelsShown]))
       .attr('x', d => xScale(x(d)))
       .attr('y', (d) => {
-        if (d.yTopScaled === containerHeight) {
+        if (d.yTopScaled - containerHeight < minPixelsShown) {
           return containerHeight - minPixelsShown;
         }
         return d.yTopScaled;

@@ -87,9 +87,19 @@ export default class GroupedLayeredBarChart extends React.Component {
       .attr('id', (d) => `${d.groupKey}-${d.barKey}-${d.blockKey}`)
       .merge(blockUpdate)
       .attr('width', xScale.bandwidth())
-      .attr('height', d => d3.max((containerHeight - yScale(d.value)), minPixelsShown))
+      .attr('height', d => {
+        if ((containerHeight - yScale(d.value)) === 0) {
+          return minPixelsShown;
+        }
+        return containerHeight - yScale(d.value);
+      })
       .attr('x', d => xScale(d.value))
-      .attr('y', d => yScale(d.value) || (containerHeight - minPixelsShown))
+      .attr('y', d => {
+        if (yScale(d.value) === containerHeight) {
+          return yScale(d.value) - minPixelsShown;
+        }
+        return yScale(d.value);
+      })
       .attr('fill', d => d.fill || colorScale(d.blockKey));
 
     const selected = $chart.selectAll(mouseEventSelector || '.block');
