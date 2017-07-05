@@ -30,6 +30,7 @@ export default class GroupedLayeredBarChart extends React.Component {
       xGroupScale,
       colorScale,
       mouseEventSelector,
+      minPixelsShown,
       x
     } = this.props;
 
@@ -86,9 +87,21 @@ export default class GroupedLayeredBarChart extends React.Component {
       .attr('id', (d) => `${d.groupKey}-${d.barKey}-${d.blockKey}`)
       .merge(blockUpdate)
       .attr('width', xScale.bandwidth())
-      .attr('height', d => containerHeight - yScale(d.value))
+      .attr('height', d => {
+        const yScaleValue = yScale(d.value);
+        if ((containerHeight - yScaleValue) < minPixelsShown) {
+          return minPixelsShown;
+        }
+        return containerHeight - yScaleValue;
+      })
       .attr('x', d => xScale(d.value))
-      .attr('y', d => yScale(d.value))
+      .attr('y', d => {
+        const yScaleValue = yScale(d.value);
+        if (yScaleValue - containerHeight > -minPixelsShown) {
+          return containerHeight - minPixelsShown;
+        }
+        return yScaleValue;
+      })
       .attr('fill', d => d.fill || colorScale(d.blockKey));
 
     const selected = $chart.selectAll(mouseEventSelector || '.block');
@@ -126,10 +139,13 @@ GroupedLayeredBarChart.propTypes = {
   colorScale: PropTypes.func,
 
   mouseEventSelector: PropTypes.string,
+
+  minPixelsShown: PropTypes.number,
 };
 
 GroupedLayeredBarChart.defaultProps = {
   data: [],
+  minPixelsShown: 0,
 };
 
 GroupedLayeredBarChart.contextTypes = {
