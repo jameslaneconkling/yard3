@@ -94,7 +94,7 @@ class MultilineChartWithDots extends React.Component {
     const dotGroupUpdate = $chart
       .selectAll('.dot-group')
       .data(data, d => d ? d.xValue : this['data-xValue']);
-    const dotExit = dotGroupUpdate.exit();
+    const dotGroupExit = dotGroupUpdate.exit();
 
     dotGroupUpdate
       .enter()
@@ -113,6 +113,8 @@ class MultilineChartWithDots extends React.Component {
         fill: point.fill,
         tooltipData: d.data,
       })), d => d ? d.lineKey : this['data-lineKey']);
+
+    const dotExit = dotUpdate.exit();
 
     dotUpdate
       .enter()
@@ -135,6 +137,7 @@ class MultilineChartWithDots extends React.Component {
     applyEvents2Selection(extractEvents(this.props), dots);
 
     dotExit.remove();
+    dotGroupExit.remove();
     lineExit.remove();
   }
 
