@@ -20,7 +20,13 @@ export default class YAxis extends React.Component {
 
     yScale.rangeRound([containerHeight, 0]);
 
-    $yAxis.call(d3.axisLeft(yScale).tickPadding(10))
+    let axis = d3.axisLeft(yScale).tickPadding(10);
+
+    if(this.props.tickFormat){
+      axis = axis.tickFormat(this.props.tickFormat);
+    }
+
+    $yAxis.call(axis)
       .append('text')
         .attr('y', 6)
         .attr('dy', '0.71em')
@@ -38,7 +44,8 @@ export default class YAxis extends React.Component {
 }
 
 YAxis.propTypes = {
-  yScale: PropTypes.func
+  yScale: PropTypes.func,
+  tickFormat: PropTypes.func,
 };
 
 YAxis.contextTypes = {

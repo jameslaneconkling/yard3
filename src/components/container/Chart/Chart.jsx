@@ -14,15 +14,25 @@ import {
 export default class Chart extends React.Component {
   getChildContext() {
     const {
-      xScale, yScale,
-      width, leftMargin, rightMargin,
-      height, topMargin, bottomMargin
+      xScale,
+      yScale,
+      width,
+      leftMargin,
+      rightMargin,
+      height,
+      topMargin,
+      bottomMargin
     } = this.props;
+
     return {
       xScale,
       yScale,
       containerWidth: width - leftMargin - rightMargin,
-      containerHeight: height - topMargin - bottomMargin
+      containerHeight: height - topMargin - bottomMargin,
+      leftMargin,
+      rightMargin,
+      topMargin,
+      bottomMargin,
     };
   }
 
@@ -35,7 +45,9 @@ export default class Chart extends React.Component {
       <svg
         {...styles}
         {...events}
-        ref={(el) => { this.svg = el; }}
+        ref={(el) => {
+          this.svg = el;
+        }}
         width={width}
         height={height}
         className="chart"
@@ -74,5 +86,9 @@ Chart.childContextTypes = {
   xScale: PropTypes.func,
   yScale: PropTypes.func,
   containerWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  topMargin: PropTypes.number,
+  rightMargin: PropTypes.number,
+  bottomMargin: PropTypes.number,
+  leftMargin: PropTypes.number
 };
